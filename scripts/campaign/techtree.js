@@ -18,8 +18,13 @@ const node = (parent, contentType, requirements, objectives) => {
 };
 const cblock = name => Vars.content.getByName(ContentType.block, "acceleration-" + name);
 const citem = name => Vars.content.getByName(ContentType.item, "acceleration-" + name);
+const cliquid = name => Vars.content.getByName(ContentType.liquid, "acceleration-" + name);
 
 //items
 node(Items.surgeAlloy, citem("aerogel"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
+node(Items.titanium, citem("sulfur"), null, null);
+//liquids
+node(Liquids.cryofluid, cliquid("corrofluid"), null, null);
 //blocks
 node(Blocks.phaseWeaver, cblock("aerogel-weaver"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
+node(Blocks.cryofluidMixer, cblock("corrofluid-mixer"), null, null);
