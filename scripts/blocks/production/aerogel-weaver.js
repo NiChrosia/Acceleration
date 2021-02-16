@@ -11,7 +11,7 @@ const aerogelWeaver = extend(GenericCrafter, "aerogel-weaver", {
 	requirements: ItemStack.with(Items.surgeAlloy, 90, Items.phaseFabric, 30, Items.titanium, 120, Items.lead, 150 ,Items.silicon, 180),
 	category: Category.crafting,
 	outputItem: new ItemStack(Vars.content.getByName(ContentType.item, "acceleration-aerogel"), 1),
-	craftTime: 900,
+	craftTime: 300,
 	buildVisibility: BuildVisibility.shown
 });
 

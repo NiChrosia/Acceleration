@@ -1,3 +1,3 @@
 const aerogel = extend(Item, "aerogel", {
-	color: Color.valueOf("B2B2BF")
+	color: Color.valueOf("E0E0E0")
 });
