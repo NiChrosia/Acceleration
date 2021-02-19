@@ -4,6 +4,6 @@ const corrofluid = extend(Liquid, "corrofluid", {
 	effect: StatusEffects.corroded,
 	heatCapacity: 0.5,
 	flammability: 0.6,
-	temperature: 0.15,
+	temperature: 0.3,
 	viscosity: 0.4
 });

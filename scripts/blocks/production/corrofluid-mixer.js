@@ -1,6 +1,16 @@
+let functions = require("functions");
+let blockName = "corrofluid-mixer-";
+
 const corrofluidMixer = extend(LiquidConverter, "corrofluid-mixer", {
+	icons() {
+		return [
+			functions.getRegion(blockName, "bottom"),
+			functions.getRegion(blockName, null),
+			functions.getRegion(blockName, "top")
+		]
+	},
 	health: 100,
-	size: 2,
+	size: 3,
 	solid: true,
 	hasPower: true,
 	hasLiquids: true,
@@ -10,12 +20,37 @@ const corrofluidMixer = extend(LiquidConverter, "corrofluid-mixer", {
 	requirements: ItemStack.with(Items.copper, 1),
 	category: Category.crafting,
 	// make 6 liquid in 1 second
-	outputLiquid: new LiquidStack(Vars.content.getByName(ContentType.liquid, "acceleration-corrofluid"), 24),
+	outputLiquid: new LiquidStack(functions.cliquid("corrofluid"), 24),
 	craftTime: 120,
-	buildVisibility: BuildVisibility.shown,
-	drawer: DrawMixer()
+	buildVisibility: BuildVisibility.shown
+	//drawer: DrawMixer()
 });
 
 corrofluidMixer.consumes.power(1.5);
-corrofluidMixer.consumes.items(ItemStack.with(Vars.content.getByName(ContentType.item, "acceleration-sulfur"), 3));
+corrofluidMixer.consumes.items(ItemStack.with(functions.citem("sulfur"), 3));
 corrofluidMixer.consumes.liquid(Liquids.water, 0.2);
+
+corrofluidMixer.buildType = () => extend(LiquidConverter.LiquidConverterBuild, corrofluidMixer, {
+  draw() {
+		this.super$draw();
+		// Bottom region
+		Draw.rect(functions.getTextureName(blockName, "bottom"), this.x, this.y);
+		// Block sprite
+		Draw.rect(this.block.region, this.x, this.y);
+		// Water region
+		Draw.color(Liquids.water.color);
+		Draw.alpha(functions.percent(this.liquids.get(Liquids.water), this.block.liquidCapacity));
+		Draw.rect(functions.getTextureName(blockName, "water"), this.x, this.y);
+		// Sulfur region
+		Draw.color(functions.citem("sulfur").color);
+		Draw.alpha(functions.percent(this.items.get(functions.citem("sulfur")), this.block.itemCapacity));
+		Draw.rect(functions.getTextureName(blockName, "sulfur"), this.x, this.y);
+		// Corrofluid region
+		Draw.color(functions.cliquid("corrofluid").color);
+		Draw.alpha(functions.percent(this.liquids.get(functions.cliquid("corrofluid")), this.block.liquidCapacity));
+		Draw.rect(functions.getTextureName(blockName, "corrofluid"), this.x, this.y);
+		// Top region
+		Draw.color();
+		Draw.rect(functions.getTextureName(blockName, "top"), this.x, this.y);
+  }
+});
