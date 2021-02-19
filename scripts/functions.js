@@ -24,18 +24,18 @@ function percent(partialValue, totalValue) {
    return partialValue / totalValue;
 };
 
-/*exports = {
-	modName,
-	getTextureName,
-	getBaseTexture,
-	getRegion,
-	cliquid,
-	citem,
-	percent
-};*/
-module.exports.modName = modName
+exports = {
+	modName: modName,
+	getTextureName: getTextureName,
+	getBaseTexture: getBaseTexture,
+	getRegion: getRegion,
+	cliquid: cliquid,
+	citem: citem,
+	percent: percent
+};
+/*module.exports.modName = modName
 module.exports.getTextureName = getTextureName
 module.exports.getRegion = getRegion
 module.exports.cliquid = cliquid
 module.exports.citem = citem
-module.exports.percent = percent
+module.exports.percent = percent*/
