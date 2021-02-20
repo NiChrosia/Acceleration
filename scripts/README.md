@@ -10,4 +10,4 @@ add an extremely hard alloy, used in machine guns and railguns
 
 add machine guns and railguns
 
-add a supercoolant, basically liquid nitrogen
+add a supercoolant, basically liquid nitrogen/hydrogen (name: arctifluid)
