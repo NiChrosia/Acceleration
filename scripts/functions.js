@@ -24,10 +24,9 @@ function percent(partialValue, totalValue) {
    return partialValue / totalValue;
 };
 
-exports = {
+module.exports = {
 	modName: modName,
 	getTextureName: getTextureName,
-	getBaseTexture: getBaseTexture,
 	getRegion: getRegion,
 	cliquid: cliquid,
 	citem: citem,

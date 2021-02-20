@@ -39,6 +39,7 @@ aerogelWeaver.buildType = () => extend(GenericCrafter.GenericCrafterBuild, aerog
 		Draw.alpha(functions.percent(this.liquids.get(functions.cliquid("corrofluid")), this.block.liquidCapacity));
 		Draw.rect(functions.getTextureName(blockName, "liquid"), this.x, this.y);
 		// Weave Region
+		// Stolen from core/src/mindustry/world/draw/DrawWeave.java
 		Draw.reset();
 		Draw.rect(functions.getTextureName(blockName, "weave"), this.x, this.y, this.totalProgress);
 		Draw.color(Pal.accent);

@@ -17,11 +17,11 @@ const corrofluidMixer = extend(LiquidConverter, "corrofluid-mixer", {
 	hasItems: true,
 	itemCapacity: 15,
 	liquidCapacity: 10,
-	requirements: ItemStack.with(Items.copper, 1),
+	requirements: ItemStack.with(Items.lead, 80, Items.titanium, 50, Items.silicon, 50, Items.phaseFabric, 15),
 	category: Category.crafting,
 	// make 6 liquid in 1 second
 	outputLiquid: new LiquidStack(functions.cliquid("corrofluid"), 24),
-	craftTime: 120,
+	craftTime: 75,
 	buildVisibility: BuildVisibility.shown
 	//drawer: DrawMixer()
 });
