@@ -26,9 +26,18 @@ const corroding = Effect(40, e => {
 	});
 });
 
+const glaciafreezeSquare = Effect(40, e => {
+	let size = 48
+	size *= 0.75
+	Draw.color(Color.valueOf("2FADAD"));
+	Draw.z(Layer.shields);
+	//Draw.alpha(0.4)
+	Fill.poly(e.x, e.y, 4, size, 45);
+});
+
 // Status Effects
 
-const arctifreezing = extend(StatusEffect, "cryofreezing", {
+const arctifreezing = extend(StatusEffect, "arctifreezing", {
 	speedMultiplier: 0.65, 
 	reloadMultiplier: 0.6,
 	damage: 0.5,
@@ -53,7 +62,7 @@ const glaciafreezing = extend(StatusEffect, "glaciafreezing", {
 const permafrost = extend(StatusEffect, "permafrost", {
 	update(unit, time) {
 		this.super$update(unit, time);
-		if (Mathf.chance(0.35 * Time.delta)) {
+		if (Mathf.chance(0.85 * Time.delta)) {
 			/*let size = 24;
 			Units.nearby(unit.team, unit.x - (size / 2), unit.y - (size / 2), 24, 24, cons(u => {
 				if (Mathf.dst(unit.x, unit.y, u.x, u.y) < 40 && !u.isDead && u.team == unit.team) {
@@ -67,27 +76,6 @@ const permafrost = extend(StatusEffect, "permafrost", {
 	}
 });
 
-function statusEffectZone() {
-	Groups.unit.each(unit => {
-		let tile = unit.tileOn();
-		if (tile == null) return;
-		let puddle = Puddles.get(tile);
-		let size = 96;
-		if (puddle != null) {
-			if (puddle.liquid == functions.cliquid("glaciafluid")) {
-				Units.nearby(unit.x - (size / 2), unit.y - (size / 2), size, size, cons(u => {
-					if (Mathf.dst(unit.x, unit.y, u.x, u.y) < 40 && !u.isDead) {
-						u.apply(glaciafreezing, 40);
-						u.apply(arctifreezing, 40);
-					};
-				}));
-			};
-		};
-	});
-};
-
-Timer.schedule(statusEffectZone, 0, 0.1);
-
 const corroded = extend(StatusEffect, "corroded", {
 	damage: 0.5,
 	effect: corroding,
@@ -100,5 +88,6 @@ module.exports = {
 	arctifreezing: arctifreezing,
 	glaciafreezing: glaciafreezing,
 	permafrost: permafrost,
-	corroded: corroded
+	corroded: corroded,
+	glaciafreezeSquare: glaciafreezeSquare
 };

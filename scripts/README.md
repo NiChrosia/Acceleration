@@ -1,13 +1,21 @@
 ## TODO
 
-Add block that deconstructs remains of unit, with % decreasing as tier increases
+[] Add block that deconstructs remains of unit, with % decreasing as tier increases
 
-Add fusion reactor that uses deuterium-tritium fuel, which can be obtained from water.
+[] Add fusion reactor that uses deuterium-tritium fuel, which can be obtained from water.
 
-Start working on Alpha units (silver-blue crawler type units)
+[] Start working on Alpha units (silver-blue crawler type units)
 
-add an extremely hard alloy, used in machine guns and railguns
+[] add an extremely hard alloy, used in machine guns and railguns
 
-add machine guns and railguns
+[] add machine guns and railguns
 
-add a supercoolant, basically liquid nitrogen/hydrogen (name: arctifluid)
+[X] Add two supercoolants, arctifluid and glaciafluid, (liquid nitrogen and hydrogen)
+
+[] Add corrofluid, a highly corrosive liquid (sulfuric acid)
+
+[] Add aerogel, a light superinsulator.
+
+[] Add Arctifluid Synthesizer which synthesizes nitrogen from the air, and supercools it using cryofluid.
+
+[] Add Glaciafluid Mixer which seperates water into its atomic components and supercools the hydrogen to liquiefy it

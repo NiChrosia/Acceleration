@@ -1,7 +1,7 @@
 require("items/aerogel");
 require("items/sulfur");
 require("blocks/environment/sulfur-ore");
-require("effects/effects")
+//require("effects/effects")
 require("liquids/arctifluid");
 require("liquids/glaciafluid");
 require("liquids/corrofluid");
