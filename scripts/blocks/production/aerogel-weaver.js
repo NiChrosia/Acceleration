@@ -1,5 +1,5 @@
-let functions = require("functions")
-let blockName = "aerogel-weaver-";
+const functions = require("lib/functions")
+const blockName = "aerogel-weaver-";
 
 const aerogelWeaver = extend(GenericCrafter, "aerogel-weaver", {
 	icons() {
@@ -32,14 +32,18 @@ aerogelWeaver.consumes.liquid(functions.cliquid("corrofluid"), 0.3);
 aerogelWeaver.buildType = () => extend(GenericCrafter.GenericCrafterBuild, aerogelWeaver, {
 	draw() {
 		this.super$draw();
+		
 		// Bottom Region
 		Draw.rect(functions.getTextureName(blockName, "bottom"), this.x, this.y);
+		
 		// Corrofluid Region
 		Draw.color(functions.cliquid("corrofluid").color);
 		Draw.alpha(functions.percent(this.liquids.get(functions.cliquid("corrofluid")), this.block.liquidCapacity));
 		Draw.rect(functions.getTextureName(blockName, "liquid"), this.x, this.y);
+		
 		// Weave Region
-		// Stolen from core/src/mindustry/world/draw/DrawWeave.java
+		
+		// Copied from core/src/mindustry/world/draw/DrawWeave.java
 		Draw.reset();
 		Draw.rect(functions.getTextureName(blockName, "weave"), this.x, this.y, this.totalProgress);
 		Draw.color(Pal.accent);
@@ -50,6 +54,7 @@ aerogelWeaver.buildType = () => extend(GenericCrafter.GenericCrafterBuild, aerog
 			90,
 			this.block.size * Vars.tilesize / 2
 		);
+		
 		// Main Region
 		Draw.reset();
 		Draw.rect(this.block.region, this.x, this.y);

@@ -1,3 +1,5 @@
+const functions = require("lib/functions");
+
 /**
  * Node for the research tech tree.
  *
@@ -16,17 +18,14 @@ const node = (parent, contentType, requirements, objectives) => {
     print(parent + " or " + contentType + " is null.");
   }
 };
-const cblock = name => Vars.content.getByName(ContentType.block, "acceleration-" + name);
-const citem = name => Vars.content.getByName(ContentType.item, "acceleration-" + name);
-const cliquid = name => Vars.content.getByName(ContentType.liquid, "acceleration-" + name);
 
 // Items
-node(Items.surgeAlloy, citem("aerogel"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
-node(Items.titanium, citem("sulfur"), null, null);
+node(Items.surgeAlloy, functions.citem("aerogel"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
+node(Items.titanium, functions.citem("sulfur"), null, null);
 // Liquids
-node(Liquids.cryofluid, cliquid("corrofluid"), null, null);
-node(Liquids.cryofluid, cliquid("arctifluid"), null, null);
-node(cliquid("arctifluid"), cliquid("glaciafluid"), null, null);
+node(Liquids.cryofluid, functions.cliquid("corrofluid"), null, null);
+node(Liquids.cryofluid, functions.cliquid("arctifluid"), null, null);
+node(functions.cliquid("arctifluid"), functions.cliquid("glaciafluid"), null, null);
 // Blocks
-node(Blocks.phaseWeaver, cblock("aerogel-weaver"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
-node(Blocks.cryofluidMixer, cblock("corrofluid-mixer"), null, null);
+node(Blocks.phaseWeaver, functions.cblock("aerogel-weaver"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
+node(Blocks.cryofluidMixer, functions.cblock("corrofluid-mixer"), null, null);
