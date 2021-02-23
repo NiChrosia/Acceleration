@@ -18,6 +18,8 @@ const cstatus = name => Vars.content.getByName(ContentType.status, ModName + nam
 const citem = name => Vars.content.getByName(ContentType.item, ModName + name);
 const percent = (partial, total) => partial / total;
 const hexColor = hexValue => Color.valueOf(hexValue);
+const avg = (x, y) => (x + y) / 2
+const dst = (ax, ay, bx, by, distance) => ((ax * ay) + (bx * by)) < Mathf.pow(distance, 2)
 
 module.exports = {
 	getTextureName: getTextureName,
@@ -28,5 +30,7 @@ module.exports = {
 	cstatus: cstatus,
 	percent: percent,
 	hexColor: hexColor,
-	ModName: ModName
+	ModName: ModName,
+	avg: avg,
+	dst: dst
 };

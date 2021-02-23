@@ -1,8 +1,8 @@
 const effects = require("effects/effects")
 
 const arctifreezing = extend(StatusEffect, "arctifreezing", {
-	speedMultiplier: 0.65, 
-	reloadMultiplier: 0.6,
+	speedMultiplier: 0.75, 
+	reloadMultiplier: 0.8,
 	damage: 0.5,
 	permanent: true,
 	healthMultiplier: 1.2,
@@ -12,9 +12,9 @@ const arctifreezing = extend(StatusEffect, "arctifreezing", {
 });
 
 const glaciafreezing = extend(StatusEffect, "glaciafreezing", {
-	speedMultiplier: 0.35,
-	reloadMultiplier: 0.25,
-	damage: 10,
+	speedMultiplier: 0.25,
+	reloadMultiplier: 0.15,
+	damage: 25,
 	permanent: false,
 	healthMultiplier: 1.3,
 	effectChance: 0.75,

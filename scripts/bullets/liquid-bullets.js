@@ -6,9 +6,9 @@ const arctifluidShot = extend(LiquidBulletType, {
 	drag: 0.0015,
 	lifetime: 54,
 	puddleSize: 24,
-	damage: 12,
+	damage: 45,
 	knockback: 3.0,
-	orbSize: 16,
+	orbSize: 7,
 	effect: functions.cstatus("arctifreezing")
 });
 
@@ -17,10 +17,10 @@ const glaciafluidShot = extend(LiquidBulletType, {
 	speed: 4.6,
 	drag: 0.0025,
 	lifetime: 75,
-	puddleSize: 2048,
-	damage: 125,
+	puddleSize: 64,
+	damage: 560,
 	knockback: 2.3,
-	orbSize: 16,
+	orbSize: 7,
 	effect: functions.cstatus("permafrost")
 });
 
@@ -31,8 +31,8 @@ const corrofluidShot = extend(LiquidBulletType, {
 	damage: 16.2,
 	knockback: 2.3,
 	lifetime: 56,
-	orbSize: 16,
-	puddleSize: 12
+	orbSize: 7,
+	puddleSize: 10
 });
 
 const massiveWaterShot = extend(LiquidBulletType, {
@@ -42,8 +42,8 @@ const massiveWaterShot = extend(LiquidBulletType, {
 	damage: 0.5,
 	knockback: 2.8,
 	lifetime: 56,
-	orbSize: 8,
-	puddleSize: 12
+	orbSize: 6,
+	puddleSize: 10
 });
 
 const massiveSlagShot = extend(LiquidBulletType, {
@@ -53,8 +53,8 @@ const massiveSlagShot = extend(LiquidBulletType, {
 	damage: 12.4,
 	knockback: 2.3,
 	lifetime: 56,
-	orbSize: 8,
-	puddleSize: 12
+	orbSize: 6,
+	puddleSize: 10
 });
 
 const massiveOilShot = extend(LiquidBulletType, {
@@ -64,8 +64,8 @@ const massiveOilShot = extend(LiquidBulletType, {
 	damage: 0.5,
 	knockback: 2.8,
 	lifetime: 56,
-	orbSize: 8,
-	puddleSize: 12
+	orbSize: 6,
+	puddleSize: 10
 });
 
 const massiveCryoShot = extend(LiquidBulletType, {
@@ -75,8 +75,8 @@ const massiveCryoShot = extend(LiquidBulletType, {
 	damage: 0.5,
 	knockback: 2.8,
 	lifetime: 56,
-	orbSize: 8,
-	puddleSize: 12
+	orbSize: 6,
+	puddleSize: 10
 });
 
 module.exports = {

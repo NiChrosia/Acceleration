@@ -26,6 +26,8 @@ require("liquids/corrofluid");
 
 require("blocks/production/corrofluid-mixer");
 require("blocks/production/aerogel-weaver");
+require("blocks/production/arctifluid-synthesizer");
+require("blocks/production/glaciafluid-extractor");
 
 // Turrets
 
