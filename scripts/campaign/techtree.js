@@ -29,3 +29,5 @@ node(functions.cliquid("arctifluid"), functions.cliquid("glaciafluid"), null, nu
 // Blocks
 node(Blocks.phaseWeaver, functions.cblock("aerogel-weaver"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
 node(Blocks.cryofluidMixer, functions.cblock("corrofluid-mixer"), null, null);
+// Turrets
+node(Blocks.tsunami, functions.cblock("flood"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)))

@@ -7,12 +7,13 @@ const flood = extend(LiquidTurret, "flood", {
 	size: 4,
 	category: Category.turret,
 	requirements: ItemStack.with(
-		Items.surgeAlloy, 350, 
-		functions.citem("aerogel"), 120, 
+		Items.copper, 250,
+		Items.lead, 150, 
 		Items.thorium, 200, 
 		Items.titanium, 150, 
-		Items.lead, 150, 
-		Items.metaglass, 120
+		Items.metaglass, 120,
+		Items.surgeAlloy, 350, 
+		functions.citem("aerogel"), 120, 
 	),
 	buildVisibility: BuildVisibility.shown,
 	reloadTime: 0.1,
