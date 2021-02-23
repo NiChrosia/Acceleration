@@ -29,8 +29,12 @@ require("blocks/production/aerogel-weaver");
 
 // Turrets
 
-require("blocks/turrets/megatsunami")
+require("blocks/turrets/flood")
 
 // Campaign
 
 require("campaign/techtree");
+
+// Events
+
+require("events/status-effect-zone")

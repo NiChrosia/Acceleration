@@ -32,9 +32,18 @@ const glaciafreezeSquare = Effect(40, e => {
 	Fill.poly(e.x, e.y, 4, size, 45);
 });
 
+const glaciafreezeSquareSmall = Effect(5, e => {
+	let size = 12
+	size *= 0.75
+	Draw.color(Color.valueOf("2FADAD"));
+	Draw.z(Layer.shields);
+	Fill.poly(e.x, e.y, 4, size, 45);
+});
+
 module.exports = {
 	arctifreeze: arctifreeze,
 	glaciafreeze: glaciafreeze,
 	corroding: corroding,
-	glaciafreezeSquare: glaciafreezeSquare
+	glaciafreezeSquare: glaciafreezeSquare,
+	glaciafreezeSquareSmall: glaciafreezeSquareSmall
 };

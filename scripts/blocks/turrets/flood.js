@@ -1,7 +1,7 @@
 const functions = require("lib/functions")
 const liquidBullets = require("bullets/liquid-bullets")
 
-const megatsunami = extend(LiquidTurret, "megatsunami", {
+const flood = extend(LiquidTurret, "flood", {
 	solid: true,
 	health: 4850,
 	size: 4,
@@ -19,10 +19,11 @@ const megatsunami = extend(LiquidTurret, "megatsunami", {
 	inaccuracy: 5.5,
 	range: 240,
 	rotateSpeed: 12,
-	extinguish: true
+	extinguish: true,
+	liquidCapacity: 160
 });
 
-megatsunami.ammo(
+flood.ammo(
 	Liquids.slag, liquidBullets.massiveSlagShot,
 	Liquids.oil, liquidBullets.massiveOilShot,
 	functions.cliquid("corrofluid"), liquidBullets.corrofluidShot,

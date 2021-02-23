@@ -18,7 +18,7 @@ const glaciafluidShot = extend(LiquidBulletType, {
 	lifetime: 75,
 	puddleSize: 2048,
 	damage: 125,
-	knockback: 3.8,
+	knockback: 2.3,
 	effect: functions.cstatus("permafrost")
 });
 
