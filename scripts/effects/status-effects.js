@@ -12,10 +12,10 @@ const arctifreezing = extend(StatusEffect, "arctifreezing", {
 });
 
 const glaciafreezing = extend(StatusEffect, "glaciafreezing", {
-	speedMultiplier: 0.25,
-	reloadMultiplier: 0.15,
-	damage: 25,
+	speedMultiplier: 0.55,
+	reloadMultiplier: 0.6,
 	permanent: false,
+	damage: 5,
 	healthMultiplier: 1.3,
 	effectChance: 0.75,
 	effect: effects.glaciafreeze,
