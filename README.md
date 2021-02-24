@@ -5,10 +5,14 @@ A JavaScript mod that exists.
 Extremely unfinished, but I try to make commits whenever its stable, but is not currently meant to be played.
 
 
-# Version numbers
+# Contributors
 
-Example: 1.0
+## Code/General help
 
-The first number is the major content version. 0 means not ready for play, but incrementing it after 1 means the mod received major updates.
+_[QmelZ](https://github.com/QmelZ)_
+_[Sh1penfire](https://github.com/Sh1penfire/)_
+_[MEEPofFaith](https://github.com/MEEPofFaith/)_
 
-The second number is the content counter. 0 means no new blocks/liquids/items have been added, but every increment after 1 means a new object has been added.
+## Spriting
+
+_[Instinct Rage](https://github.com/InstinctRage)_

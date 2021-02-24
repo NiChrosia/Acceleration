@@ -6,10 +6,12 @@ require("lib/functions")
 
 require("items/aerogel");
 require("items/sulfur");
+require("items/diamond");
 
 // Ores
 
 require("blocks/environment/sulfur-ore");
+require("blocks/environment/diamond-ore");
 
 // Effects and Status Effects
 

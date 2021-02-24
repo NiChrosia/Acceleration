@@ -9,7 +9,6 @@ const glaciafluidExtractor = extend(LiquidConverter, "glaciafluid-extractor", {
 	itemCapacity: 0,
 	liquidCapacity: 10,
 	requirements: ItemStack.with(
-		Items.copper, 245,
 		Items.lead, 240,
 		Items.silicon, 210,
 		Items.metaglass, 120,
