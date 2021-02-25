@@ -10,7 +10,9 @@ Extremely unfinished, but I try to make commits whenever its stable, but is not 
 ## Code/General help
 
 _[QmelZ](https://github.com/QmelZ)_
+
 _[Sh1penfire](https://github.com/Sh1penfire/)_
+
 _[MEEPofFaith](https://github.com/MEEPofFaith/)_
 
 ## Spriting
