@@ -34,6 +34,11 @@ require("blocks/production/glaciafluid-extractor");
 // Turrets
 
 require("blocks/turrets/flood")
+require("blocks/turrets/forebode")
+
+// Defense
+
+require("blocks/defense/surge-mine")
 
 // Campaign
 

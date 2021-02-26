@@ -3,11 +3,11 @@ const effects = require("effects/effects");
 const functions = require("lib/functions");
 const liquidBullets = require("bullets/liquid-bullets");
 
-function puddleStatusEffectZone(statusEffect, effect, size, liquid) {
+function puddleStatusEffectZone(statusEffect, effect, alternateEffect, size, liquid) {
 	Groups.puddle.each(puddle => {
 		let tile = puddle.tileOn();
 		if (puddle.liquid == liquid) {
-			effect.at(puddle.x, puddle.y)
+			Core.settings.getBool("animatedshields") ? effect.at(puddle.x, puddle.y) : alternateEffect.at(puddle.x, puddle.y);
 			Units.nearby(puddle.x - (size / 2), puddle.y - (size / 2), size, size, u => {
 				if (!u.isDead) {
 					u.apply(statusEffect, 40);
@@ -32,7 +32,7 @@ function bulletStatusEffectZone(statusEffect, effect, size, matchBullet) {
 };
 
 function glaciafreezeZone() {
-	puddleStatusEffectZone(statusEffects.permafrost, effects.glaciafreezeSquare, 48, functions.cliquid("glaciafluid"));
+	puddleStatusEffectZone(statusEffects.permafrost, effects.glaciafreezeSquare, effects.glaciafreezeLineSquare, 48, functions.cliquid("glaciafluid"));
 	// bulletStatusEffectZone(statusEffects.permafrost, effects.glaciafreezeSquareSmall, 24, liquidBullets.glaciafluidShot);
 };
 

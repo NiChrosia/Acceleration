@@ -1,6 +1,6 @@
 const functions = require("lib/functions")
 
-const glaciafluidExtractor = extend(LiquidConverter, "glaciafluid-extractor", {
+const glaciafluidExtractor = extend(Fracker, "glaciafluid-extractor", {
 	health: 360,
 	size: 4,
 	solid: true,
@@ -8,6 +8,7 @@ const glaciafluidExtractor = extend(LiquidConverter, "glaciafluid-extractor", {
 	hasLiquid: true,
 	itemCapacity: 0,
 	liquidCapacity: 10,
+	result: functions.cliquid("glaciafluid"),
 	requirements: ItemStack.with(
 		Items.lead, 240,
 		Items.silicon, 210,
@@ -19,6 +20,7 @@ const glaciafluidExtractor = extend(LiquidConverter, "glaciafluid-extractor", {
 	category: Category.crafting,
 	outputLiquid: new LiquidStack(functions.cliquid("glaciafluid"), 1),
 	craftTime: 120,
+	attribute: Attribute.water,
 	buildVisibility: BuildVisibility.shown
 });
 

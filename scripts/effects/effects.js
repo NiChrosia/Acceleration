@@ -32,6 +32,14 @@ const glaciafreezeSquare = Effect(40, e => {
 	Fill.poly(e.x, e.y, 4, size, 45);
 });
 
+const glaciafreezeLineSquare = Effect(40, e => {
+	let size = 48
+	size *= 0.75
+	Draw.color(Color.valueOf("2FADAD"));
+	Draw.z(Layer.shields);
+	Lines.poly(e.x, e.y, 4, size, 45);
+});
+
 const glaciafreezeSquareSmall = Effect(5, e => {
 	let size = 12
 	size *= 0.75
@@ -40,10 +48,35 @@ const glaciafreezeSquareSmall = Effect(5, e => {
 	Fill.poly(e.x, e.y, 4, size, 45);
 });
 
+const purpleLaserCharge = new Effect(80, 100, e => {
+	let purple = Color.valueOf("af4dd6")
+	Draw.color(purple);
+	Lines.stroke(e.fin() * 2);
+	Lines.circle(e.x, e.y, 4 + e.fout() * 100);
+
+	Fill.circle(e.x, e.y, e.fin() * 20);
+
+	Angles.randLenVectors(e.id, 20, 40 * e.fout(), (x, y) => {
+		Fill.circle(e.x + x, e.y + y, e.fin() * 5);
+	});
+
+	Fill.circle(e.x, e.y, e.fin() * 10);
+});
+
+const purpleLaserChargeSmall = new Effect(80, 100, e => {
+	let purple = Color.valueOf("af4dd6")
+	Draw.color(purple);
+	Lines.stroke(e.fin() * 2);
+	Lines.circle(e.x, e.y, e.fout() * 50);
+});
+
 module.exports = {
 	arctifreeze: arctifreeze,
 	glaciafreeze: glaciafreeze,
 	corroding: corroding,
 	glaciafreezeSquare: glaciafreezeSquare,
-	glaciafreezeSquareSmall: glaciafreezeSquareSmall
+	glaciafreezeLineSquare: glaciafreezeLineSquare,
+	glaciafreezeSquareSmall: glaciafreezeSquareSmall,
+	purpleLaserCharge: purpleLaserCharge,
+	purpleLaserChargeSmall: purpleLaserChargeSmall
 };
