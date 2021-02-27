@@ -36,7 +36,7 @@ const glaciafreezeLineSquare = Effect(40, e => {
 	let size = 48
 	size *= 0.75
 	Draw.color(Color.valueOf("2FADAD"));
-	Draw.z(Layer.shields);
+	Draw.z(Layer.shields + 1);
 	Lines.poly(e.x, e.y, 4, size, 45);
 });
 
@@ -90,7 +90,7 @@ const liquefyingLineSquare = Effect(40, e => {
 	let size = 48
 	size *= 0.75
 	Draw.color(functions.cliquid("quark-plasma").color);
-	Draw.z(Layer.shields);
+	Draw.z(Layer.shields + 1);
 	Lines.poly(e.x, e.y, 4, size, 45);
 });
 

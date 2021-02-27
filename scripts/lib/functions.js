@@ -1,3 +1,8 @@
+Events.on(ClientLoadEvent, () => {
+	const addSetting = key => Vars.ui.settings.graphics.checkPref(key, Core.settings.getBool(key));
+	addSetting("puddle-status-zone");
+});
+
 const ModName = "acceleration-";
 
 function getTextureName(blockName, name) {
@@ -19,7 +24,7 @@ const citem = name => Vars.content.getByName(ContentType.item, ModName + name);
 const percent = (partial, total) => partial / total;
 const hexColor = hexValue => Color.valueOf(hexValue);
 const avg = (x, y) => (x + y) / 2;
-const dst = (ax, ay, bx, by, distance) => ((ax * ay) + (bx * by)) < Mathf.pow(distance, 2);
+const dst = (ax, ay, bx, by, distance) => ((ax * ay) + (bx * by)) < Mathf.pow(distance, 2)
 
 module.exports = {
 	getTextureName: getTextureName,

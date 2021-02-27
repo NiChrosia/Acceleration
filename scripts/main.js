@@ -40,7 +40,7 @@ require("blocks/power/fusion-reactor");
 // Turrets
 
 require("blocks/turrets/flood")
-require("blocks/turrets/forebode")
+require("blocks/turrets/harbinger")
 
 // Defense
 

@@ -7,7 +7,7 @@ function puddleStatusEffectZone(statusEffect, effect, alternateEffect, size, liq
 	Groups.puddle.each(puddle => {
 		let tile = puddle.tileOn();
 		if (puddle.liquid == liquid) {
-			Core.settings.getBool("animatedshields") ? effect.at(puddle.x, puddle.y) : alternateEffect.at(puddle.x, puddle.y);
+			Core.settings.getBool("puddle-status-zone") ? effect.at(puddle.x, puddle.y) : alternateEffect.at(puddle.x, puddle.y);
 			Units.nearby(puddle.x - (size / 2), puddle.y - (size / 2), size, size, u => {
 				if (!u.isDead) {
 					u.apply(statusEffect, 40);
