@@ -2,7 +2,7 @@ const functions = require("lib/functions");
 const bullets = require("bullets/bullets");
 const effects = require("effects/effects");
 
-const forebode = extend(PowerTurret, "forebode", {
+const harbinger = extend(PowerTurret, "harbinger", {
 	size: 4,
 	health: 2650,
 	category: Category.turret,
@@ -11,6 +11,7 @@ const forebode = extend(PowerTurret, "forebode", {
 	inaccuracy: 1.2,
 	range: 450,
 	rotateSpeed: 1.8,
+	coolantMultiplier: 0.5,
 	shootSound: Sounds.laserblast,
 	chargeEffect: effects.purpleLaserChargeSmall,
 	chargeTime: 80,
@@ -18,7 +19,6 @@ const forebode = extend(PowerTurret, "forebode", {
 	liquidCapacity: 50,
 	shootType: bullets.longLaser,
 	powerUse: 30,
-	coolantMultiplier: 0,
 	requirements: ItemStack.with(
 		Items.copper, 1200,
 		Items.metaglass, 750,
@@ -29,4 +29,4 @@ const forebode = extend(PowerTurret, "forebode", {
 	)
 });
 
-forebode.consumes.liquid(functions.cliquid("glaciafluid"), 0.5)
+harbinger.consumes.add(ConsumeLiquidFilter(liquid => liquid.temperature <= 0.5 && liquid.flammability < 0.1, 0.5));
