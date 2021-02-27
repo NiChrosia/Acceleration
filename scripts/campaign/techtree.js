@@ -33,4 +33,4 @@ node(Blocks.cryofluidMixer, functions.cblock("arctifluid-synthesizer"), null, Se
 node(functions.cblock("arctifluid-synthesizer"), functions.cblock("glaciafluid-extractor"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.impact0078)));
 // Turrets
 node(Blocks.tsunami, functions.cblock("flood"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.nuclearComplex)));
-node(Blocks.foreshadow, functions.cblock("forebode"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.impact0078)));
+node(Blocks.foreshadow, functions.cblock("harbinger"), null, Seq.with(new Objectives.SectorComplete(SectorPresets.impact0078)));
