@@ -94,6 +94,23 @@ const liquefyingLineSquare = Effect(40, e => {
 	Lines.poly(e.x, e.y, 4, size, 45);
 });
 
+// Explosion radius for the fusion reactor.
+const explosionRadius = 48;
+
+const fusionShockwave = Effect(13, 300, e => {
+    Draw.color(Color.valueOf("55a4e0"), Color.lightGray, e.fin());
+    Lines.stroke(e.fout() * 4 + 0.2);
+    Lines.circle(e.x, e.y, e.fin() * (explosionRadius * 9));
+});
+
+const fusionCloud = Effect(140, 400, e => {
+    Angles.randLenVectors(e.id, 20, e.finpow() * (explosionRadius * 7), (x, y) => {
+        let size = e.fout() * 15;
+        Draw.color(Color.valueOf("55a4e0"), Color.lightGray, e.fin());
+        Fill.circle(e.x + x, e.y + y, size / 2);
+    });
+});
+
 module.exports = {
 	arctifreeze: arctifreeze,
 	glaciafreeze: glaciafreeze,
@@ -105,5 +122,7 @@ module.exports = {
 	purpleLaserChargeSmall: purpleLaserChargeSmall,
 	liquefying: liquefying,
 	liquefyingSquare: liquefyingSquare,
-	liquefyingLineSquare: liquefyingLineSquare
+	liquefyingLineSquare: liquefyingLineSquare,
+	fusionCloud: fusionCloud,
+	fusionShockwave: fusionShockwave
 };
