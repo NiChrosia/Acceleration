@@ -1,8 +1,8 @@
-// const functions = require("lib/functions");
+const functions = require("lib/functions");
 const bullets = require("bullets/bullets");
 const effects = require("effects/effects");
 
-const forebode = extend(ItemTurret, "forebode", {
+const forebode = extend(PowerTurret, "forebode", {
 	size: 4,
 	health: 2650,
 	category: Category.turret,
@@ -15,9 +15,18 @@ const forebode = extend(ItemTurret, "forebode", {
 	chargeEffect: effects.purpleLaserChargeSmall,
 	chargeTime: 80,
 	shootShake: 5,
-	coolantMultiplier: 0.35
+	liquidCapacity: 50,
+	shootType: bullets.longLaser,
+	powerUse: 30,
+	coolantMultiplier: 0,
+	requirements: ItemStack.with(
+		Items.copper, 1200,
+		Items.metaglass, 750,
+		Items.silicon, 750,
+		Items.plastanium, 300,
+		Items.surgeAlloy, 450,
+		functions.citem("aerogel"), 300
+	)
 });
 
-forebode.ammo(
-	Items.surgeAlloy, bullets.longLaser
-);
+forebode.consumes.liquid(functions.cliquid("glaciafluid"), 0.5)

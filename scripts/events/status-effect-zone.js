@@ -33,6 +33,7 @@ function bulletStatusEffectZone(statusEffect, effect, size, matchBullet) {
 
 function glaciafreezeZone() {
 	puddleStatusEffectZone(statusEffects.permafrost, effects.glaciafreezeSquare, effects.glaciafreezeLineSquare, 48, functions.cliquid("glaciafluid"));
+	puddleStatusEffectZone(statusEffects.liquefying, effects.liquefyingSquare, effects.liquefyingLineSquare, 48, functions.cliquid("quark-plasma"));
 	// bulletStatusEffectZone(statusEffects.permafrost, effects.glaciafreezeSquareSmall, 24, liquidBullets.glaciafluidShot);
 };
 

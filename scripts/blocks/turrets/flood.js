@@ -26,6 +26,7 @@ const flood = extend(LiquidTurret, "flood", {
 
 flood.ammo(
 	Liquids.slag, liquidBullets.massiveSlagShot,
+	functions.cliquid("quark-plasma"), liquidBullets.quarkPlasmaShot,
 	Liquids.oil, liquidBullets.massiveOilShot,
 	functions.cliquid("corrofluid"), liquidBullets.corrofluidShot,
 	Liquids.water, liquidBullets.massiveWaterShot,

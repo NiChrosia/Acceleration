@@ -38,9 +38,17 @@ const corroded = extend(StatusEffect, "corroded", {
 	color: Color.valueOf("215B60")
 });
 
+const liquefying = extend(StatusEffect, "liquefying", {
+	damage: 10,
+	effectChance: 1,
+	color: Color.valueOf("E0E0E0"),
+	effect: effects.liquefying
+});
+
 module.exports = {
 	arctifreezing: arctifreezing,
 	glaciafreezing: glaciafreezing,
 	permafrost: permafrost,
-	corroded: corroded
+	corroded: corroded,
+	liquefying: liquefying
 };

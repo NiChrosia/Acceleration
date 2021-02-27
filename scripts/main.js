@@ -7,6 +7,7 @@ require("lib/functions")
 require("items/aerogel");
 require("items/sulfur");
 require("items/diamond");
+require("items/fusion-compound");
 
 // Ores
 
@@ -23,6 +24,7 @@ require("effects/status-effects")
 require("liquids/arctifluid");
 require("liquids/glaciafluid");
 require("liquids/corrofluid");
+require("liquids/quark-plasma");
 
 // Production Blocks
 
@@ -30,6 +32,10 @@ require("blocks/production/corrofluid-mixer");
 require("blocks/production/aerogel-weaver");
 require("blocks/production/arctifluid-synthesizer");
 require("blocks/production/glaciafluid-extractor");
+
+// Power Blocks
+
+require("blocks/power/fusion-reactor");
 
 // Turrets
 

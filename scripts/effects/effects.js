@@ -70,6 +70,30 @@ const purpleLaserChargeSmall = new Effect(80, 100, e => {
 	Lines.circle(e.x, e.y, e.fout() * 50);
 });
 
+const liquefying = Effect(40, e => {
+	Draw.color(functions.cliquid("quark-plasma").color, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id, 0.12));
+
+	Angles.randLenVectors(e.id, 2, 1 + e.fin() * 3, (x, y) => {
+		Fill.circle(e.x + x, e.y + y, .2 + e.fout() * 1.2);
+	});
+});
+
+const liquefyingSquare = Effect(40, e => {
+	let size = 48
+	size *= 0.75
+	Draw.color(functions.cliquid("quark-plasma").color);
+	Draw.z(Layer.shields);
+	Fill.poly(e.x, e.y, 4, size, 45);
+});
+
+const liquefyingLineSquare = Effect(40, e => {
+	let size = 48
+	size *= 0.75
+	Draw.color(functions.cliquid("quark-plasma").color);
+	Draw.z(Layer.shields);
+	Lines.poly(e.x, e.y, 4, size, 45);
+});
+
 module.exports = {
 	arctifreeze: arctifreeze,
 	glaciafreeze: glaciafreeze,
@@ -78,5 +102,8 @@ module.exports = {
 	glaciafreezeLineSquare: glaciafreezeLineSquare,
 	glaciafreezeSquareSmall: glaciafreezeSquareSmall,
 	purpleLaserCharge: purpleLaserCharge,
-	purpleLaserChargeSmall: purpleLaserChargeSmall
+	purpleLaserChargeSmall: purpleLaserChargeSmall,
+	liquefying: liquefying,
+	liquefyingSquare: liquefyingSquare,
+	liquefyingLineSquare: liquefyingLineSquare
 };

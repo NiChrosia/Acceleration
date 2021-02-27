@@ -35,6 +35,17 @@ const corrofluidShot = extend(LiquidBulletType, {
 	puddleSize: 10
 });
 
+const quarkPlasmaShot = extend(LiquidBulletType, {
+	liquid: functions.cliquid("quark-plasma"),
+	speed: 4.5,
+	drag: 0.0001,
+	damage: 120,
+	knockback: 2.2,
+	lifetime: 64,
+	orbSize: 7,
+	effect: functions.cstatus("liquefying")
+});
+
 const massiveWaterShot = extend(LiquidBulletType, {
 	liquid: Liquids.water,
 	speed: 4.5,
@@ -86,5 +97,6 @@ module.exports = {
 	massiveWaterShot: massiveWaterShot,
 	massiveSlagShot: massiveSlagShot,
 	massiveOilShot: massiveOilShot,
-	massiveCryoShot: massiveCryoShot
+	massiveCryoShot: massiveCryoShot,
+	quarkPlasmaShot: quarkPlasmaShot
 };
