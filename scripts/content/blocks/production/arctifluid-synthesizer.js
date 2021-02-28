@@ -1,4 +1,9 @@
-const functions = require("lib/functions")
+// Imports
+
+const mitems = require("content/items");
+const mliquids = require("content/liquids");
+
+// Assignment
 
 const arctifluidSynthesizer = extend(LiquidConverter, "arctifluid-synthesizer", {
 	health: 160,
@@ -15,7 +20,7 @@ const arctifluidSynthesizer = extend(LiquidConverter, "arctifluid-synthesizer", 
 		Items.titanium, 90
 	),
 	category: Category.crafting,
-	outputLiquid: new LiquidStack(functions.cliquid("arctifluid"), 1),
+	outputLiquid: new LiquidStack(mliquids.arctifluid, 1),
 	craftTime: 120,
 	buildVisibility: BuildVisibility.shown
 });

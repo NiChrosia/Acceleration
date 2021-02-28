@@ -1,6 +1,10 @@
+// Constants
+
 const purple = Color.valueOf("af4dd6");
 
-const longLaser = extend(LaserBulletType, {
+// Laser Bullets
+
+const longPurpleLaser = extend(LaserBulletType, {
 	length: 460,
     damage: 1850,
     width: 45,
@@ -15,6 +19,8 @@ const longLaser = extend(LaserBulletType, {
 	colors: [purple, purple, Color.white]
 });
 
+// Exports
+
 module.exports = {
-	longLaser: longLaser
+	longPurpleLaser: longPurpleLaser
 };

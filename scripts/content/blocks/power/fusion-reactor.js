@@ -1,6 +1,14 @@
-const functions = require("lib/functions");
+// Imports
+
+const mitems = require("content/items");
+const mliquids = require("content/liquids");
+const effects = require("content/effects/effects");
+
+// Constants
+
 const blockName = "fusion-reactor-";
-const effects = require("effects/effects");
+
+// Assignment
 
 const fusionReactor = extend(ImpactReactor, "fusion-reactor", {
 	size: 5,
@@ -13,8 +21,8 @@ const fusionReactor = extend(ImpactReactor, "fusion-reactor", {
 	buildVisibility: BuildVisibility.shown
 });
 
-fusionReactor.consumes.items(ItemStack.with(functions.citem("fusion-compound"), 1))
-fusionReactor.consumes.liquid(functions.cliquid("quark-plasma"), 0.25);
+fusionReactor.consumes.items(ItemStack.with(mitems.fusionCompound, 1))
+fusionReactor.consumes.liquid(mliquids.quarkPlasma, 0.25);
 fusionReactor.consumes.power(70);
 
 fusionReactor.buildType = () => extend(ImpactReactor.ImpactReactorBuild, fusionReactor, {
@@ -26,9 +34,9 @@ fusionReactor.buildType = () => extend(ImpactReactor.ImpactReactorBuild, fusionR
 		const plasmaRegionCount = 4;
 		let plasmaRegions = [];
 		for (let count = 0; count < plasmaRegionCount; count++) {
-			plasmaRegions.push(functions.getRegion(blockName, "plasma-" + String(count)));
+			plasmaRegions.push(util.getRegion(blockName, "plasma-" + String(count)));
 		}
-        Draw.rect(functions.getTextureName(blockName, "bottom"), this.x, this.y);
+        Draw.rect(util.getTextureName(blockName, "bottom"), this.x, this.y);
         for (let i = 0; i < plasmaRegionCount; i++) {
             let r = this.block.size * Vars.tilesize - 3 + Mathf.absin(Time.time, 2 + i * 1, 5 - i * 0.5);
 
@@ -45,9 +53,9 @@ fusionReactor.buildType = () => extend(ImpactReactor.ImpactReactorBuild, fusionR
 		
 		// Liquid region code
 		
-        Draw.color(functions.cliquid("quark-plasma").color);
-		Draw.alpha(functions.percent(this.liquids.get(functions.cliquid("quark-plasma")), this.block.liquidCapacity));
-		Draw.rect(functions.getTextureName(blockName, "liquid"), this.x, this.y);
+        Draw.color(mliquids.quarkPlasma.color);
+		Draw.alpha(util.percent(this.liquids.get(mliquids.quarkPlasma), this.block.liquidCapacity));
+		Draw.rect(util.getTextureName(blockName, "liquid"), this.x, this.y);
 		
 		Draw.reset();
     },

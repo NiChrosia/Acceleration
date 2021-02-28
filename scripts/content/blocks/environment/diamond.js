@@ -1,7 +1,11 @@
-const functions = require("lib/functions");
+// Imports
+
+const mitems = require("content/items");
+
+// Assignment
 
 const diamondOre = extend(Floor, "diamond-ore", {
 	variants: 1,
-	itemDrop: functions.citem("diamond"),
+	itemDrop: mitems.diamond,
 	buildVisibility: BuildVisibility.editorOnly
 });

@@ -1,5 +1,10 @@
-const functions = require("lib/functions")
-const liquidBullets = require("bullets/liquid-bullets")
+// Imports
+
+const liquidBullets = require("content/bullets/liquid-bullets");
+const mitems = require("content/items");
+const mliquids = require("content/liquids");
+
+// Assignment
 
 const flood = extend(LiquidTurret, "flood", {
 	solid: true,
@@ -13,7 +18,7 @@ const flood = extend(LiquidTurret, "flood", {
 		Items.titanium, 150, 
 		Items.metaglass, 120,
 		Items.surgeAlloy, 350, 
-		functions.citem("aerogel"), 120, 
+		mitems.aerogel, 120, 
 	),
 	buildVisibility: BuildVisibility.shown,
 	reloadTime: 0.1,
@@ -24,13 +29,15 @@ const flood = extend(LiquidTurret, "flood", {
 	liquidCapacity: 160
 });
 
+// Ammo
+
 flood.ammo(
 	Liquids.slag, liquidBullets.massiveSlagShot,
-	functions.cliquid("quark-plasma"), liquidBullets.quarkPlasmaShot,
+	mliquids.quarkPlasma, liquidBullets.quarkPlasmaShot,
 	Liquids.oil, liquidBullets.massiveOilShot,
-	functions.cliquid("corrofluid"), liquidBullets.corrofluidShot,
+	mliquids.corrofluid, liquidBullets.corrofluidShot,
 	Liquids.water, liquidBullets.massiveWaterShot,
 	Liquids.cryofluid, liquidBullets.massiveCryoShot,
-	functions.cliquid("arctifluid"), liquidBullets.arctifluidShot,
-	functions.cliquid("glaciafluid"), liquidBullets.glaciafluidShot
+	mliquids.arctifluid, liquidBullets.arctifluidShot,
+	mliquids.glaciafluid, liquidBullets.glaciafluidShot
 );

@@ -1,7 +1,16 @@
-const functions = require("lib/functions")
+// Imports
+
+const mliquids = require("content/liquids")
+const msfx = require("content/effects/status-effects")
+
+// Constants
+
+const dark = Color.valueOf("00000000")
+
+// Liquid Bullets
 
 const arctifluidShot = extend(LiquidBulletType, {
-	liquid: functions.cliquid("arctifluid"),
+	liquid: mliquids.arctifluid,
 	speed: 4,
 	drag: 0.0015,
 	lifetime: 54,
@@ -9,11 +18,11 @@ const arctifluidShot = extend(LiquidBulletType, {
 	damage: 45,
 	knockback: 3.0,
 	orbSize: 7,
-	effect: functions.cstatus("arctifreezing")
+	effect: msfx.arctifreezing
 });
 
 const glaciafluidShot = extend(LiquidBulletType, {
-	liquid: functions.cliquid("glaciafluid"),
+	liquid: mliquids.glaciafluid,
 	speed: 4.6,
 	drag: 0.0025,
 	lifetime: 75,
@@ -21,11 +30,11 @@ const glaciafluidShot = extend(LiquidBulletType, {
 	damage: 85,
 	knockback: 2.3,
 	orbSize: 7,
-	effect: functions.cstatus("permafrost")
+	effect: msfx.permafrost
 });
 
 const corrofluidShot = extend(LiquidBulletType, {
-	liquid: functions.cliquid("corrofluid"),
+	liquid: mliquids.corrofluid,
 	speed: 4.5,
 	drag: 0.0001,
 	damage: 16.2,
@@ -36,14 +45,14 @@ const corrofluidShot = extend(LiquidBulletType, {
 });
 
 const quarkPlasmaShot = extend(LiquidBulletType, {
-	liquid: functions.cliquid("quark-plasma"),
+	liquid: mliquids.quarkPlasma,
 	speed: 4.5,
 	drag: 0.0001,
 	damage: 120,
 	knockback: 2.2,
 	lifetime: 64,
 	orbSize: 7,
-	effect: functions.cstatus("liquefying")
+	effect: msfx.liquefying
 });
 
 const massiveWaterShot = extend(LiquidBulletType, {
@@ -54,7 +63,8 @@ const massiveWaterShot = extend(LiquidBulletType, {
 	knockback: 2.8,
 	lifetime: 56,
 	orbSize: 6,
-	puddleSize: 10
+	puddleSize: 10,
+	lightColor: dark
 });
 
 const massiveSlagShot = extend(LiquidBulletType, {
@@ -76,7 +86,8 @@ const massiveOilShot = extend(LiquidBulletType, {
 	knockback: 2.8,
 	lifetime: 56,
 	orbSize: 6,
-	puddleSize: 10
+	puddleSize: 10,
+	lightColor: dark
 });
 
 const massiveCryoShot = extend(LiquidBulletType, {
@@ -89,6 +100,8 @@ const massiveCryoShot = extend(LiquidBulletType, {
 	orbSize: 6,
 	puddleSize: 10
 });
+
+// Exports
 
 module.exports = {
 	arctifluidShot: arctifluidShot,

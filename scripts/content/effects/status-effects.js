@@ -1,4 +1,8 @@
-const effects = require("effects/effects")
+// Imports
+
+const meffects = require("content/effects/effects")
+
+// Status Effects
 
 const arctifreezing = extend(StatusEffect, "arctifreezing", {
 	speedMultiplier: 0.75, 
@@ -7,7 +11,7 @@ const arctifreezing = extend(StatusEffect, "arctifreezing", {
 	permanent: true,
 	healthMultiplier: 1.2,
 	effectChance: 0.85,
-	effect: effects.arctifreeze,
+	effect: meffects.arctifreeze,
 	color: Color.valueOf("42E3E3")
 });
 
@@ -18,7 +22,7 @@ const glaciafreezing = extend(StatusEffect, "glaciafreezing", {
 	damage: 5,
 	healthMultiplier: 1.3,
 	effectChance: 0.75,
-	effect: effects.glaciafreeze,
+	effect: meffects.glaciafreeze,
 	color: Color.valueOf("215B60")
 });
 
@@ -34,7 +38,7 @@ const permafrost = extend(StatusEffect, "permafrost", {
 
 const corroded = extend(StatusEffect, "corroded", {
 	damage: 0.5,
-	effect: effects.corroding,
+	effect: meffects.corroding,
 	color: Color.valueOf("215B60")
 });
 
@@ -42,7 +46,7 @@ const liquefying = extend(StatusEffect, "liquefying", {
 	damage: 10,
 	effectChance: 1,
 	color: Color.valueOf("E0E0E0"),
-	effect: effects.liquefying
+	effect: meffects.liquefying
 });
 
 module.exports = {

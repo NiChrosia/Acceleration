@@ -1,5 +1,5 @@
 Events.on(ClientLoadEvent, () => {
-	const addSetting = key => Vars.ui.settings.graphics.checkPref(key, Core.settings.getBool(key));
+	const addSetting = key => Vars.ui.settings.graphics.checkPref(key, true);
 	addSetting("puddle-status-zone");
 });
 
