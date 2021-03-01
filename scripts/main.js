@@ -17,3 +17,9 @@ require("content/events")
 // Campaign
 
 require("campaign/techtree")
+
+//   Planets
+
+require("campaign/planet-gen");
+require("campaign/planets");
+require("campaign/sectors");

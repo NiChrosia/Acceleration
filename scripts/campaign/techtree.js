@@ -4,6 +4,8 @@
 const mitems = require("content/items");
 const mliquids = require("content/liquids");
 const mblocks = require("content/blocks");
+const msectors = require("campaign/sectors");
+const objectives = require("campaign/objectives");
 
 /**
  * Node for the research tech tree.
@@ -20,7 +22,7 @@ const node = (parent, contentType, requirements, objectives) => {
     
     if(objectives != null) tnode.objectives.addAll(objectives);
   }else{
-    print("techtree.js: " + parent + " or " + contentType + " is null.");
+    print("[techtree.js] " + parent + " or " + contentType + " is null.");
   }
 };
 
@@ -70,3 +72,7 @@ node(mblocks.arctifluidSynthesizer, mblocks.glaciafluidExtractor, null, null);
 
 node(Blocks.tsunami, mblocks.flood, null, null);
 node(Blocks.foreshadow, mblocks.harbinger, null, null);
+
+// Sectors
+
+node(SectorPresets.planetaryTerminal, msectors.glacialWasteland, null, Seq.with(objectives.objectivePlanetaryTerminalActivated))
