@@ -3,6 +3,7 @@
 const mitems = require("content/items");
 const mliquids = require("content/liquids");
 const effects = require("content/effects/effects");
+const util = require("lib/util");
 
 // Constants
 
