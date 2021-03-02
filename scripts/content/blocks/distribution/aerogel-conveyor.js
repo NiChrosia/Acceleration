@@ -6,7 +6,6 @@ const mitems = require("content/items")
 
 const aerogelConveyor = extend(StackConveyor, "aerogel-conveyor", {
 	speed: 0.1,
-	albedo: 0.5,
 	targetable: false,
 	health: 95,
 	size: 1,
