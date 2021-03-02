@@ -26,21 +26,33 @@ const node = (parent, contentType, requirements, objectives) => {
   }
 };
 
+const nodeProduce = (parent, contentType, requirements, objectives) => {
+  if(parent != null && contentType != null){
+    const tnode = new TechTree.TechNode(TechTree.get(parent), contentType, requirements != null ? requirements : contentType.researchRequirements());
+    let used = new ObjectSet();
+    
+	tnode.objectives.add(Objectives.Produce(contentType));
+    if(objectives != null) tnode.objectives.addAll(objectives);
+  }else{
+    print("[techtree.js] " + parent + " or " + contentType + " is null.");
+  }
+};
+
 // Research Nodes
 
 // Items
 
-node(Items.sand, mitems.sulfur, null, null);
-node(Items.phaseFabric, mitems.aerogel, null, null, null);
-node(Items.thorium, mitems.diamond, null, null);
-node(Items.blastCompound, mitems.fusionCompound, null, null);
+nodeProduce(Items.sand, mitems.sulfur, null, null);
+nodeProduce(Items.phaseFabric, mitems.aerogel, null, null, null);
+nodeProduce(Items.thorium, mitems.diamond, null, null);
+nodeProduce(Items.blastCompound, mitems.fusionCompound, null, null);
 
 // Liquids
 
-node(Liquids.oil, mliquids.corrofluid, null, null);
-node(Liquids.cryofluid, mliquids.arctifluid, null, null);
-node(mliquids.arctifluid, mliquids.glaciafluid, null, null);
-node(Liquids.slag, mliquids.quarkPlasma, null, null);
+nodeProduce(Liquids.oil, mliquids.corrofluid, null, null);
+nodeProduce(Liquids.cryofluid, mliquids.arctifluid, null, null);
+nodeProduce(mliquids.arctifluid, mliquids.glaciafluid, null, null);
+nodeProduce(Liquids.slag, mliquids.quarkPlasma, null, null);
 
 // Blocks
 

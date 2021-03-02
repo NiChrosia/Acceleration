@@ -15,14 +15,13 @@ const harbinger = extend(PowerTurret, "harbinger", {
 	inaccuracy: 1.2,
 	range: 450,
 	rotateSpeed: 1.8,
-	coolantMultiplier: 0.5,
 	shootSound: Sounds.laserblast,
 	chargeEffect: effects.purpleLaserChargeSmall,
 	chargeTime: 80,
 	shootShake: 5,
 	liquidCapacity: 50,
 	shootType: laserBullets.longPurpleLaser,
-	powerUse: 30,
+	powerUse: 90,
 	requirements: ItemStack.with(
 		Items.copper, 1200,
 		Items.metaglass, 750,
@@ -33,5 +32,3 @@ const harbinger = extend(PowerTurret, "harbinger", {
 		mitems.aerogel, 300
 	)
 });
-
-harbinger.consumes.add(ConsumeLiquidFilter(liquid => liquid.temperature <= 0.5 && liquid.flammability < 0.1, 0.5));
