@@ -185,15 +185,15 @@ const planetGenerator = extend(PlanetGenerator, {
         let scl = 1;
         let addscl = 1.3;
 
-        if(this.noise.octaveNoise3D(2, 0.5, scl, this.sector.tile.v.x, this.sector.tile.v.y, this.sector.tile.v.z) * nmag + poles > 0.15 * addscl){
+        if(this.noise.octaveNoise3D(2, 0.5, scl, this.sector.tile.v.x, this.sector.tile.v.y, this.sector.tile.v.z) * nmag + poles > 0.25 * addscl){
             ores.add(Blocks.oreCoal);
         };
 
-        if(this.noise.octaveNoise3D(2, 0.5, scl, this.sector.tile.v.x + 1, this.sector.tile.v.y, this.sector.tile.v.z) * nmag + poles > 0.3 * addscl){
+        if(this.noise.octaveNoise3D(2, 0.5, scl, this.sector.tile.v.x + 1, this.sector.tile.v.y, this.sector.tile.v.z) * nmag + poles > 0.5 * addscl){
             ores.add(Blocks.oreTitanium);
         };
 
-        if(this.noise.octaveNoise3D(2, 0.5, scl, this.sector.tile.v.x + 2, this.sector.tile.v.y, this.sector.tile.v.z) * nmag + poles > 0.5 * addscl){
+        if(this.noise.octaveNoise3D(2, 0.5, scl, this.sector.tile.v.x + 2, this.sector.tile.v.y, this.sector.tile.v.z) * nmag + poles > 0.7 * addscl){
             ores.add(Blocks.oreThorium);
         };
 
@@ -231,20 +231,9 @@ const planetGenerator = extend(PlanetGenerator, {
         this.tech();
         this.pass((x, y) => {
             //random boulder
-            if(this.floor == Blocks.stone){
-                if(Math.abs(0.5 - this.noiseOct(x - 90, y, 4, 0.8, 65)) > 0.02){
-                    this.floor = Blocks.boulder;
-                };
-            };
-
-            if(this.floor != null && this.floor != Blocks.basalt && this.floor != Blocks.mud && this.floor.asFloor().hasSurface()){
-                let noise = this.noiseOct(x + 782, y, 5, 0.75, 260);
-                if(noise > 0.72){
-                    this.floor = noise > 0.78 ? Blocks.taintedWater : (this.floor == Blocks.sand ? Blocks.sandWater : Blocks.darksandTaintedWater);
-                    this.ore = Blocks.air;
-                }else if(noise > 0.67){
-                    this.floor = (this.floor == Blocks.sand ? this.floor : Blocks.darksand);
-                    this.ore = Blocks.air;
+            if(this.floor == Blocks.snow){
+                if(Math.random() > 0.99 && this.block == Blocks.air){
+                    this.block = Blocks.snowBoulder;
                 };
             };
         });
@@ -287,7 +276,7 @@ const planetGenerator = extend(PlanetGenerator, {
     } 
 });
 let cryogenia = planetGenerator
-cryogenia.arr = [   
+/*cryogenia.arr = [   
     [Blocks.deepwater, Blocks.water, Blocks.water, Blocks.darksand, Blocks.craters, Blocks.darksand, Blocks.darksand, Blocks.basalt, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.ice],
     [Blocks.deepwater, Blocks.water, Blocks.water, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.metalFloorDamaged, Blocks.dacite, Blocks.snow, Blocks.snow, Blocks.ice, Blocks.snow, Blocks.ice],
     [Blocks.deepwater, Blocks.water, Blocks.darksand, Blocks.darksand, Blocks.metalFloorDamaged, Blocks.metalFloorDamaged, Blocks.snow, Blocks.basalt, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice],
@@ -303,6 +292,18 @@ cryogenia.arr = [
     [Blocks.water, Blocks.water, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.water, Blocks.ice, Blocks.ice, Blocks.ice],
     [Blocks.water, Blocks.water, Blocks.darksand, Blocks.darksand, Blocks.iceSnow, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.water, Blocks.ice, Blocks.ice, Blocks.ice],
     [Blocks.water, Blocks.water, Blocks.darksand, Blocks.iceSnow, Blocks.iceSnow, Blocks.iceSnow, Blocks.darksand, Blocks.ice, Blocks.ice, Blocks.ice, Blocks.snow, Blocks.dacite, Blocks.ice]
+];*/
+cryogenia.arr = [   
+    [Blocks.deepwater, Blocks.water, Blocks.water, Blocks.snow, Blocks.ice, Blocks.darksand, Blocks.darksand, Blocks.basalt, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.ice],
+    [Blocks.deepwater, Blocks.water, Blocks.water, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.ice, Blocks.snow, Blocks.ice],
+    [Blocks.deepwater, Blocks.water, Blocks.darksand, Blocks.darksand, Blocks.snow, Blocks.snow, Blocks.darksand, Blocks.basalt, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.darksand, Blocks.ice],
+    [Blocks.deepwater, Blocks.water, Blocks.snow, Blocks.snow, Blocks.basalt, Blocks.snow, Blocks.basalt, Blocks.hotrock, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.ice],
+    [Blocks.water, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.tar, Blocks.snow, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.ice],
+	[Blocks.deepwater, Blocks.water, Blocks.water, Blocks.snow, Blocks.ice, Blocks.darksand, Blocks.darksand, Blocks.basalt, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.ice],
+    [Blocks.deepwater, Blocks.water, Blocks.water, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.ice, Blocks.snow, Blocks.ice],
+    [Blocks.deepwater, Blocks.water, Blocks.darksand, Blocks.darksand, Blocks.snow, Blocks.snow, Blocks.darksand, Blocks.basalt, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.darksand, Blocks.ice],
+    [Blocks.deepwater, Blocks.water, Blocks.snow, Blocks.snow, Blocks.basalt, Blocks.snow, Blocks.basalt, Blocks.hotrock, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.ice],
+    [Blocks.water, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.tar, Blocks.snow, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.ice]
 ];
 cryogenia.rid = new Packages.arc.util.noise.RidgedPerlin(1, 2);
 cryogenia.basegen = new BaseGenerator();
