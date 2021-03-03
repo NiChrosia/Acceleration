@@ -10,10 +10,10 @@ require("content/blocks/distribution/colossal-driver");
 require("content/blocks/effect/surge-mine");
 require("content/blocks/effect/core-atom");
 
-require("content/blocks/environment/diamond");
-require("content/blocks/environment/diamond-wall");
-require("content/blocks/environment/sulfur");
-require("content/blocks/environment/cold-water");
+require("content/blocks/environment/floors/diamond");
+require("content/blocks/environment/walls/diamond-wall");
+require("content/blocks/environment/floors/sulfur");
+require("content/blocks/environment/liquids/cold-water");
 
 require("content/blocks/power/fusion-reactor");
 

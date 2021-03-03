@@ -19,7 +19,16 @@ const fusionReactor = extend(ImpactReactor, "fusion-reactor", {
 	explosionRadius: 48,
 	explosionDamage: 6400,
 	category: Category.power,
-	buildVisibility: BuildVisibility.shown
+	buildVisibility: BuildVisibility.shown,
+	requirements: ItemStack.with(
+		Items.lead, 750,
+		Items.metaglass, 400,
+		Items.graphite, 650,
+		Items.silicon, 700,
+		Items.surgeAlloy, 350,
+		Items.phaseFabric, 350,
+		mitems.aerogel, 200
+	)
 });
 
 fusionReactor.consumes.items(ItemStack.with(mitems.fusionCompound, 1))

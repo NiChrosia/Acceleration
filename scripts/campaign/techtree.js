@@ -5,7 +5,6 @@ const mitems = require("content/items");
 const mliquids = require("content/liquids");
 const mblocks = require("content/blocks");
 const msectors = require("campaign/sectors");
-const objectives = require("campaign/objectives");
 
 /**
  * Node for the research tech tree.
@@ -87,4 +86,4 @@ node(Blocks.foreshadow, mblocks.harbinger, null, null);
 
 // Sectors
 
-node(SectorPresets.planetaryTerminal, msectors.glacialWasteland, null, Seq.with(objectives.objectivePlanetaryTerminalActivated))
+node(SectorPresets.planetaryTerminal, msectors.glacialWasteland, null, Seq.with(new Objectives.SectorComplete(SectorPresets.planetaryTerminal)));

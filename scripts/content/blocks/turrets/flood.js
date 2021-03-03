@@ -21,7 +21,7 @@ const flood = extend(LiquidTurret, "flood", {
 		mitems.aerogel, 120, 
 	),
 	buildVisibility: BuildVisibility.shown,
-	reloadTime: 0.1,
+	reloadTime: 0,
 	inaccuracy: 5.5,
 	range: 240,
 	rotateSpeed: 12,
