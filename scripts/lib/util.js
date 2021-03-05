@@ -21,6 +21,7 @@ const cblock = name => Vars.content.getByName(ContentType.block, ModName + name)
 const cliquid = name => Vars.content.getByName(ContentType.liquid, ModName + name);
 const cstatus = name => Vars.content.getByName(ContentType.status, ModName + name);
 const citem = name => Vars.content.getByName(ContentType.item, ModName + name);
+const cunit = name => Vars.content.getByName(ContentType.unit, ModName + name);
 const percent = (partial, total) => partial / total;
 const hexColor = hexValue => Color.valueOf(hexValue);
 const avg = (x, y) => (x + y) / 2;
@@ -37,5 +38,6 @@ module.exports = {
 	hexColor: hexColor,
 	ModName: ModName,
 	avg: avg,
-	dst: dst
+	dst: dst,
+	cunit: cunit
 };

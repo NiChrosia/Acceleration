@@ -1,6 +1,7 @@
 // Imports
 
-const mitems = require("content/items")
+const mitems = require("content/items");
+const munits = require("content/units");
 
 // Assignment
 
@@ -21,5 +22,5 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 	itemCapacity: 18000,
 	unitCapModifier: 32,
 	researchCostMultiplier: 0.08,
-	unitType: UnitTypes.gamma
+	unitType: munits.delta
 });

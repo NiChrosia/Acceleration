@@ -2,5 +2,5 @@ name: acceleration
 displayName: Acceleration
 author: NiChrosia
 description: A mindustry mod. Extremely unfinished. Animated shields is highly reccomended for gameplay.
-minGameVersion: "105"
-version: "1.6"
+minGameVersion: "126"
+version: "0.6"

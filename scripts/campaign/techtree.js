@@ -87,3 +87,4 @@ node(Blocks.foreshadow, mblocks.harbinger, null, null);
 // Sectors
 
 node(SectorPresets.planetaryTerminal, msectors.glacialWasteland, null, Seq.with(new Objectives.SectorComplete(SectorPresets.planetaryTerminal)));
+// node(null, msectors.volcanicMountains, null, null);

@@ -1,17 +1,23 @@
 // Lib
 
 require("lib/util");
-require("lib/events");
 
 // Content
 
 require("content/items");
+
 require("content/effects/effects");
 require("content/effects/status-effects")
-require("content/liquids");
-require("content/blocks");
+
 require("content/bullets/laser-bullets");
 require("content/bullets/liquid-bullets");
+
+require("content/liquids");
+
+require("content/units");
+
+require("content/blocks");
+
 require("content/events")
 
 // Campaign
