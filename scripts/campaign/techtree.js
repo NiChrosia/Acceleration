@@ -41,16 +41,12 @@ const nodeProduce = (parent, contentType, requirements, objectives) => {
 
 // Items
 
-nodeProduce(Items.sand, mitems.sulfur, null, null);
 nodeProduce(Items.phaseFabric, mitems.aerogel, null, null, null);
-nodeProduce(Items.thorium, mitems.diamond, null, null);
 nodeProduce(Items.blastCompound, mitems.fusionCompound, null, null);
 
 // Liquids
 
-nodeProduce(Liquids.oil, mliquids.corrofluid, null, null);
 nodeProduce(Liquids.cryofluid, mliquids.arctifluid, null, null);
-nodeProduce(mliquids.arctifluid, mliquids.glaciafluid, null, null);
 nodeProduce(Liquids.slag, mliquids.quarkPlasma, null, null);
 
 // Blocks
@@ -60,14 +56,6 @@ nodeProduce(Liquids.slag, mliquids.quarkPlasma, null, null);
 node(Blocks.coreNucleus, mblocks.coreAtom, null, null);
 node(Blocks.shockMine, mblocks.surgeMine, null, null);
 
-/*    Environment
-
-Not Applicable.
-node(null, mblocks.diamond, null, null);
-node(null, mblocks.sulfur, null, null);
-
-*/
-
 //    Power
 
 node(Blocks.impactReactor, mblocks.fusionReactor, null, null);
@@ -76,8 +64,6 @@ node(Blocks.impactReactor, mblocks.fusionReactor, null, null);
 
 node(Blocks.phaseWeaver, mblocks.aerogelWeaver, null, null);
 node(Blocks.cryofluidMixer, mblocks.arctifluidSynthesizer, null, null);
-node(Blocks.cryofluidMixer, mblocks.corrofluidMixer, null, null);
-node(mblocks.arctifluidSynthesizer, mblocks.glaciafluidExtractor, null, null);
 
 //    Turrets
 

@@ -14,7 +14,6 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 		Items.copper, 12000,
 		Items.lead, 12000,
 		Items.thorium, 6000,
-		mitems.diamond, 4000,
 		Items.silicon, 6000,
 		Items.surgeAlloy, 2000,
 		mitems.aerogel, 2000

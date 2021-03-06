@@ -1,7 +1,6 @@
 // Imports
 
 const mitems = require("content/items");
-const mliquids = require("content/liquids");
 const util = require("lib/util");
 
 // Constants
@@ -41,8 +40,11 @@ const aerogelWeaver = extend(GenericCrafter, "aerogel-weaver", {
 });
 
 aerogelWeaver.consumes.power(16);
-aerogelWeaver.consumes.items(ItemStack.with(Items.sand, 5));
-aerogelWeaver.consumes.liquid(mliquids.corrofluid, 0.3);
+aerogelWeaver.consumes.items(ItemStack.with(
+	Items.sand, 3,
+	Items.lead, 2
+));
+aerogelWeaver.consumes.liquid(Liquids.water, 0.4);
 
 aerogelWeaver.buildType = () => extend(GenericCrafter.GenericCrafterBuild, aerogelWeaver, {
 	draw() {
@@ -50,11 +52,6 @@ aerogelWeaver.buildType = () => extend(GenericCrafter.GenericCrafterBuild, aerog
 		
 		// Bottom Region
 		Draw.rect(util.getTextureName(blockName, "bottom"), this.x, this.y);
-		
-		// Corrofluid Region
-		Draw.color(mliquids.corrofluid.color);
-		Draw.alpha(util.percent(this.liquids.get(mliquids.corrofluid), this.block.liquidCapacity));
-		Draw.rect(util.getTextureName(blockName, "liquid"), this.x, this.y);
 		
 		// Weave Region
 		

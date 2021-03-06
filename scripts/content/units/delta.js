@@ -14,6 +14,7 @@ const delta = extend(UnitType, "delta", {
 	ammoType: AmmoTypes.copper,
 	itemCapacity: 90,
 	mineTier: 3, // Might change later, can currently mine titanium
+	mineSpeed: 10,
 	buildSpeed: 1.25,
 	hitSize: 13,
 	canHeal: true,

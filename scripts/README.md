@@ -2,22 +2,36 @@
 
 - [] Add block that deconstructs remains of unit, with % decreasing as tier increases
 
-- [] Add fusion reactor that uses deuterium-tritium fuel, which can be obtained from water.
+- [X] Add fusion reactor that uses deuterium-tritium fuel, which can be obtained from water.
 
-- [] Start working on Alpha units (silver-blue crawler type units)
-
-- [] Add an extremely hard alloy, used in machine guns and railguns.
+- [] Begin prototyping on lightning air units
 
 - [] Add machine guns and railguns.
 
-- [X] Add two supercoolants, arctifluid and glaciafluid, (liquid nitrogen and hydrogen)
+- [] Add an additional coolant, better than cryofluid.
 
-- [] Add a liquid turret, capable of shooting the new supercoolants.
+- [X] Add a liquid turret, capable of handling these liquids.
 
-- [X] Add corrofluid, a highly corrosive liquid (sulfuric acid)
+- [] Simply production of aerogel
 
-- [X] Add aerogel, a light superinsulator.
+- [X] Add aerogel, a light superinsulator
 
-- [] Add Arctifluid Synthesizer which synthesizes nitrogen from the air, and supercools it using cryofluid.
+- [] Add arctifluid, a coolant better than cryofluid
 
-- [] Add Glaciafluid Mixer which seperates water into its atomic components and supercools the hydrogen to liquiefy it
+- [] Remove glaciafluid, an unneccesary coolant
+
+- [] Remove atom core, or make it have unique abilities
+
+- [X] Add a new planet, Cryogenia
+
+- [X] Add a sector to the planet, Glacial Wasteland
+
+- [] Remove corrofluid, and replace its use in aerogel production with something else
+
+- [X] Add quark plasma, a superheated liquid with extreme heat
+
+- [] Add ion collider, used for production of quark plasma
+
+- [] Significantly buff quark plasma, due to its difficult production process
+
+- [] Remove diamond, as it is unneccesary due to the existence of plastanium, thorium, and surge alloy

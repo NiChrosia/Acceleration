@@ -21,29 +21,6 @@ const arctifluidShot = extend(LiquidBulletType, {
 	effect: msfx.arctifreezing
 });
 
-const glaciafluidShot = extend(LiquidBulletType, {
-	liquid: mliquids.glaciafluid,
-	speed: 4.6,
-	drag: 0.0025,
-	lifetime: 75,
-	puddleSize: 64,
-	damage: 85,
-	knockback: 2.3,
-	orbSize: 7,
-	effect: msfx.permafrost
-});
-
-const corrofluidShot = extend(LiquidBulletType, {
-	liquid: mliquids.corrofluid,
-	speed: 4.5,
-	drag: 0.0001,
-	damage: 16.2,
-	knockback: 2.3,
-	lifetime: 56,
-	orbSize: 7,
-	puddleSize: 10
-});
-
 const quarkPlasmaShot = extend(LiquidBulletType, {
 	liquid: mliquids.quarkPlasma,
 	speed: 4.5,
@@ -105,8 +82,6 @@ const massiveCryoShot = extend(LiquidBulletType, {
 
 module.exports = {
 	arctifluidShot: arctifluidShot,
-	glaciafluidShot: glaciafluidShot,
-	corrofluidShot: corrofluidShot,
 	massiveWaterShot: massiveWaterShot,
 	massiveSlagShot: massiveSlagShot,
 	massiveOilShot: massiveOilShot,

@@ -35,9 +35,7 @@ flood.ammo(
 	Liquids.slag, liquidBullets.massiveSlagShot,
 	mliquids.quarkPlasma, liquidBullets.quarkPlasmaShot,
 	Liquids.oil, liquidBullets.massiveOilShot,
-	mliquids.corrofluid, liquidBullets.corrofluidShot,
 	Liquids.water, liquidBullets.massiveWaterShot,
 	Liquids.cryofluid, liquidBullets.massiveCryoShot,
-	mliquids.arctifluid, liquidBullets.arctifluidShot,
-	mliquids.glaciafluid, liquidBullets.glaciafluidShot
+	mliquids.arctifluid, liquidBullets.arctifluidShot
 );

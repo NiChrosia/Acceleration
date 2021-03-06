@@ -8,8 +8,8 @@ const mliquids = require("content/liquids");
 // Runnables for events
 
 function glaciafreezeZone() {
-	mevents.puddleStatusEffectZone(smfx.permafrost, mfx.glaciafreezeSquare, mfx.glaciafreezeLineSquare, 48, mliquids.glaciafluid);
-	mevents.puddleStatusEffectZone(smfx.liquefying, mfx.liquefyingSquare, mfx.liquefyingLineSquare, 48, mliquids.quarkPlasma);
+	mevents.puddleStatusEffectZone(smfx.arctifreezing, mfx.arctifreezeSquare, mfx.arctifreezeLineSquare, 48, mliquids.arctifluid, false);
+	mevents.puddleStatusEffectZone(smfx.liquefying, mfx.liquefyingSquare, mfx.liquefyingLineSquare, 48, mliquids.quarkPlasma, true);
 };
 
 // Adding events to Events

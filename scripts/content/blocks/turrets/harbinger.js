@@ -28,7 +28,6 @@ const harbinger = extend(PowerTurret, "harbinger", {
 		Items.silicon, 750,
 		Items.plastanium, 300,
 		Items.surgeAlloy, 450,
-		mitems.diamond, 300,
 		mitems.aerogel, 300
 	)
 });
