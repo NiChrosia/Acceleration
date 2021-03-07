@@ -16,6 +16,7 @@ const reload = 400;
 const blockName = "core-atom-";
 let squareSize = 0;
 const sizeCap = 24;
+const lightningColor = Color.valueOf("f3e979");
 
 // Assignment
 
@@ -43,6 +44,12 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 		// Remove
 		
 		// this.stats.remove(Stat.buildTime)
+	},
+	icons() {
+		return [
+			util.getRegion(blockName, null),
+			util.getRegion(blockName, "team")
+		]
 	},
 	size: 6,
 	health: 15000,
@@ -74,7 +81,12 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 				other.heal(other.maxHealth * (healPercent / 100));
 				Fx.healBlockFull.at(other.x, other.y, other.block.size, baseColor);
 			});
-		}
+		};
+		
+		// summon lightning
+		Units.nearby(this.x - (range / 2), this.y - (range / 2), range, range, u => {
+			u.team != Team.sharded ? Lightning.create(this.team, lightningColor, 5, this.x, this.y, this.angleTo(u.x, u.y), range + 10) : null
+		});
 	},
 	drawSelect() {
 		//print("x: " + this.x + ", y: " + this.y)
@@ -105,7 +117,6 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		Draw.rect(util.getTextureName(blockName, "mend"), this.x, this.y);
 		Draw.alpha(1);
 		Lines.stroke(squareSize / 6);
-		print("x: " + this.x + ", y: " + this.y + "\nsquareSize: " + squareSize)
 		Lines.square(this.x, this.y, squareSize);
 		
 		Draw.reset();
