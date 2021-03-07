@@ -1,4 +1,8 @@
-const deltaWeapons = UnitTypes.gamma.weapons
+const healRepeater = require("content/weapons/heal-repeater").healRepeater;
+
+const deltaWeapons = Seq.with(
+	healRepeater
+)
 
 const delta = extend(UnitType, "delta", {
 	defaultController: () => extend(BuilderAI, {}),

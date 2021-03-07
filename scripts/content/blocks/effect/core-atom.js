@@ -15,7 +15,11 @@ const efficiency = 1;
 const reload = 400;
 const blockName = "core-atom-";
 let squareSize = 0;
+let lineSize = 5;
 const sizeCap = 24;
+const lineCap = 5;
+const sizeSpeed = 0.15;
+const lineSizeSpeed = 0.17 / 6;
 const lightningColor = Color.valueOf("f3e979");
 const lightningLength = 50;
 const lightningDamage = 20;
@@ -154,7 +158,6 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		};
 	},
 	drawSelect() {
-		//print("x: " + this.x + ", y: " + this.y)
 		Drawf.dashCircle(this.x + offset, this.y + offset, range, baseColor);
 
 		Vars.indexer.eachBlock(this.team, this.x + offset, this.y + offset, range, other => true, other => Drawf.selected(other, Color(
@@ -172,16 +175,25 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		Draw.color(this.team.color);
 		Draw.rect(util.getTextureName(blockName, "team"), this.x, this.y);
 		
-		print("x: " + vec.x + ", y: " + vec.y)
 		Draw.z(Layer.turret);
 		Draw.rect(util.getTextureName(blockName, "turret"), this.x + vec.x, this.y + vec.y, turretRotation);
 		
 		if (!Vars.state.paused) {
-			squareSize += 0.15
+			squareSize += sizeSpeed
 			if (squareSize >= sizeCap) {
-				squareSize = 0
+				squareSize = 0;
+				lineSize = lineCap;
 			}
 		};
+		
+		if (!Vars.state.paused) {
+			lineSize -= lineSizeSpeed
+			if (lineSize <= 0.001) {
+				lineSize = lineCap;
+			}
+		};
+		
+		print("square: " + squareSize + ", line: " + lineSize)
 		
 		Draw.z(Layer.block);
 		Draw.color(baseColor);
@@ -189,7 +201,7 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		Draw.rect(util.getTextureName(blockName, "mend"), this.x, this.y);
 		Draw.z(Layer.turret - 1);
 		Draw.alpha(1);
-		Lines.stroke(squareSize / 6);
+		Lines.stroke(lineSize);
 		Lines.square(this.x, this.y, squareSize);
 		
 		Draw.reset();
