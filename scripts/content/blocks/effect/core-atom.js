@@ -17,6 +17,21 @@ const blockName = "core-atom-";
 let squareSize = 0;
 const sizeCap = 24;
 const lightningColor = Color.valueOf("f3e979");
+const lightningLength = 50;
+const lightningDamage = 20;
+const turretReload = 30;
+let turretCooldown = 0;
+let turretRotation = 270;
+let turretTempRotation;
+const turretRotateSpeed = 2;
+const recoilRate = 0.3;
+let unit = {
+	team: Team.sharded,
+	x: 0,
+	y: 0
+};
+let vec = Vec2();
+const turretRecoil = 5;
 
 // Assignment
 
@@ -70,7 +85,36 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 });
 
 coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
-	updateTile() {	 
+	updateTile() {
+		unit = {
+			team: this.team,
+			x: unit.x,
+			y: unit.y
+		};
+		if (vec.x > recoilRate * 2) {
+			vec.x -= recoilRate
+		} else if (vec.x > 0) {
+			vec.x -= recoilRate / 2
+		};
+		
+		if (vec.y > recoilRate * 2) {
+			vec.y -= recoilRate
+		} else if (vec.y > 0) {
+			vec.y -= recoilRate / 2
+		};
+		
+		if (vec.x < -(recoilRate * 2)) {
+			vec.x += recoilRate
+		} else if (vec.x < 0) {
+			vec.x += recoilRate / 2
+		};
+		
+		if (vec.y < -(recoilRate * 2)) {
+			vec.y += recoilRate
+		} else if (vec.y < 0) {
+			vec.y += recoilRate / 2
+		};
+		
 		charge += 1 * Time.delta;
 
 		if(charge >= reload) {
@@ -83,16 +127,37 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 			});
 		};
 		
-		// summon lightning
+		// Set Stats
+		turretCooldown++;
+		
 		Units.nearby(this.x - (range / 2), this.y - (range / 2), range, range, u => {
-			u.team != Team.sharded ? Lightning.create(this.team, lightningColor, 5, this.x, this.y, this.angleTo(u.x, u.y), range + 10) : null
+			unit = u.team != this.team ? u : unit;
 		});
+		
+		turretTempRotation = unit.team != this.team ? this.angleTo(unit.x, unit.y) : turretTempRotation;
+		if (turretRotation > turretTempRotation) {
+			//while (turretRotation > turretTempRotation) {
+			turretRotation -= turretRotateSpeed
+			//};
+		};
+		if (turretRotation < turretTempRotation) {
+			//while (turretRotation < turretTempRotation) {
+			turretRotation += turretRotateSpeed
+			//};
+		};
+		
+		if (turretCooldown >= turretReload) {
+			// reset cooldown
+			turretCooldown = 0;
+			unit.team != this.team ? Lightning.create(this.team, lightningColor, lightningDamage, this.x, this.y, turretRotation, lightningLength) : null
+			unit.team != this.team ? vec.trns(turretRotation + 180, turretRecoil) : null;
+		};
 	},
 	drawSelect() {
 		//print("x: " + this.x + ", y: " + this.y)
 		Drawf.dashCircle(this.x + offset, this.y + offset, range, baseColor);
 
-		Vars.indexer.eachBlock(Vars.player.team(), this.x + offset, this.y + offset, range, other => true, other => Drawf.selected(other, Color(
+		Vars.indexer.eachBlock(this.team, this.x + offset, this.y + offset, range, other => true, other => Drawf.selected(other, Color(
 			baseColor.r, 
 			baseColor.g, 
 			baseColor.b, 
@@ -107,14 +172,22 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		Draw.color(this.team.color);
 		Draw.rect(util.getTextureName(blockName, "team"), this.x, this.y);
 		
-		squareSize += 0.15
-		if (squareSize >= sizeCap) {
-			squareSize = 0
-		}
+		print("x: " + vec.x + ", y: " + vec.y)
+		Draw.z(Layer.turret);
+		Draw.rect(util.getTextureName(blockName, "turret"), this.x + vec.x, this.y + vec.y, turretRotation);
 		
+		if (!Vars.state.paused) {
+			squareSize += 0.15
+			if (squareSize >= sizeCap) {
+				squareSize = 0
+			}
+		};
+		
+		Draw.z(Layer.block);
 		Draw.color(baseColor);
 		Draw.alpha(Mathf.absin(Time.time, 10, 1));
 		Draw.rect(util.getTextureName(blockName, "mend"), this.x, this.y);
+		Draw.z(Layer.turret - 1);
 		Draw.alpha(1);
 		Lines.stroke(squareSize / 6);
 		Lines.square(this.x, this.y, squareSize);
