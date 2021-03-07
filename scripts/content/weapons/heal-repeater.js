@@ -1,6 +1,7 @@
 // Imports
 
 const util = require("lib/util");
+const electricBullets = require("content/bullets/electric-bullets");
 
 // Assignment
 
@@ -11,8 +12,8 @@ const healRepeater = extend(Weapon, "heal-repeater", {
 		this.outlineRegion = Core.atlas.find(util.ModName + "heal-repeater" + "-outline");
 	},*/
 	name: util.ModName + "heal-repeater",
-	bullet: UnitTypes.nova.weapons.get(0).bullet,
-	reload: 10,
+	bullet: electricBullets.deltaHealBullet,
+	reload: 16,
 	x: 1,
 	y: 2
 });

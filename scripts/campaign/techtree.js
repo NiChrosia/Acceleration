@@ -70,6 +70,10 @@ node(Blocks.cryofluidMixer, mblocks.arctifluidSynthesizer, null, null);
 node(Blocks.tsunami, mblocks.flood, null, null);
 node(Blocks.foreshadow, mblocks.harbinger, null, null);
 
+//    Storage
+
+node(Blocks.vault, mblocks.repository, null, null);
+
 // Sectors
 
 node(SectorPresets.planetaryTerminal, msectors.glacialWasteland, null, Seq.with(new Objectives.SectorComplete(SectorPresets.planetaryTerminal)));

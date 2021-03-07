@@ -71,19 +71,19 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 		]
 	},
 	size: 6,
-	health: 15000,
+	health: 48000,
 	category: Category.effect,
 	buildVisibility: BuildVisibility.shown,
 	requirements: ItemStack.with(
-		Items.copper, 12000,
-		Items.lead, 12000,
-		Items.thorium, 6000,
-		Items.silicon, 6000,
-		Items.surgeAlloy, 2000,
-		mitems.aerogel, 2000
+		Items.copper, 24000,
+		Items.lead, 24000,
+		Items.thorium, 12000,
+		Items.silicon, 12000,
+		Items.surgeAlloy, 8000,
+		mitems.aerogel, 8000
 	),
-	itemCapacity: 18000,
-	unitCapModifier: 32,
+	itemCapacity: 32000,
+	unitCapModifier: 48,
 	researchCostMultiplier: 0.08,
 	unitType: munits.delta
 });
@@ -192,8 +192,6 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 				lineSize = lineCap;
 			}
 		};
-		
-		print("square: " + squareSize + ", line: " + lineSize)
 		
 		Draw.z(Layer.block);
 		Draw.color(baseColor);

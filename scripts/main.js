@@ -16,6 +16,8 @@ require("content/liquids");
 
 require("content/units");
 
+require("content/unit-plans/lightning-air");
+
 require("content/blocks");
 
 require("content/events")

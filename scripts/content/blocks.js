@@ -7,6 +7,8 @@ const util = require("lib/util");
 require("content/blocks/distribution/aerogel-conveyor");
 require("content/blocks/distribution/colossal-driver");
 
+require("content/blocks/storage/repository");
+
 require("content/blocks/effect/surge-mine");
 require("content/blocks/effect/core-atom");
 
@@ -24,6 +26,8 @@ require("content/blocks/turrets/harbinger");
 
 const aerogelConveyor = util.cblock("aerogel-conveyor");
 const colossalDriver = util.cblock("colossal-driver");
+
+const repository = util.cblock("repository");
 
 const surgeMine = util.cblock("surge-mine");
 const coreAtom = util.cblock("core-atom");
@@ -45,6 +49,10 @@ module.exports = {
 	
 	aerogelConveyor: aerogelConveyor,
 	colossalDriver: colossalDriver,
+	
+	// Storage
+	
+	repository: repository,
 	
 	// Effect
 	
