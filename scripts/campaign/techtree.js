@@ -5,6 +5,7 @@ const mitems = require("content/items");
 const mliquids = require("content/liquids");
 const mblocks = require("content/blocks");
 const msectors = require("campaign/sectors");
+const munits = require("content/units");
 
 /**
  * Node for the research tech tree.
@@ -73,6 +74,14 @@ node(Blocks.foreshadow, mblocks.harbinger, null, null);
 //    Storage
 
 node(Blocks.vault, mblocks.repository, null, null);
+
+// Units
+
+node(UnitTypes.mono, munits.ion, null, null);
+node(munits.ion, munits.spark, null, null);
+node(munits.spark, munits.energy, null, null);
+node(munits.energy, munits.lightning, null, null);
+node(munits.lightning, munits.tempest, null, null);
 
 // Sectors
 
