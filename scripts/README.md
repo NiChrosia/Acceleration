@@ -8,17 +8,13 @@
 
 - [] Add machine guns and railguns.
 
-- [] Add an additional coolant, better than cryofluid.
-
 - [X] Add a liquid turret, capable of handling these liquids.
 
-- [] Simply production of aerogel
+- [] Simplify production of aerogel
 
 - [X] Add aerogel, a light superinsulator
 
-- [] Add arctifluid, a coolant better than cryofluid
-
-- [] Remove glaciafluid, an unneccesary coolant
+- [X] Add arctifluid, a coolant better than cryofluid
 
 - [] Remove atom core, or make it have unique abilities
 
@@ -34,4 +30,4 @@
 
 - [] Significantly buff quark plasma, due to its difficult production process
 
-- [] Remove diamond, as it is unneccesary due to the existence of plastanium, thorium, and surge alloy
+- [] Make atom core regenerate buildings in a radius, and attack enemies that come near
