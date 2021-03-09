@@ -21,6 +21,9 @@ require("content/blocks/production/arctifluid-synthesizer");
 
 require("content/blocks/turrets/flood");
 require("content/blocks/turrets/harbinger");
+require("content/blocks/turrets/storm");
+
+require("content/blocks/liquid/fortified-conduit");
 
 // Assignments
 
@@ -41,6 +44,9 @@ const arctifluidSynthesizer = util.cblock("arctifluid-synthesizer");
 
 const flood = util.cblock("flood");
 const harbinger = util.cblock("harbinger");
+const storm = util.cblock("storm");
+
+const fortifiedConduit = util.cblock("fortified-conduit");
 
 // Exports
 
@@ -75,5 +81,10 @@ module.exports = {
 	// Turrets
 	
 	flood: flood,
-	harbinger: harbinger
+	harbinger: harbinger,
+	storm: storm,
+	
+	// Liquid
+	
+	fortifiedConduit: fortifiedConduit
 };

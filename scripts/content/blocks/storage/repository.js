@@ -8,5 +8,6 @@ const repository = extend(StorageBlock, "repository", {
 		Items.thorium, 500,
 		Items.silicon, 200,
 		Items.surgeAlloy, 50
-	)
+	),
+	category: Category.effect
 });

@@ -170,13 +170,18 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 	draw() {
 		this.super$draw();
 		
+		// Base sprite
 		Draw.rect(util.getTextureName(blockName, null), this.x, this.y);
 		
+		// Team sprite
 		Draw.color(this.team.color);
 		Draw.rect(util.getTextureName(blockName, "team"), this.x, this.y);
+		Draw.reset();
 		
+		// Turret sprite
 		Draw.z(Layer.turret);
 		Draw.rect(util.getTextureName(blockName, "turret"), this.x + vec.x, this.y + vec.y, turretRotation);
+		Draw.reset();
 		
 		if (!Vars.state.paused) {
 			squareSize += sizeSpeed
@@ -193,15 +198,19 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 			}
 		};
 		
+		// Mend sprite (pulses)
 		Draw.z(Layer.block);
 		Draw.color(baseColor);
 		Draw.alpha(Mathf.absin(Time.time, 10, 1));
 		Draw.rect(util.getTextureName(blockName, "mend"), this.x, this.y);
+		Draw.reset();
+		
+		// Mend overlay, goes in to out, with line size decreasing
 		Draw.z(Layer.turret - 1);
+		Draw.color(baseColor);
 		Draw.alpha(1);
 		Lines.stroke(lineSize);
 		Lines.square(this.x, this.y, squareSize);
-		
 		Draw.reset();
 	}
 });

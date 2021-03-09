@@ -41,7 +41,8 @@ const massiveWaterShot = extend(LiquidBulletType, {
 	lifetime: 56,
 	orbSize: 6,
 	puddleSize: 10,
-	lightColor: dark
+	lightColor: dark,
+	status: StatusEffects.wet
 });
 
 const massiveSlagShot = extend(LiquidBulletType, {
@@ -52,7 +53,8 @@ const massiveSlagShot = extend(LiquidBulletType, {
 	knockback: 2.3,
 	lifetime: 56,
 	orbSize: 6,
-	puddleSize: 10
+	puddleSize: 10,
+	status: StatusEffects.melting
 });
 
 const massiveOilShot = extend(LiquidBulletType, {
@@ -64,7 +66,8 @@ const massiveOilShot = extend(LiquidBulletType, {
 	lifetime: 56,
 	orbSize: 6,
 	puddleSize: 10,
-	lightColor: dark
+	lightColor: dark,
+	status: StatusEffects.tarred
 });
 
 const massiveCryoShot = extend(LiquidBulletType, {
@@ -75,7 +78,8 @@ const massiveCryoShot = extend(LiquidBulletType, {
 	knockback: 2.8,
 	lifetime: 56,
 	orbSize: 6,
-	puddleSize: 10
+	puddleSize: 10,
+	status: StatusEffects.freezing
 });
 
 // Exports
