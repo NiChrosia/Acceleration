@@ -15,7 +15,11 @@ const ion = extend(UnitType, "ion", {
 	flying: true,
 	health: 100,
 	speed: 3,
-	weapons: UnitTypes.pulsar.weapons
+	weapons: UnitTypes.pulsar.weapons,
+	drag: 0.06,
+	buildSpeed: 0.25,
+	mineSpeed: 3,
+	mineTier: 1
 });
 
 ion.constructor = () => extend(UnitEntity, {});

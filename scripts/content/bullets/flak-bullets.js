@@ -26,7 +26,7 @@ const explosiveFragPlastic = extend(FlakBulletType, {
 	speed: 6,
 	width: 9,
 	height: 12,
-	lifetime: 60
+	lifetime: 40
 });
 
 const explosiveFragShockFrag = extend(BasicBulletType, {
@@ -73,7 +73,7 @@ const explosiveFragBomb = extend(FlakBulletType, {
 	width: 9,
 	height: 12,
 	status: StatusEffects.blasted,
-	lifetime: 60
+	lifetime: 40
 });
 
 const explosiveFragNuke = extend(FlakBulletType, {
@@ -87,7 +87,7 @@ const explosiveFragNuke = extend(FlakBulletType, {
 	width: 9,
 	height: 12,
 	status: StatusEffects.blasted,
-	lifetime: 60
+	lifetime: 40
 });
 
 // Exports

@@ -70,6 +70,7 @@ node(Blocks.cryofluidMixer, mblocks.arctifluidSynthesizer, null, null);
 
 node(Blocks.tsunami, mblocks.flood, null, null);
 node(Blocks.foreshadow, mblocks.harbinger, null, null);
+node(Blocks.cyclone, mblocks.storm, null, null);
 
 //    Storage
 
