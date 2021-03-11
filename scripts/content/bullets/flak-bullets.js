@@ -57,7 +57,7 @@ const explosiveFragShock = extend(FlakBulletType, {
 	width: 12,
 	height: 15,
 	status: StatusEffects.shocked,
-	lifetime: 70,
+	lifetime: 50,
 	lightning: 5,
 	lightningLength: 12
 });
@@ -87,7 +87,7 @@ const explosiveFragNuke = extend(FlakBulletType, {
 	width: 9,
 	height: 12,
 	status: StatusEffects.blasted,
-	lifetime: 40
+	lifetime: 50
 });
 
 // Exports
