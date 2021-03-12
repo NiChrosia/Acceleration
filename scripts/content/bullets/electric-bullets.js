@@ -11,6 +11,25 @@ const deltaHealBullet = extend(LaserBoltBulletType, {
 	buildingDamageMultiplier: 0.01
 });
 
+const lightArc = extend(LightningBulletType, {
+	lifetime: 1,
+	lightningColor: Color.valueOf("3492eb"),
+	lightningLength: 12,
+	damage: 10,
+	healPercent: 1,
+	lightningType: extend(BulletType, 0.0001, 0, {
+		lifetime: Fx.lightning.lifetime,
+		hitEffect: Fx.hitLancer,
+		despawnEffect: Fx.none,
+		status: StatusEffects.shocked,
+		statusDuration: 10,
+		hittable: false,
+		healPercent: 1,
+		collidesTeam: true
+	})
+});
+
 module.exports = {
-	deltaHealBullet: deltaHealBullet
+	deltaHealBullet: deltaHealBullet,
+	lightArc: lightArc
 }

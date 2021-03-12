@@ -16,28 +16,26 @@ function puddleStatusEffectZone(statusEffect, effect, alternateEffect, size, liq
 					};
 				});
 				if (damage) {
-					Groups.build.each(b => {
-						// print("b.x: " + b.x / 8 + ", b.y: " + b.y / 8 + ", tile.x: " + tile.x + ", tile.y: " + tile.y + ", distance: " + size + ", is distance: " + util.dst(b.x / 8, b.y / 8, tile.x, tile.y, size))
-						if (util.dst(b.x / 8, b.y / 8, tile.x, tile.y, size / 8)) {
+					teams = Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue) // Slightly increased performance in campaign.
+					teams.each(t => {
+						Vars.indexer.eachBlock(t, puddle.x, puddle.y, size, b => true, b => {
 							if (immuneBlock instanceof Seq) {
-								print("instanceof immuneblock seq incoming\n----------------")
 								let nullifyDamage = false;
 								immuneBlock.each(ib => {
-									print("immblock: " + ib);
-									print("block: " + b.block);
 									nullifyDamage = nullifyDamage ? nullifyDamage : (ib == b.block);
-									print(nullifyDamage + "\n");
 									
 									if (nullifyDamage) {
 										return;
 									};
 								});
 								nullifyDamage ? null : b.damage(statusEffect.damage)
-							} else {
+							} else if (!(immuneBlock instanceof Array)){
 								b.block != immuneBlock ? b.damage(statusEffect.damage) : null;
+							} else {
+								print("[events.js] why are you using arrays")
 							}
-						};
-					});
+						});
+					})
 				};
 			};
 		});

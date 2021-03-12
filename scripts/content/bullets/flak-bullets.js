@@ -58,8 +58,8 @@ const explosiveFragShock = extend(FlakBulletType, {
 	height: 15,
 	status: StatusEffects.shocked,
 	lifetime: 50,
-	lightning: 5,
-	lightningLength: 12
+	lightning: 3,
+	lightningLength: 8
 });
 
 const explosiveFragBomb = extend(FlakBulletType, {
