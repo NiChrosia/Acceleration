@@ -1,14 +1,28 @@
-# Cryogenia
+# Cryogenia:
 
-## Origin of cold
+A unique frozen planet whose properties originate from not distance to a star but a strange ore found on the surface.  
 
-Powerful technology capable of mass freezing was being researched, but the Crux attacked the facility, resulting in its downfall, and freezing the planet in a volatle reaction.
+# Cryogem
 
-## Arctifluid
+This ore is called a cryogem due to its powerful property of extreme cold.  
 
-The ruins of this technology can be found in [`placeholder`], and could be reclaimed to use in weaponry. 
-A simple result of this technology is arctifluid. A coolant more powerful than cryofluid, that freezes the nearby air.
+## Refined cryogem: Arctifluid and Cryocatalyst
 
-## to be continued
+This ore can also be harnessed for use in extremely cold coolant.  
+This ore can be then refined into a cryocatalyst, a powerful material used in ammunition, reactors, and special weapons.
 
-Much more is to be researched, this is for certain. [`...`]
+# Individual Sector lore:
+
+## Frozen Glade
+
+An ancient frozen glade situated in a tranquil zone. Contains abnormally high quantities of cryogem for its location.  
+Capture the sector. Harness the resources. Move on.
+
+## Cryogem Cavern
+
+A cold and dark cave, containing numerous cryogem geodes.  
+The enemy has established a resource extraction base here.  
+Destroy the base.  
+Leave no remaining structures.
+
+## Frigid Forest

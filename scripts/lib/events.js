@@ -31,8 +31,8 @@ function puddleStatusEffectZone(statusEffect, effect, alternateEffect, size, liq
 								nullifyDamage ? null : b.damage(statusEffect.damage)
 							} else if (!(immuneBlock instanceof Array)){
 								b.block != immuneBlock ? b.damage(statusEffect.damage) : null;
-							} else {
-								print("[events.js] why are you using arrays")
+							} else if (immuneBlock instanceof Array){
+								throw "[lib/events.js] Internal error: arrays not supported."
 							}
 						});
 					})
