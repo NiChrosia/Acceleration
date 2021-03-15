@@ -34,4 +34,4 @@ require("campaign/sectors");
 
 // Autoupdate
 
-util.autoUpdate("acceleration", "nichrosia/Acceleration", "master", true)
+util.autoUpdate("acceleration", "nichrosia/Acceleration", "master", false)
