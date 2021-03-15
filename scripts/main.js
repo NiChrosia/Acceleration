@@ -1,6 +1,6 @@
 // Lib
 
-const util = require("lib/util");
+require("lib/util");
 
 // Content
 
@@ -31,7 +31,3 @@ require("campaign/techtree")
 require("campaign/planet-gen");
 require("campaign/planets");
 require("campaign/sectors");
-
-// Autoupdate
-
-util.autoUpdate("acceleration", "nichrosia/Acceleration", "master", false)
