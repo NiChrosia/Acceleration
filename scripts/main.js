@@ -31,3 +31,9 @@ require("campaign/techtree")
 require("campaign/planet-gen");
 require("campaign/planets");
 require("campaign/sectors");
+
+// Successful loading
+
+Events.on(ClientLoadEvent, () => {
+	Log.info("Mod [accent]Acceleration[] loaded successfully.");
+});
