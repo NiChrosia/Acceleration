@@ -15,14 +15,14 @@ This ore can be then refined into a cryocatalyst, a powerful material used in am
 
 # Individual Sector lore:
 
-## Frozen Glade
+## Glacial Glade
 
 An ancient frozen glade situated in a tranquil zone. Contains abnormally high quantities of cryogem for its location.  
 Capture the sector. Harness the resources. Move on.
 
 Threat: `low`
 
-### Lore
+### Lore:
 
 Originally a prosperous forest, the cold has long since killed all life. Icy remains can be found.
 
@@ -35,7 +35,7 @@ Leave no remaining structures.
 
 Threat: `high`
 
-### Lore
+### Lore:
 
 This area was formed due to powerful liquids melting their way deep into the ground.  
 The end of these caverns have not been found yet.
@@ -48,7 +48,7 @@ Gather as much arctifluid as possible. Move on.
 
 Threat: `extreme`
 
-### Lore
+### Lore:
 
 Due to unique conditions, these areas have natural deposits of arctifluid.  
 This area is highly desired by the enemy and they will stop at nothing to obtain this area.
@@ -63,7 +63,19 @@ Capture the base. Research the technology.
 
 Threat: `eradication`
 
-### Lore
+### Lore:
 
 This crack in the sturdy crust of the planet was penetrated from an extremely powerful explosion from below the surface.  
 More volatile events may follow. *Beware.*
+
+## Lightning Peaks
+
+A dangerous enemy base with special units. These units specialize in speed and lightning attacks.  
+Annihilate the base. Research the technology.
+
+Threat: `high`
+
+### Lore:
+
+The technology was first discovered by the enemy in mostly destroyed blueprints.  
+These were found deep within the wreckage of Impact 0078, and promptly removed by the enemy to give themselves an advantage.

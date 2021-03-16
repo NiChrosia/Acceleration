@@ -1,6 +1,6 @@
 // Imports
 
-// const util = require("lib/util");
+const util = require("lib/util");
 const mitems = require("content/items");
 const mliquids = require("content/liquids");
 const mblocks = require("content/blocks");
@@ -16,26 +16,41 @@ const munits = require("content/units");
  * @property {Seq}                  objectives      - A sequence of Objectives required to unlock this node. Can be null.
  */
 const node = (parent, contentType, requirements, objectives) => {
-  if(parent != null && contentType != null){
-    const tnode = new TechTree.TechNode(TechTree.get(parent), contentType, requirements != null ? requirements : contentType.researchRequirements());
-    let used = new ObjectSet();
-    
-    if(objectives != null) tnode.objectives.addAll(objectives);
-  }else{
-    print("[techtree.js] " + parent + " or " + contentType + " is null.");
-  }
+	if (parent != null && contentType != null) {
+        const tnode = new TechTree.TechNode(TechTree.get(parent), contentType, requirements != null ? requirements : contentType.researchRequirements());
+	    let used = new ObjectSet();
+		if (objectives != null) tnode.objectives.addAll(objectives);
+	}
+  
+   if (parent == null) {
+		Log.err("[ [accent]techtree.js[] ]: parent: [" + parent + "] is null.");
+	}
+	if (contentType == null) {
+		Log.err("[ [accent]techtree.js[] ]: contentType: [" + contentType + "] is null.");
+	}
+	if (parent == null && contentType == null) {
+		Log.err("[ [accent]techtree.js[] ]: parent: [" + parent + "] and contentType: [" + contentType + "] is null.");
+	}
 };
 
 const nodeProduce = (parent, contentType, requirements, objectives) => {
-  if(parent != null && contentType != null){
-    const tnode = new TechTree.TechNode(TechTree.get(parent), contentType, requirements != null ? requirements : contentType.researchRequirements());
-    let used = new ObjectSet();
+	if (parent != null && contentType != null){
+		const tnode = new TechTree.TechNode(TechTree.get(parent), contentType, requirements != null ? requirements : contentType.researchRequirements());
+		let used = new ObjectSet();
     
-	tnode.objectives.add(Objectives.Produce(contentType));
-    if(objectives != null) tnode.objectives.addAll(objectives);
-  }else{
-    print("[techtree.js] " + parent + " or " + contentType + " is null.");
-  }
+		tnode.objectives.add(Objectives.Produce(contentType));
+		if (objectives != null) tnode.objectives.addAll(objectives);
+	}
+	
+	if (parent == null) {
+		Log.err("[ [accent]techtree.js[] ]: parent: [" + parent + "] is null.");
+	}
+	if (contentType == null) {
+		Log.err("[ [accent]techtree.js[] ]: contentType: [" + contentType + "] is null.");
+	}
+	if (parent == null && contentType == null) {
+		Log.err("[ [accent]techtree.js[] ]: parent: [" + parent + "] and contentType: [" + contentType + "] is null.");
+	}
 };
 
 // Research Nodes
