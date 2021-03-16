@@ -22,7 +22,7 @@ const node = (parent, contentType, requirements, objectives) => {
 		if (objectives != null) tnode.objectives.addAll(objectives);
 	}
   
-   if (parent == null) {
+	if (parent == null) {
 		Log.err("[ [accent]techtree.js[] ]: parent: [" + parent + "] is null.");
 	}
 	if (contentType == null) {
