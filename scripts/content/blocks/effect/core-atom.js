@@ -29,9 +29,15 @@ const turretRecoil = 5;
 
 const coreAtom = extend(CoreBlock, "core-atom", {
 	drawPlace(x, y, rotation, valid) {
-		this.super$drawPlace(x, y, rotation, valid);
+		if(!this.canPlaceOn(Vars.world.tile(x, y), Vars.player.team())){
+
+            this.drawPlaceText(Core.bundle.get((Vars.player.team().core() != null && Vars.player.team().core().items.has(this.requirements, Vars.state.rules.buildCostMultiplier)) || Vars.state.rules.infiniteResources ?
+                "bar.corereq" :
+                "bar.noresources"
+            ), x, y, valid);
+        };
 		
-		Drawf.dashCircle(x * Vars.tilesize + offset, y * Vars.tilesize + offset, range * Vars.tilesize, baseColor);
+		Drawf.dashCircle(x * Vars.tilesize + offset, y * Vars.tilesize + offset, range, baseColor);
 
 		Vars.indexer.eachBlock(Vars.player.team(), x * Vars.tilesize + offset, y * Vars.tilesize + offset, range * Vars.tilesize, other => true, other => Drawf.selected(other, Color(
 			baseColor.r, 
