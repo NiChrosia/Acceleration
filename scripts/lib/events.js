@@ -16,7 +16,7 @@ function puddleStatusEffectZone(statusEffect, effect, alternateEffect, size, liq
 					};
 				});
 				if (damage) {
-					teams = Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue) // Slightly increased performance in campaign.
+					let teams = Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue) // Slightly increased performance in campaign.
 					teams.each(t => {
 						Vars.indexer.eachBlock(t, puddle.x, puddle.y, size, b => true, b => {
 							if (immuneBlock instanceof Seq) {
@@ -32,7 +32,7 @@ function puddleStatusEffectZone(statusEffect, effect, alternateEffect, size, liq
 							} else if (!(immuneBlock instanceof Array)){
 								b.block != immuneBlock ? b.damage(statusEffect.damage) : null;
 							} else if (immuneBlock instanceof Array){
-								throw "[lib/events.js] Internal error: arrays not supported."
+								Log.err("[lib/events.js] Internal error: arrays not supported.")
 							}
 						});
 					})
