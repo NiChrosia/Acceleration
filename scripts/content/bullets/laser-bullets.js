@@ -5,16 +5,16 @@ const purple = Color.valueOf("af4dd6");
 // Laser Bullets
 
 const longPurpleLaser = extend(LaserBulletType, {
-	length: 460,
-    damage: 1850,
-    width: 45,
-    lifetime: 85,
-    lightningSpacing: 15,
-    lightningLength: 8,
+	length: 360,
+    damage: 650,
+    width: 25,
+    lifetime: 45,
+    lightningSpacing: 10,
+    lightningLength: 4,
     lightningDelay: 0.6,
-    lightningLengthRand: 15,
-    lightningDamage: 120,
-    lightningAngleRand: 40,
+    lightningLengthRand: 8,
+    lightningDamage: 60,
+    lightningAngleRand: 20,
 	lightningColor: purple,
 	colors: [purple, purple, Color.white]
 });

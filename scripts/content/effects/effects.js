@@ -34,10 +34,10 @@ const purpleLaserCharge = new Effect(80, 100, e => {
 	Fill.circle(e.x, e.y, e.fin() * 10);
 });
 
-const purpleLaserChargeSmall = new Effect(80, 100, e => {
+const purpleLaserChargeSmall = new Effect(50, 100, e => {
 	Draw.color(purple);
 	Lines.stroke(e.fin() * 2);
-	Lines.circle(e.x, e.y, e.fout() * 50);
+	Lines.circle(e.x, e.y, e.fout() * 30);
 });
 
 const fusionShockwave = Effect(13, 300, e => {

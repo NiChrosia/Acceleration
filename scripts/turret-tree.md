@@ -28,4 +28,10 @@
 ##
 `parent: capacitor`
 
+[`3x3`] Restorer: Shoots a noncolliding bullet at enemies and friendly blocks. The bullet has a mending field around it.
 [`4x4`] Core: Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate.
+
+##
+`parent: restorer`
+
+[`4x4`] Rejuvenator: Rapidly shoots small healing projectiles with a small mending field. Also emits overdriving and mending fields around the turret itself.

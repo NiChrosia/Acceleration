@@ -56,6 +56,11 @@ function lineSquareEffect(size, color, time) {
 	});
 };
 
+function equalByAmount(x, y, amount) {
+	let val = Math.abs((x - y));
+	return val <= amount;
+};
+
 module.exports = {
 	getTextureName: getTextureName,
 	getRegion: getRegion,
@@ -71,5 +76,6 @@ module.exports = {
 	cunit: cunit,
 	circleEffect: circleEffect,
 	squareShieldEffect: squareShieldEffect,
-	lineSquareEffect: lineSquareEffect
+	lineSquareEffect: lineSquareEffect,
+	equalByAmount: equalByAmount
 };
