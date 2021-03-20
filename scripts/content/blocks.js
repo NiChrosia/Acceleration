@@ -25,6 +25,9 @@ require("content/blocks/turrets/storm");
 
 require("content/blocks/liquid/fortified-conduit");
 
+require("content/blocks/walls/metaglass-wall");
+require("content/blocks/walls/metaglass-wall-large");
+
 // Assignments
 
 const aerogelConveyor = util.cblock("aerogel-conveyor");
@@ -47,6 +50,9 @@ const harbinger = util.cblock("harbinger");
 const storm = util.cblock("storm");
 
 const fortifiedConduit = util.cblock("fortified-conduit");
+
+const metaglassWall = util.cblock("metaglass-wall");
+const metaglassWallLarge = util.cblock("metaglass-wall-large");
 
 // Exports
 
@@ -86,5 +92,10 @@ module.exports = {
 	
 	// Liquid
 	
-	fortifiedConduit: fortifiedConduit
+	fortifiedConduit: fortifiedConduit,
+	
+	// Walls
+	
+	metaglassWall: metaglassWall,
+	metaglassWallLarge: metaglassWallLarge
 };
