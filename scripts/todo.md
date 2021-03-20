@@ -31,3 +31,7 @@
 - [ ] Significantly buff quark plasma, due to its difficult production process
 
 - [X] Make atom core regenerate buildings in a radius, and attack enemies that come near
+
+- [ ] Make a decent sprite for atom core
+
+- [ ] Make a decent sprite for metaglass walls
