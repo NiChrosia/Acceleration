@@ -74,7 +74,7 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 	),
 	itemCapacity: 32000,
 	unitCapModifier: 48,
-	researchCostMultiplier: 0.08,
+	researchCostMultiplier: 0.25,
 	unitType: munits.delta
 });
 

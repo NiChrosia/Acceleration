@@ -1,6 +1,6 @@
 const reflectiveWall = require("lib/reflective-wall");
 
-const metaglassWallLarge = reflectiveWall("metaglass-wall-large", 100, {
+const metaglassWallLarge = reflectiveWall("metaglass-wall-large", 85, {
 	size: 2,
 	health: 1440,
 	buildVisibility: BuildVisibility.shown,
