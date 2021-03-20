@@ -28,7 +28,7 @@ function reflectiveWall(name, chancePercent, attributes) {
 					sideways = sideways == 0 ? 1 : 0
 					
 					// Refract the bullet
-					const shoot = () => {bullet.type.create({}, this.team, this.x, this.y, 360 - bullet.rotation() + (180 * sideways))}
+					const shoot = bullet.type != null ? () => {bullet.type.create({}, this.team, this.x, this.y, 360 - bullet.rotation() + (180 * sideways))} : () => {}
 					Vars.state.paused ? null : Timer.schedule(shoot, 0.1)
 				};
 			}
