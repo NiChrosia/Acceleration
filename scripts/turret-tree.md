@@ -16,22 +16,12 @@
 [`3x3`] Capacitor: shoots shocking bullets with a damaging electric field.
 
 ##
-`parent: segment`
-
-[`3x3`] Division: Rapidly fires small point defenses. Large power expenditure.
-
-##
-`parent: parallax`
-
-[`3x3`] Perception: extremely powerful tractor beam, capable of pulling in T5s. Massive power expenditure.
-
-##
 `parent: capacitor`
 
 [`3x3`] Restorer: Shoots a noncolliding bullet at enemies and friendly blocks. The bullet has a mending field around it.
-[`4x4`] Core: Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate.
+[`4x4`] Core: Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate. Uses phase fabric as ammo.
 
 ##
 `parent: restorer`
 
-[`4x4`] Rejuvenator: Rapidly shoots small healing projectiles with a small mending field. Also emits overdriving and mending fields around the turret itself.
+[`4x4`] Rejuvenator: Rapidly shoots small healing projectiles with a mend effect around the bullet on impact.  Also emits mending fields around the turret itself.
