@@ -8,9 +8,9 @@ A nimble controller ship with light energy weapons.
 #### `requirements:`
 |`amount`|`material`|
 |:-----:|:-----:|
-`15`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-phase-fabric.png)  
-`25`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-titanium.png)  
-`30`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-silicon.png)
+`15`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)
+`25`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-titanium.png)
+`30`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)
 
 #### `stats:`
 |`stat`|`value`|
@@ -32,8 +32,8 @@ A fast support ship, with an overclocking shield. Shoots piercing electric bulle
 #### `requirements:`
 |`amount`|`material`|
 |:-----:|:-----:|
-`45`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-phase-fabric.png)  
-`45`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-silicon.png)
+`45`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`45`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
 
 #### `stats:`
 |`stat`|`value`|
@@ -55,9 +55,9 @@ Agile controller ship with a damaging electric aura. Shoots overloading energy b
 #### `requirements:`
 |`amount`|`material`|
 |:-----:|:-----:|
-`120`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-phase-fabric.png)  
-`90`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-silicon.png)  
-`60`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-plastanium.png)
+`120`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`90`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
+`60`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-plastanium.png)  
 
 #### `stats:`
 |`stat`|`value`|
@@ -82,11 +82,11 @@ Shoots dual energy lasers.
 #### `requirements:`
 |`amount`|`material`|
 |:-----:|:-----:|
-`300`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-phase-fabric.png)
-`225`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-silicon.png)  
-`150`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-plastanium.png)  
-`100`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-surge-alloy.png)  
-`60/s`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/liquid-cryofluid.png)
+`300`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)
+`225`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
+`150`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-plastanium.png)  
+`100`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-surge-alloy.png)  
+`60/s`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/liquid-cryofluid.png)  
 
 #### `stats:`
 |`stat`|`value`|
@@ -112,11 +112,11 @@ Outermost shield: Small amount of health, regenerates ultrafast.
 #### `requirements:`
 |`amount`|`material`|
 |:-----:|:-----:|
-`600`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-phase-fabric.png)  
-`450`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-silicon.png)  
-`300`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-plastanium.png)  
-`200`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/materials/material-surge-alloy.png)  
-`30/s`|![](https://raw.githubusercontent.com/nichrosia/Acceleration/master/sprites/liquids/arctifluid.png)
+`600`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`450`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
+`300`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-plastanium.png)  
+`200`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-surge-alloy.png)  
+`30/s`|![](https://raw.githubusercontent.com/nichrosia/Acceleration/master/sprites/liquids/arctifluid.png)  
 
 #### `stats:`
 |`stat`|`value`|
