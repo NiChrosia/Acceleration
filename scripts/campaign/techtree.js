@@ -101,5 +101,5 @@ node(munits.lightning, munits.tempest, null, null);
 
 // Sectors
 
-node(SectorPresets.planetaryTerminal, msectors.glacialWasteland, null, Seq.with(new Objectives.SectorComplete(SectorPresets.planetaryTerminal)));
+node(SectorPresets.planetaryTerminal, msectors.glacialGlade, null, Seq.with(new Objectives.SectorComplete(SectorPresets.planetaryTerminal)));
 // node(null, msectors.volcanicMountains, null, null);
