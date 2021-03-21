@@ -91,6 +91,11 @@ node(Blocks.cyclone, mblocks.storm, null, null);
 
 node(Blocks.vault, mblocks.repository, null, null);
 
+//	  Walls
+
+node(Blocks.plastaniumWallLarge, mblocks.metaglassWall, null, null);
+node(mblocks.metaglassWall, mblocks.metaglassWallLarge, null, null);
+
 // Units
 
 node(UnitTypes.mono, munits.ion, null, null);
