@@ -5,25 +5,31 @@
 ### Ion
 A nimble controller ship with light energy weapons.
 
-#### `requirements:` 
-`15` - phase fabric  
-`25` - titanium  
-`30` - silicon
+#### `requirements:`
+|`amount`|`item`|
+|:-----:|:-----:|
+`15`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`25`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-titanium.png)  
+`30`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)
 
 ### Spark
 A fast support ship, with an overclocking shield. Shoots piercing electric bullets.
 
 #### `requirements:`
-`45` - phase fabric  
-`45` - silicon
+|`amount`|`item`|
+|:-----:|:-----:|
+`45`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`45`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)
 
 ### Plasma
 Agile controller ship with a damaging electric aura. Shoots overloading energy bullets that sharply decrease enemy fire rate.
 
 #### `requirements:`
-`120` - phase fabric  
-`90` - silicon  
-`60` - plastanium
+|`amount`|`item`|
+|:-----:|:-----:|
+`120`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`90`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
+`60`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-plastanium.png)
 
 ### Discharge
 Controller ship with multiple shields.  
@@ -31,14 +37,14 @@ The first one is very small and surrounds a small radius around the unit, but wi
 The second has a much larger area, but significantly less health. Regenerates very rapidly.  
 Shoots dual energy lasers.
 
-####
-||`requirements:`| 
+#### `requirements:`
+|`amount`|`item`|
 |:-----:|:-----:|
-`300`|phase fabric  
-`225`|silicon  
-`150`|plastanium  
-`100`|surge alloy  
-`60`|cryofluid
+`300`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)
+`225`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
+`150`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-plastanium.png)  
+`100`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-surge-alloy.png)  
+`60/s`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/liquid-cryofluid.png)
 
 ### Aurora
 A lithe controller ship, with a quad shield, and a revitalizing field.  
@@ -47,9 +53,11 @@ Inner shield: Large amount of health, regenerates slowly.
 Outer shield: Medium amount of health, and regenerates quickly.  
 Outermost shield: Small amount of health, regenerates ultrafast.
 
-#### `requirements:` 
-`600` - phase fabric  
-`450` - silicon  
-`300` - plastanium  
-`200` - surge alloy  
-`30` - arctifluid
+#### `requirements:`
+|`amount`|`item`|
+|:-----:|:-----:|
+`600`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-phase-fabric.png)  
+`450`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-silicon.png)  
+`300`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-plastanium.png)  
+`200`|![](https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/items/item-surge-alloy.png)  
+`30/s`|![](https://raw.githubusercontent.com/nichrosia/Acceleration/master/sprites/liquids/arctifluid.png)
