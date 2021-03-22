@@ -17,10 +17,13 @@ function dst(x1, y1, x2, y2, distance){
 
 function avg(/* number, number, number... */){
     let total = 0;
-    arguments.forEach(e => {
-        if(!isFinite(e) || !(e instanceof Number)) return; // filters out Infinity, negative infinity and anything that is not a number
+    for(let i in arguments){
+        let e = arguments[i];
+        if(!isFinite(e) || !(e instanceof Number)) continue; // filters out Infinity, negative infinity and anything that is not a number
         total += e;
-    });
+		print(e);
+    }
+	print(total)
     return total / arguments.length;
 }
 
@@ -64,7 +67,6 @@ module.exports = {
     citem: citem,
     cblock: cblock,
     cstatus: cstatus,
-    percent: percent,
     hexColor: hexColor,
     ModName: ModName,
     avg: avg,

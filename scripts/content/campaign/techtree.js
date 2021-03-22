@@ -4,7 +4,7 @@ const util = require("lib/util");
 const mitems = require("content/items");
 const mliquids = require("content/liquids");
 const mblocks = require("content/blocks");
-const msectors = require("campaign/sectors");
+const msectors = require("content/campaign/sectors");
 const munits = require("content/units");
 
 /**

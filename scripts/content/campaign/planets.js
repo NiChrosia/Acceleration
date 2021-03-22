@@ -1,4 +1,4 @@
-const planetGen = require("campaign/planet-gen");
+const planetGen = require("content/campaign/planet-gen");
 
 const cryogenia = extend(Planet, "cryogenia", Planets.sun, 3, 1, {
 	generator: planetGen.cryogenia,

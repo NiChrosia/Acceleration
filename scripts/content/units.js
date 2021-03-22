@@ -2,7 +2,7 @@
 let {cunit} = require("lib/util");
 
 // Loading
-require("libs/loader")({
+require("lib/loader")({
     units: {
         core: {
             delta: 0

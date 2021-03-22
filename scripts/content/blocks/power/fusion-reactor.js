@@ -64,7 +64,7 @@ fusionReactor.buildType = () => extend(ImpactReactor.ImpactReactorBuild, fusionR
 		// Liquid region code
 		
         Draw.color(mliquids.quarkPlasma.color);
-		Draw.alpha(util.percent(this.liquids.get(mliquids.quarkPlasma), this.block.liquidCapacity));
+		Draw.alpha((this.liquids.get(mliquids.quarkPlasma) / this.block.liquidCapacity));
 		Draw.rect(util.getTextureName(blockName, "liquid"), this.x, this.y);
 		
 		Draw.reset();

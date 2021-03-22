@@ -1,4 +1,4 @@
-const planets = require("campaign/planets");
+const planets = require("content/campaign/planets");
 
 // Cryogenia
 /// Glacial Wasteland
