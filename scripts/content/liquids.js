@@ -1,20 +1,20 @@
 // Imports
-
-const util = require("lib/util");
+let {cliquid} = require("lib/util");
 
 // Loading
-
-require("content/liquids/arctifluid");
-require("content/liquids/quark-plasma");
+require("lib/loader")({
+    liquids: {
+        arctifluid: 0,
+        "quark-plasma": 0
+    }
+});
 
 // Assignments
-
-const arctifluid = util.cliquid("arctifluid");
-const quarkPlasma = util.cliquid("quark-plasma");
+const arctifluid = cliquid("arctifluid");
+const quarkPlasma = cliquid("quark-plasma");
 
 // Exports
-
 module.exports = {
-	arctifluid: arctifluid,
-	quarkPlasma: quarkPlasma
+    arctifluid: arctifluid,
+    quarkPlasma: quarkPlasma
 };
