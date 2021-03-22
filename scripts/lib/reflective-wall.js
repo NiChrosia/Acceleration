@@ -3,6 +3,7 @@ function reflectiveWall(name, chancePercent, attributes) {
 	wall.absorbLasers = true
 	
 	wall.buildType = () => extend(Wall.WallBuild, wall, {
+		chanceRefract: chancePercent,
 		collision(bullet) {
 			this.damage(bullet.damage * (this.team == Team.derelict ? 2 : 1))
 			
@@ -10,27 +11,37 @@ function reflectiveWall(name, chancePercent, attributes) {
 			let pierce = bulletType == LaserBulletType
 			let rot = bullet.rotation() + 180
 			rot = rot > 360 ? rot -= 360 : rot
-			if (pierce && Mathf.chance(chancePercent / 100)) {
+			if (pierce && Mathf.chance(this.chanceRefract / 100)) {
+				// Calculate collision point
+				let bulletCollisionLength = Damage.findLaserLength(bullet, bullet.type.length);
+				let bulletVec = Vec2();
+				bulletVec.trns(bullet.rotation(), bulletCollisionLength);
+				let collisionX = bullet.x + bulletVec.x;
+				let collisionY = bullet.y + bulletVec.y;
 				
-				// Handling for new collisions
-				if (bullet.data === null) {
-					bullet.data = {}
-				};
-				if (bullet.data.collisions == undefined) {
-					bullet.data.collisions = 1
-				};
+				// Angle to bullet collision
+				let angle = this.angleTo(collisionX, collisionY);
 				
-				// Increment collisions
-				bullet.data.collisions++
-				if (bullet.data.collisions <= 2) {
-					// Fix for the left and right sides, as they require slightly different handling
-					let sideways = (Mathf.round(bullet.rotation() / 90) % 2)
-					sideways = sideways == 0 ? 1 : 0
-					
-					// Refract the bullet
-					const shoot = bullet.type != null ? () => {bullet.type.create({}, this.team, this.x, this.y, 360 - bullet.rotation() + (180 * sideways))} : () => {}
-					Vars.state.paused ? null : Timer.schedule(shoot, 0.1)
-				};
+				// Calculate rotation to bullet
+				let rotation = Mathf.round(angle / 90)
+				
+				// Calculate directions
+				let left = rotation == 2;
+				let right = rotation == 0;
+				let bottom = rotation == 3;
+				let top = rotation == 1;
+				
+				// Calculate difference in x and y
+				let diffX = (left ? bullet.x - collisionX : (right ? collisionX - bullet.x : 0)) * Vars.tilesize
+				let diffY = (bottom ? bullet.y - collisionY : (top ? collisionY - bullet.y : 0)) * Vars.tilesize
+				
+				// Get new angle
+				let refractAngle = this.angleTo(bullet.x + diffX, bullet.y + diffY)
+				print(refractAngle)
+				
+				// Refract the bullet
+				const shoot = bullet.type != null ? () => {bullet.type.create({}, this.team, collisionX, collisionY, refractAngle)} : () => {}
+				Vars.state.paused ? null : Timer.schedule(shoot, 0.1)
 			}
 			return !pierce
 		}
@@ -40,11 +51,3 @@ function reflectiveWall(name, chancePercent, attributes) {
 }
 
 module.exports = reflectiveWall
-
-/** TODO make the mechanics work better, as in calculating the angle via difference in x, for example:
-WWWWWWWWWW
-  L
- L
-T
-would be calculated via the difference in x of the turret and the end x to get the angle to the x multiplied by two and the y the same as turret.
-*/
