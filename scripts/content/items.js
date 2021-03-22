@@ -1,20 +1,20 @@
 // Imports
-
-const util = require("lib/util");
+let {citem} = require("lib/util");
 
 // Loading
-
-require("content/items/aerogel");
-require("content/items/fusion-compound");
+require("lib/loader")({
+    items: {
+        aerogel: 0,
+        "fusion-compound": 0
+    }
+});
 
 // Assignments
-
-const aerogel = util.citem("aerogel");
-const fusionCompound = util.citem("fusion-compound");
+const aerogel = citem("aerogel");
+const fusionCompound = citem("fusion-compound");
 
 // Exports
-
 module.exports = {
-	aerogel: aerogel,
-	fusionCompound: fusionCompound
+    aerogel: aerogel,
+    fusionCompound: fusionCompound
 };

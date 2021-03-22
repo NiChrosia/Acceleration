@@ -1,37 +1,41 @@
 // Imports
-
-const util = require("lib/util");
+let {cunit} = require("lib/util");
 
 // Loading
+require("libs/loader")({
+    units: {
+        core: {
+            delta: 0
+        },
+        "lightning-air": {
+            ion: 0,
+            spark: 0,
+            energy: 0,
+            lightning: 0,
+            tempest: 0
+        }
+    }
+});
 
-require("content/units/core/delta");
-
-require("content/units/lightning-air/ion");
-require("content/units/lightning-air/spark");
-require("content/units/lightning-air/energy");
-require("content/units/lightning-air/lightning");
-require("content/units/lightning-air/tempest");
 
 // Assignments
+const delta = cunit("delta");
 
-const delta = util.cunit("delta");
-
-const ion = util.cunit("ion");
-const spark = util.cunit("spark");
-const energy = util.cunit("energy");
-const lightning = util.cunit("lightning");
-const tempest = util.cunit("tempest");
+const ion = cunit("ion");
+const spark = cunit("spark");
+const energy = cunit("energy");
+const lightning = cunit("lightning");
+const tempest = cunit("tempest");
 
 // Exports
-
 module.exports = {
-	// Core units
-	delta: delta,
-	
-	// Lightning air
-	ion: ion,
-	spark: spark,
-	energy: energy,
-	lightning: lightning,
-	tempest: tempest
+    // Core units
+    delta: delta,
+    
+    // Lightning air
+    ion: ion,
+    spark: spark,
+    energy: energy,
+    lightning: lightning,
+    tempest: tempest
 };
