@@ -39,14 +39,6 @@ function reflectiveWall(name, chancePercent, attributes) {
 				let refractX = bullet.x + diffX * (right ? -1 : 1);
 				let refractY = bullet.y + diffY * (top ? -1 : 1);
 				
-				print("[accent]-==========================================================================-[]")
-				print("[accent]Left:[] " + left + ", [accent]Right:[] " + right + ", [accent]Bottom:[] " + bottom + ", [accent]Top:[] " + top)
-				print("[accent]DiffX:[] " + (diffX) + ", [accent]DiffY:[] " + (diffY))
-				print("[accent]BulletX:[] " + (bullet.x) + ", [accent]BulletY:[] " + (bullet.y))
-				print("[accent]X:[] " + refractX + ", [accent]Y:[] " + refractY)
-				Fx.explosion.at(refractX, refractY)
-				Fx.commandSend.at(refractX, refractY)
-				
 				// Get new angle
 				let refractAngle = this.angleTo(refractX, refractY)
 				print(refractAngle)
