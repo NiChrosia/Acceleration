@@ -31,6 +31,20 @@ Core|`silicon`, `phase-fabric`|720
 `frost`|`3x3`|Snowflake|Shoots razor sharp whirling cryocatalyst shards. Requires large amounts of power for sharpening and hyperrotation. Bullets temporarily disarm enemies.
 `snowflake`|`4x4`|Sleet|Shoots insanely sharpened projectiles at enemies. Requires massive amounts of power for laser cutting and spinning the projectile to extreme speeds. Bullets slice through enemies, resulting in usually fatal damage.
 
+## Accelerated
+|`parent`|`size`|`name`|`description`|
+|:-:|:-:|:-:|:-:|
+`gate`|`2x2`|Lepton|Accelerates small objects into fast piercing projectiles.
+`lepton`|`3x3`|Neutrino|Accelerates medium-size objects to ultrafast speeds. Capable of massive pierce.
+`neutrino`|`4x4`|Tachyon|A miniature particle accelerator. Accelerates objects to near light speed and launches them. Can pierce several hundred walls. Highly expensive to operate.
+
+### Ammo Types
+|`name`|`ammoType`|`powerUsage`|
+|:-:|:-:|:-:|
+Lepton|`copper`, `titanium`, `silicon`|60
+Neutrino|`silicon`, `titanium`, `thorium`, `surge-alloy`|180
+Tachyon|`thorium`, `surge-alloy`, `plastanium`, `blast-compound`, `phase-fabric`|720
+
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|
 |:-:|:-:|:-:|

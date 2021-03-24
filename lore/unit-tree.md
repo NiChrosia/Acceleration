@@ -1,4 +1,78 @@
-# Turret Tree
+# Unit Tree
+
+## Reassemblers
+
+### Additive Reassembler
+An advanced reconstructor that fully reassembles units.  
+Upgrades inputted units to the second tier.
+
+#### `stats:`
+|**`stat`**|**`value`**|
+|:-:|:-:|
+`size`|`3`
+`health`|`480`
+`powerUse`|`240`
+`itemCapacity`|`90`
+`productionTime`|`15`
+`research`|`multiplicative-reconstructor`
+
+|**`unit`**|**`upgrade`**|
+|:-:|:-:|
+`ion`|`spark`
+
+### Multiplicative Reassembler
+An advanced reconstructor that fully reassembles units.  
+Upgrades inputted units to the third tier.
+
+#### `stats:`
+|**`stat`**|**`value`**|
+|:-:|:-:|
+`size`|`5`
+`health`|`1400`
+`powerUse`|`480`
+`itemCapacity`|`270`
+`productionTime`|`40`
+`research`|`additive-reassembler`
+
+|**`unit`**|**`upgrade`**|
+|:-:|:-:|
+`spark`|`plasma`
+
+### Exponential Reassembler
+An advanced reconstructor that fully reassembles units.  
+Upgrades inputted units to the fourth tier.
+
+#### `stats:`
+|**`stat`**|**`value`**|
+|:-:|:-:|
+`size`|`7`
+`health`|`2400`
+`powerUse`|`1040`
+`itemCapacity`|`775`
+`productionTime`|`120`
+`research`|`multiplicative-reassembler`
+
+|**`unit`**|**`upgrade`**|
+|:-:|:-:|
+`plasma`|`discharge`
+
+### Tetrative Reassembler
+An advanced reconstructor that fully reassembles units.  
+Upgrades inputted units to the fifth and final tier.
+
+#### `stats:`
+|**`stat`**|**`value`**|
+|:-:|:-:|
+`size`|`9`
+`health`|`3800`
+`powerUse`|`2000`
+`itemCapacity`|`1550`
+`productionTime`|`320`
+`research`|`exponential-reassembler`
+
+|**`unit`**|**`upgrade`**|
+|:-:|:-:|
+`discharge`|`aurora`
 
 ## Controller tree
 
