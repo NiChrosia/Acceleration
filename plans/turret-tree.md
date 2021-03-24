@@ -31,6 +31,13 @@ Core|`silicon`, `phase-fabric`|720
 `frost`|`3x3`|Snowflake|Shoots razor sharp whirling cryocatalyst shards. Requires large amounts of power for sharpening and hyperrotation. Bullets temporarily disarm enemies.
 `snowflake`|`4x4`|Sleet|Shoots insanely sharpened projectiles at enemies. Requires massive amounts of power for laser cutting and spinning the projectile to extreme speeds. Bullets slice through enemies, resulting in usually fatal damage.
 
+### Ammo Types
+|`name`|`ammoType`|`powerUsage`|
+|:-:|:-:|:-:|
+Frost|`cryocatalyst`|`0`
+Snowflake|`cryocatalyst`|`180`
+Sleet|`cryocatalyst`|`720`
+
 ## Accelerated
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
@@ -44,13 +51,6 @@ Core|`silicon`, `phase-fabric`|720
 Lepton|`copper`, `titanium`, `silicon`|60
 Neutrino|`silicon`, `titanium`, `thorium`, `surge-alloy`|180
 Tachyon|`thorium`, `surge-alloy`, `plastanium`, `blast-compound`, `phase-fabric`|720
-
-### Ammo Types
-|`name`|`ammoType`|`powerUsage`|
-|:-:|:-:|:-:|
-Frost|`cryocatalyst`|`0`
-Snowflake|`cryocatalyst`|`180`
-Sleet|`cryocatalyst`|`720`
 
 ## Support
 |`parent`|`size`|`name`|`description`|

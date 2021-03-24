@@ -1,19 +1,4 @@
-# Cryogenia:
-
-A unique frozen planet whose properties originate from not distance to a star but a strange ore found on the surface.  
-The core of this planet has extreme conditions hotter than even the core of the sun.  
-It contains volatile reactions capable of making quark plasma, resulting in the magnetic field being extremely strong.
-
-# Cryogem
-
-This ore is called a cryogem due to its powerful property of extreme cold.  
-
-## Refined cryogem: Arctifluid and Cryocatalyst
-
-This ore can also be harnessed for use in extremely cold coolant.  
-This ore can be then refined into a cryocatalyst, a powerful material used in ammunition, reactors, and special weapons.
-
-# Individual Sector lore:
+# Sectors
 
 ## Glacial Glade
 
