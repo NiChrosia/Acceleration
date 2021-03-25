@@ -24,7 +24,7 @@ Capacitor|`silicon`, `phase-fabric`, `surge-alloy`|180
 |:-:|:-:|:-:|
 Core|`silicon`, `phase-fabric`|720
 
-## Cryogenic
+## Cryogenic (Railgun)
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
 `gate`|`2x2`|Frost|Utilizes cryocatalyst for its cryogenic properties. Fires clumps of damaging cryocatalyst at enemies. Slows enemy weapons down in a radius around the impact.
@@ -38,12 +38,12 @@ Frost|`cryocatalyst`|`0`
 Snowflake|`cryocatalyst`|`180`
 Sleet|`cryocatalyst`|`720`
 
-## Accelerated
+## Accelerated (Machine Gun)
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
-`gate`|`2x2`|Lepton|Accelerates small objects into fast piercing projectiles.
-`lepton`|`3x3`|Neutrino|Accelerates medium-size objects to ultrafast speeds. Capable of massive pierce.
-`neutrino`|`4x4`|Tachyon|A miniature particle accelerator. Accelerates objects to near light speed and launches them. Can pierce several hundred walls. Highly expensive to operate.
+`gate`|`2x2`|Lepton|Rapidly fires magnetically accelerated projectiles.
+`lepton`|`3x3`|Neutrino|Swiftly fires electromagnetically propulsed projectiles. Medium piece ability.
+`neutrino`|`4x4`|Tachyon|Expeditiously fires ultra-high velocity projectiles. Approximately an eighth the speed of a railgun. High pierce ability.
 
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|

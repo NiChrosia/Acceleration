@@ -151,7 +151,7 @@ Agile controller ship with a damaging electric aura. Shoots overloading energy b
 Controller ship with multiple shields.  
 - Inner shield: Very small and surrounds a small radius around the unit, but with a high health. Takes an extremely long time to regen.  
 - Outer shield: Large area, but significantly less health. Regenerates very rapidly.  
-Shoots dual energy lasers.
+Shoots dual energy machine guns.
 
 #### `requirements:`
 |`amount`|`material`|
@@ -178,6 +178,7 @@ Shoots dual energy lasers.
 
 ### Aurora
 A lithe controller ship, with a quad shield, and a revitalizing field.  
+Has a mounted railgun, as well as two cryo-machine guns. Weapons do minimal damage yet inflict freezing status effects.  
 - Innermost Shield: Massive amount of health, ultralow regen speed. Overdrives nearby units and buildings to 200%  
 - Inner shield: Large amount of health, regenerates slowly.  
 - Outer shield: Medium amount of health, and regenerates quickly.  
