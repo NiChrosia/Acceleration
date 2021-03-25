@@ -34,9 +34,9 @@ load({
 
 // Successful loading
 Events.on(ClientLoadEvent, () => {
-    const addCheck = (key, default) => {
+    const addCheck = (key, _default) => {
 		Vars.ui.settings.graphics.checkPref(key, Core.settings.getBool(key));
-		Core.settings.defaults(key, default);
+		Core.settings.defaults(key, _default);
 	}
     addCheck("puddle-status-zone", false);
     
