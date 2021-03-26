@@ -20,6 +20,10 @@ const liquefying = util.circleEffect(quarkColor, 40);
 const liquefyingSquare = util.squareShieldEffect(48, quarkColor, 40);
 const liquefyingLineSquare = util.lineSquareEffect(48, quarkColor, 40);
 
+const electrifying = util.circleEffect(Pal.surge, 40);
+const electricSquare = util.squareShieldEffect(24, Pal.surge, 12);
+const electricLineSquare = util.lineSquareEffect(24, Pal.surge, 12);
+
 const purpleLaserCharge = new Effect(80, 100, e => {
 	Draw.color(purple);
 	Lines.stroke(e.fin() * 2);
@@ -66,5 +70,8 @@ module.exports = {
 	liquefyingSquare: liquefyingSquare,
 	liquefyingLineSquare: liquefyingLineSquare,
 	fusionCloud: fusionCloud,
-	fusionShockwave: fusionShockwave
+	fusionShockwave: fusionShockwave,
+	electrifying: electrifying,
+	electricSquare: electricSquare,
+	electricLineSquare: electricLineSquare
 };

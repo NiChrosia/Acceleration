@@ -1,7 +1,7 @@
 const ModName = this.modName + "-";
 
 const getTextureName = (blockName, name) => ModName + blockName + name;
-const getRegion = (blockName, name) => Core.atlas.find(ModName + blockName + !name ? "" : name);
+const getRegion = (blockName, name) => Core.atlas.find(ModName + blockName + (!name ? "" : name));
 const cblock = name => Vars.content.getByName(ContentType.block, ModName + name);
 const cliquid = name => Vars.content.getByName(ContentType.liquid, ModName + name);
 const cstatus = name => Vars.content.getByName(ContentType.status, ModName + name);

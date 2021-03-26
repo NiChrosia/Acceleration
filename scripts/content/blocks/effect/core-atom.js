@@ -1,6 +1,5 @@
 // Imports
 
-const mitems = require("content/items");
 const munits = require("content/units");
 const util = require("lib/util");
 
@@ -69,8 +68,7 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 		Items.lead, 24000,
 		Items.thorium, 12000,
 		Items.silicon, 12000,
-		Items.surgeAlloy, 8000,
-		mitems.aerogel, 8000
+		Items.surgeAlloy, 8000
 	),
 	itemCapacity: 32000,
 	unitCapModifier: 48,

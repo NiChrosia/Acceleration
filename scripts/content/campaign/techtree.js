@@ -55,11 +55,6 @@ const nodeProduce = (parent, contentType, requirements, objectives) => {
 
 // Research Nodes
 
-// Items
-
-nodeProduce(Items.phaseFabric, mitems.aerogel, null, null, null);
-nodeProduce(Items.blastCompound, mitems.fusionCompound, null, null);
-
 // Liquids
 
 nodeProduce(Liquids.cryofluid, mliquids.arctifluid, null, null);
@@ -70,26 +65,10 @@ nodeProduce(Liquids.slag, mliquids.quarkPlasma, null, null);
 //   Effect
 
 node(Blocks.coreNucleus, mblocks.coreAtom, null, null);
-node(Blocks.shockMine, mblocks.surgeMine, null, null);
-
-//    Power
-
-node(Blocks.impactReactor, mblocks.fusionReactor, null, null);
 
 //    Production
 
-node(Blocks.phaseWeaver, mblocks.aerogelWeaver, null, null);
 node(Blocks.cryofluidMixer, mblocks.arctifluidSynthesizer, null, null);
-
-//    Turrets
-
-node(Blocks.tsunami, mblocks.flood, null, null);
-node(Blocks.foreshadow, mblocks.harbinger, null, null);
-node(Blocks.cyclone, mblocks.storm, null, null);
-
-//    Storage
-
-node(Blocks.vault, mblocks.repository, null, null);
 
 //	  Walls
 
@@ -107,4 +86,3 @@ node(munits.lightning, munits.tempest, null, null);
 // Sectors
 
 node(SectorPresets.planetaryTerminal, msectors.glacialGlade, null, Seq.with(new Objectives.SectorComplete(SectorPresets.planetaryTerminal)));
-// node(null, msectors.volcanicMountains, null, null);

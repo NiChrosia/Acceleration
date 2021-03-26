@@ -148,9 +148,7 @@ Agile controller ship with a damaging electric aura. Shoots overloading energy b
 `range`|`0`
 
 ### Discharge
-Controller ship with multiple shields.  
-- Inner shield: Very small and surrounds a small radius around the unit, but with a high health. Takes an extremely long time to regen.  
-- Outer shield: Large area, but significantly less health. Regenerates very rapidly.  
+Controller ship with a powerful compressed shield. Also regenerates shields of nearby units. 
 Shoots dual energy machine guns.
 
 #### `requirements:`
@@ -177,12 +175,9 @@ Shoots dual energy machine guns.
 `range`|`0`
 
 ### Aurora
-A lithe controller ship, with a quad shield, and a revitalizing field.  
-Has a mounted railgun, as well as two cryo-machine guns. Weapons do minimal damage yet inflict freezing status effects.  
-- Innermost Shield: Massive amount of health, ultralow regen speed. Overdrives nearby units and buildings to 200%  
-- Inner shield: Large amount of health, regenerates slowly.  
-- Outer shield: Medium amount of health, and regenerates quickly.  
-- Outermost shield: Small amount of health, regenerates ultrafast.
+A lithe controller ship, with a ultracompressed shield, and a revitalizing field (Regenerating, Overdriving, and Shield Regeneration).  
+Has a mounted railgun, as well as two cryo-energy HMGs.  
+Shield has large amount of health, but regen and cooldown are very slow.
 
 #### `requirements:`
 |`amount`|`material`|
@@ -206,3 +201,22 @@ Has a mounted railgun, as well as two cryo-machine guns. Weapons do minimal dama
 `commandLimit`|`0`
 `itemCapacity`|`0`
 `range`|`0`
+
+## Plutonic Tree
+Color: `d44c08`
+
+### Pit
+
+An extremely hot spider-like mech. Fires lethally hot missiles.
+
+### Shaft
+
+A fast spider-like mech. Fires piercing lasers and close-range piercing blasts.
+
+### Chasm
+
+An extremely fast spider mech. Has two shock HMGs.
+
+### Abyss
+
+### Void

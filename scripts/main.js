@@ -34,11 +34,11 @@ load({
 
 // Successful loading
 Events.on(ClientLoadEvent, () => {
-    const addCheck = (key, _default) => {
+    const addCheck = (key, default_value) => {
 		Vars.ui.settings.graphics.checkPref(key, Core.settings.getBool(key));
-		Core.settings.defaults(key, _default);
+		Core.settings.defaults(key, default_value);
 	}
-    addCheck("puddle-status-zone", false);
+    addCheck("status-zone", false);
     
     Log.info("Mod [accent]Acceleration[] loaded successfully.");
 });

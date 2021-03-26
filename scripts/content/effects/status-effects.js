@@ -22,9 +22,17 @@ const liquefying = extend(StatusEffect, "liquefying", {
 	effect: meffects.liquefying
 });
 
+const shocked = extend(StatusEffect, "shocked", {
+	damage: 3.5,
+	color: Pal.surge,
+	effect: meffects.electrifying,
+	effectChance: 0.85
+});
+
 module.exports = {
 	arctifreezing: arctifreezing,
-	liquefying: liquefying
+	liquefying: liquefying,
+	shocked: shocked
 };
 
 /*
