@@ -1,36 +1,45 @@
-const siliconBullet = extend(BasicBulletType, {
-	width: 9,
-	height: 12,
-	damage: 12,
-	lifetime: 70,
-	speed: 3.5,
-	homingRange: 60,
-	homingPower: 0.08
-});
-
-const phaseBullet = extend(BasicBulletType, {
-	width: 9,
-	height: 12,
-	damage: 28,
-	lifetime: 120,
-	speed: 3.4,
-	homingRange: 180,
-	homingPower: 0.08
-});
+const {getTextureName} = require("lib/util");
+const arBullets = require("content/bullets/artillery-bullets");
 
 const gate = extend(ItemTurret, "gate", {
 	rotateSpeed: 8,
 	health: 1150,
-	range: 195,
-	reloadTime: 30,
+	range: 270,
+	reloadTime: 85,
 	size: 2,
+	recoilAmount: 4,
 	buildVisibility: BuildVisibility.shown,
-	category: Category.turret
+	category: Category.turret,
+	inaccuracy: 1.5,
+	shootSound: Sounds.artillery
 });
 
-gate.consumes.power(1)
-
 gate.ammo(
-	Items.silicon, siliconBullet,
-	Items.phaseFabric, phaseBullet
+	Items.graphite, arBullets.railArtilleryDense,
+	Items.silicon, arBullets.railArtilleryHoming,
+	Items.pyratite, arBullets.railArtilleryIncendiary,
+	Items.metaglass, arBullets.railArtilleryGlass
 )
+
+gate.consumes.power(1);
+
+let blockName = "gate-"
+
+gate.buildType = () => extend(ItemTurret.ItemTurretBuild, gate, {
+	tr3: new Vec2,
+	draw() {
+		this.tr3 = new Vec2;
+		this.tr3.trns(this.rotation, -this.recoil)
+		
+		Draw.z(Layer.turret + 1)
+		
+		Draw.alpha(this.logicControlled() ? 1 : 0);
+		Draw.rect(getTextureName(blockName, "logic-overlay"), this.x + this.tr3.x, this.y + this.tr3.y, this.rotation - 90);
+		
+		Draw.alpha(1);
+		
+		Draw.z(Layer.block)
+		
+		this.super$draw();
+	}
+});

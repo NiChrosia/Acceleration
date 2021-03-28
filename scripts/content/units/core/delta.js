@@ -1,4 +1,4 @@
-const healRepeater = require("content/weapons/heal-repeater").healRepeater;
+const healRepeater = require("content/weapons/heal-repeater");
 
 const deltaWeapons = Seq.with(
 	healRepeater

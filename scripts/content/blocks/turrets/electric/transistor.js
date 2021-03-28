@@ -17,5 +17,6 @@ const transistor = extend(PowerTurret, "transistor", {
 	spread: 6,
 	buildVisibility: BuildVisibility.shown,
 	category: Category.turret,
-	shootType: bullet
+	shootType: bullet,
+	shootSound: Sounds.lasershoot
 });

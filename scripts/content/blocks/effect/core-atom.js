@@ -11,7 +11,7 @@ const baseColor = Color.valueOf("84f491");
 const healPercent = 45;
 const efficiency = 1;
 const reload = 400;
-const blockName = "core-atom-";
+const blockName = "core-atom";
 const sizeCap = 24;
 const lineCap = 5;
 const sizeSpeed = 0.15;
@@ -55,8 +55,8 @@ const coreAtom = extend(CoreBlock, "core-atom", {
 	},
 	icons() {
 		return [
-			util.getRegion(blockName, null),
-			util.getRegion(blockName, "team")
+			util.getRegion(blockName, ""),
+			util.getRegion(blockName, "-team")
 		]
 	},
 	size: 6,
@@ -81,7 +81,7 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 	squareSize: 0,
 	lineSize: 0,
 	turretCooldown: 0,
-	turretRotation: 0,
+	turretRotation: 270,
 	turretTempRotation: 0,
 	target: {
 		team: Team.sharded,
@@ -93,13 +93,7 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		return Units.bestTarget(team, x, y, range, e => !e.dead, b => true, sort)
 	},
 	posTarget(target) {
-		let turretTempRotation = target.team != this.team ? this.angleTo(target.x, target.y) : this.turretRotation;
-		if (this.turretRotation > turretTempRotation) {
-			this.turretRotation -= turretRotateSpeed
-		};
-		if (this.turretRotation < turretTempRotation) {
-			this.turretRotation += turretRotateSpeed
-		};
+		this.target.team != Team.sharded ? this.turretRotation = Angles.moveToward(this.turretRotation, this.angleTo(target.x, target.y), turretRotateSpeed * Time.delta) : null
 	},
 	validateShoot(target, rotation, cooldown) {
 		let angleValid = util.equalByAmount(this.angleTo(target.x, target.y), rotation, 5);
@@ -164,15 +158,11 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		this.validateMend(this.charge) ? this.mend() : null
 		
 		// Increase turret charge
-		this.turretCooldown++;
+		this.turretCooldown += 1 * Time.delta;
 		
 		// Calculate target
 		let potentialTarget = this.findTarget(this.team, this.x, this.y, range, e => e.maxHealth)
 		this.target = potentialTarget != null ? potentialTarget : this.target
-		/*Log.info("[accent]-")
-		Log.info(this.team)
-		Log.info(potentialTarget)
-		Log.info(this.target)*/
 		
 		// Rotate towards target
 		this.posTarget(this.target);
@@ -194,16 +184,16 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		this.super$draw();
 		
 		// Base sprite
-		Draw.rect(util.getTextureName(blockName, null), this.x, this.y);
+		Draw.rect(util.getTextureName(blockName, ""), this.x, this.y);
 		
 		// Team sprite
 		Draw.color(this.team.color);
-		Draw.rect(util.getTextureName(blockName, "team"), this.x, this.y);
+		Draw.rect(util.getTextureName(blockName, "-team"), this.x, this.y);
 		Draw.reset();
 		
 		// Turret sprite
 		Draw.z(Layer.turret);
-		Draw.rect(util.getTextureName(blockName, "turret"), this.x + this.vec.x, this.y + this.vec.y, this.turretRotation);
+		Draw.rect(util.getTextureName(blockName, "-turret"), this.x + this.vec.x, this.y + this.vec.y, this.turretRotation);
 		Draw.reset();
 		
 		if (!Vars.state.paused) {
@@ -225,7 +215,7 @@ coreAtom.buildType = () => extend(CoreBlock.CoreBuild, coreAtom, {
 		Draw.z(Layer.block);
 		Draw.color(baseColor);
 		Draw.alpha(Mathf.absin(Time.time, 10, 1));
-		Draw.rect(util.getTextureName(blockName, "mend"), this.x, this.y);
+		Draw.rect(util.getTextureName(blockName, "-mend"), this.x, this.y);
 		Draw.reset();
 		
 		// Mend overlay, goes in to out, with line size decreasing

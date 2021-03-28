@@ -10,7 +10,8 @@ const healRepeater = extend(Weapon, "heal-repeater", {
 	bullet: electricBullets.deltaHealBullet,
 	reload: 16,
 	x: 1,
-	y: 2
+	y: 2,
+	shootSound: Sounds.lasershoot
 });
 
 // Exports

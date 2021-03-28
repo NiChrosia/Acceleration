@@ -4,7 +4,7 @@
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
 `arc`|`1x1`|Transistor|Shoots small electric bolts with a high power consumption.
-`transistor`|`2x2`|Gate|Shoots homing electric bullets. Requires silicon & power as ammo.
+`transistor`|`2x2`|Gate|Shoots electromagnetically accelerated artillery.
 `gate`|`3x3`|Capacitor|Shoots shocking bullets with a damaging electric field.
 
 ### Ammo Types

@@ -206,17 +206,18 @@ Shield has large amount of health, but regen and cooldown are very slow.
 Color: `d44c08`
 
 ### Pit
-
-An extremely hot spider-like mech. Fires lethally hot missiles.
+A dense ground unit. Quickly fires standard bullets.
 
 ### Shaft
-
-A fast spider-like mech. Fires piercing lasers and close-range piercing blasts.
+A very dense ground unit. Rapidly fires standard bullets, and fires streams of flame at close range.
 
 ### Chasm
-
-An extremely fast spider mech. Has two shock HMGs.
+A condensed ground unit. Fires artillery bullets at fast speeds. Artillery bullets explode into a fireball upon impact.
 
 ### Abyss
+A heavily condensed ground unit. Has a very small shield with large amounts of health. Regenerates very slowly.  
+Fires shocking blasts at close-range, and large jets of flame.
 
 ### Void
+An ultracompressed ground unit. Has an extremely small shield with massive health. Regenerates slowly.  
+Fires massive jets of flame at nearby enemies, and huge shocking blasts at close-range.
