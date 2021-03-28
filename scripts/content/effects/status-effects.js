@@ -22,27 +22,16 @@ const liquefying = extend(StatusEffect, "liquefying", {
 	effect: meffects.liquefying
 });
 
-const shocked = extend(StatusEffect, "shocked", {
-	damage: 3.5,
-	color: Pal.surge,
-	effect: meffects.electrifying,
-	effectChance: 0.85
-});
-
 module.exports = {
 	arctifreezing: arctifreezing,
-	liquefying: liquefying,
-	shocked: shocked
+	liquefying: liquefying
 };
 
 /*
-const permafrost = extend(StatusEffect, "permafrost", {
+const effect = extend(StatusEffect, "name", {
 	update(unit, time) {
 		this.super$update(unit, time);
-		if (Mathf.chance(0.85 * Time.delta)) {
-			unit.apply(glaciafreezing, time);
-			unit.apply(arctifreezing, time);
-		};
+		code();
 	}
 });
-Discontinued, but still here as reference code*/
+*/

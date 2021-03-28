@@ -24,7 +24,8 @@ require("lib/loader")({ // Starts from scripts/content
 		turrets: {
 			electric: {
 				transistor: 0,
-				gate: 0
+				gate: 0,
+				capacitor: 0
 			}
 		}
     }
@@ -43,6 +44,7 @@ const metaglassWallLarge = cblock("metaglass-wall-large");
 
 const transistor = cblock("transistor");
 const gate = cblock("gate");
+const capacitor = cblock("capacitor");
 
 // Exports
 module.exports = {
@@ -65,5 +67,6 @@ module.exports = {
 	// Turrets
 	
 	transistor: transistor,
-	gate: gate
+	gate: gate,
+	capacitor: capacitor
 };

@@ -38,7 +38,8 @@ Events.on(ClientLoadEvent, () => {
 		Vars.ui.settings.graphics.checkPref(key, Core.settings.getBool(key));
 		Core.settings.defaults(key, default_value);
 	}
-    addCheck("status-zone", false);
+    addCheck("status-zone", true);
+	addCheck("status-zone-particles", true);
     
     Log.info("Mod [accent]Acceleration[] loaded successfully.");
 });

@@ -8,6 +8,7 @@ const cstatus = name => Vars.content.getByName(ContentType.status, ModName + nam
 const citem = name => Vars.content.getByName(ContentType.item, ModName + name);
 const cunit = name => Vars.content.getByName(ContentType.unit, ModName + name);
 const hexColor = hexValue => Color.valueOf(hexValue);
+const particleEffect = (color) => extend(ParticleEffect, {colorFrom: color, colorTo: color});
 
 function dst(x1, y1, x2, y2, distance){
     let x = x2 - x1;
@@ -75,5 +76,6 @@ module.exports = {
     circleEffect: circleEffect,
     squareShieldEffect: squareShieldEffect,
     lineSquareEffect: lineSquareEffect,
-    equalByAmount: equalByAmount
+    equalByAmount: equalByAmount,
+	particleEffect: particleEffect
 };

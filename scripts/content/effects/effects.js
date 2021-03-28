@@ -1,6 +1,6 @@
 // Imports
 
-const util = require("lib/util");
+const {circleEffect, squareShieldEffect, lineSquareEffect, particleEffect} = require("lib/util");
 
 // Constants
 
@@ -12,17 +12,19 @@ const explosionRadius = 48;
 
 // Effects
 
-const arctifreeze = util.circleEffect(arctiColor, 40);
-const arctifreezeSquare = util.squareShieldEffect(48, arctiColor, 40);
-const arctifreezeLineSquare = util.lineSquareEffect(48, arctiColor, 40);
+const arctifrozen = particleEffect(arctiColor);
+const arctifreeze = circleEffect(arctiColor, 40);
+const arctifreezeSquare = squareShieldEffect(48, arctiColor, 40);
+const arctifreezeLineSquare = lineSquareEffect(48, arctiColor, 40);
 
-const liquefying = util.circleEffect(quarkColor, 40);
-const liquefyingSquare = util.squareShieldEffect(48, quarkColor, 40);
-const liquefyingLineSquare = util.lineSquareEffect(48, quarkColor, 40);
+const liquefied = particleEffect(quarkColor);
+const liquefying = circleEffect(quarkColor, 40);
+const liquefyingSquare = squareShieldEffect(48, quarkColor, 40);
+const liquefyingLineSquare = lineSquareEffect(48, quarkColor, 40);
 
-const electrifying = util.circleEffect(Pal.surge, 40);
-const electricSquare = util.squareShieldEffect(24, Pal.surge, 12);
-const electricLineSquare = util.lineSquareEffect(24, Pal.surge, 12);
+const enflamed = particleEffect(Pal.lightOrange);
+const pyraSquare = squareShieldEffect(24, Pal.lightOrange, 12);
+const pyraLineSquare = lineSquareEffect(24, Pal.lightOrange, 12);
 
 const purpleLaserCharge = new Effect(80, 100, e => {
 	Draw.color(purple);
@@ -71,7 +73,9 @@ module.exports = {
 	liquefyingLineSquare: liquefyingLineSquare,
 	fusionCloud: fusionCloud,
 	fusionShockwave: fusionShockwave,
-	electrifying: electrifying,
-	electricSquare: electricSquare,
-	electricLineSquare: electricLineSquare
+	pyraSquare: pyraSquare,
+	pyraLineSquare: pyraLineSquare,
+	arctifrozen: arctifrozen,
+	liquefied: liquefied,
+	enflamed: enflamed
 };

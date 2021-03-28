@@ -5,7 +5,7 @@ const electricBullets = require("content/bullets/electric-bullets");
 
 // Assignment
 
-const healRepeater = extend(Weapon, "heal-repeater", {
+const healRepeater = extend(Weapon, {
 	name: util.ModName + "heal-repeater",
 	bullet: electricBullets.deltaHealBullet,
 	reload: 16,
@@ -16,6 +16,4 @@ const healRepeater = extend(Weapon, "heal-repeater", {
 
 // Exports
 
-module.exports = {
-	healRepeater: healRepeater
-};
+module.exports = healRepeater
