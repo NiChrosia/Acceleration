@@ -5,23 +5,37 @@
  * @property Pyratite    - Has a damaging burning field around it. Starts fires in the field.
 */
 
+// Imports
+
 const bulletStatusEffectZone = require("lib/events").bulletStatusEffectZone;
 const fx = require("content/effects/effects");
 
-function zoneBullet(statusEffect, shieldEffect, lineEffect, particleEffect, size, damageSelf, damage, immuneBlock, type, attributes) {
-	bullet = extend(type, attributes);
-	Events.run(Trigger.update, () => {bulletStatusEffectZone(statusEffect, shieldEffect, lineEffect, particleEffect, size, bullet, damageSelf, damage, immuneBlock)});
-	return bullet;
-};
+// Bullets
 
-const pyraBullet = zoneBullet(StatusEffects.burning, fx.pyraSquare, fx.pyraLineSquare, fx.enflamed, 12, false, true, new Seq, BasicBulletType, {
+const pyraBullet = extend(BasicBulletType, {
 	speed: 4,
 	damage: 10,
 	width: 8,
 	height: 11
-})
+});
+
+const surgeBullet = extend(BasicBulletType, {
+	speed: 4,
+	damage: 10,
+	width: 8,
+	height: 11
+});
+
+// Bullet Status Zone
+
+Events.run(Trigger.update, () => {
+	bulletStatusEffectZone(StatusEffects.burning, fx.pyraSquare, fx.pyraLineSquare, fx.enflamed, 12, pyraBullet, false, true, new Seq);
+	bulletStatusEffectZone(StatusEffects.shocked, fx.surgeSquare, fx.surgeLineSquare, Fx.none, 12, surgeBullet, false, true, new Seq);
+});
+
+// Exports
 
  module.exports = {
-	 zoneBullet: zoneBullet,
-	 pyraBullet: pyraBullet
+	pyraBullet: pyraBullet,
+	surgeBullet: surgeBullet
  };

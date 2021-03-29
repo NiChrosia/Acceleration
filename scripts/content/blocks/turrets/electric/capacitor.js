@@ -13,5 +13,6 @@ const capacitor = extend(ItemTurret, "capacitor", {
 capacitor.consumes.power(3)
 
 capacitor.ammo(
-	Items.pyratite, zoneBullets.pyraBullet
+	Items.pyratite, zoneBullets.pyraBullet,
+	Items.surgeAlloy, zoneBullets.surgeBullet
 )

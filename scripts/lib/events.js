@@ -6,7 +6,10 @@ const teams = (Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, 
 // Constants
 
 const fireChance = 0.025;
+const lightningChance = 0.05;
 const particleChance = 0.025;
+
+const lightningDamage = 14;
 
 // Puddle Status Zone
 
@@ -36,12 +39,24 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 				};
 				
 				if (damage) { // If damage blocks 
+						
+					if (Mathf.chance(fireChance * Time.delta) && statusEffect === StatusEffects.burning) {
+						let fireX = Mathf.round(Mathf.random(puddle.x - (size / 2), puddle.x + (size / 2)));
+						let fireY = Mathf.round(Mathf.random(puddle.y - (size / 2), puddle.y + (size / 2)));
+						
+						Fires.create(fireX, fireY) // Create fires if status effect is burning
+					};
+					if (Mathf.chance(lightningChance * Time.delta) && statusEffect === StatusEffects.shocked) {
+						let lightningX = Mathf.round(Mathf.random(puddle.x - (size / 2), puddle.x + (size / 2)));
+						let lightningY = Mathf.round(Mathf.random(puddle.y - (size / 2), puddle.y + (size / 2)));
+						
+						Fx.explosion.at(lightningX, lightningY);
+						Lightning.create(team != null ? team : Team.derelict, Pal.surge, lightningDamage, lightningX, lightningY, Mathf.random(0, 360), lightningLength);
+					};
+					
 					teams.each(t => { // Iterate over teams
 						
 						Vars.indexer.eachBlock(t, puddle.x, puddle.y, size, b => true, b => { // Iterate over blocks
-							if (Mathf.chance(fireChance) && statusEffect === StatusEffects.burning) {
-								Fires.create(b.tile) // Create fires if status effect is burning
-							};
 							if (immuneBlocks instanceof Seq) { // calculate whether to nullify damage depending on damageSelf and immuneBlocks
 								let nullifyDamage = false;
 								immuneBlocks.each(ib => {
@@ -91,15 +106,30 @@ function bulletStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 					};
 				}
 				
-				if (damage) {					
-					teams.each(t => { // Iterate over teams
-						if (Mathf.chance(fireChance / 6) && statusEffect === StatusEffects.burning && dst(bullet.x, bullet.y, (bullet.shooter != null ? bullet.shooter.x : bullet.x), (bullet.shooter != null ? bullet.shooter.y : bullet.y), 48)) {
-							let particleX = Mathf.round(Mathf.random(bullet.x - (size / 2), bullet.x + (size / 2)));
-							let particleY = Mathf.round(Mathf.random(bullet.y - (size / 2), bullet.y + (size / 2)));
+				if (damage) {
+					if (Mathf.chance(fireChance * Time.delta) && statusEffect === StatusEffects.burning && dst(bullet.x, bullet.y, (bullet.shooter != null ? bullet.shooter.x : bullet.x), (bullet.shooter != null ? bullet.shooter.y : bullet.y), 48)) {
+						let fireX = Mathf.round(Mathf.random(bullet.x - (size / 2), bullet.x + (size / 2)));
+						let fireY = Mathf.round(Mathf.random(bullet.y - (size / 2), bullet.y + (size / 2)));
 							
-							Fires.create(Vars.world.tile(particleX/Vars.tilesize, particleY/Vars.tilesize))
-						}
+						Fires.create(Vars.world.tile(fireX/Vars.tilesize, fireY/Vars.tilesize))
+					};
+					
+					if (Mathf.chance(lightningChance * Time.delta) && statusEffect === StatusEffects.shocked) {
+						let lightningX = Mathf.round(Mathf.random(bullet.x - (size / 2), bullet.x + (size / 2)));
+						let lightningY = Mathf.round(Mathf.random(bullet.y - (size / 2), bullet.y + (size / 2)));
 						
+						Fx.hitFuse.at(lightningX, lightningY);
+						teams.each(t => {
+							Vars.indexer.eachBlock(t, lightningX, lightningY, 32, b => true, b => {
+								b.damage(lightningDamage);
+							});
+						});
+						Units.nearby(lightningX - 16, lightningY - 16, 32, 32, u => {
+							u.damage(lightningDamage);
+						});
+					};
+					
+					teams.each(t => { // Iterate over teams						
 						Vars.indexer.eachBlock(t, bullet.x, bullet.y, size, b => true, b => { // Iterate through nearby blocks
 							if (immuneBlocks instanceof Seq) {
 								let nullifyDamage = false;

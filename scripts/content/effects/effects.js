@@ -26,6 +26,27 @@ const enflamed = particleEffect(Pal.lightOrange);
 const pyraSquare = squareShieldEffect(24, Pal.lightOrange, 12);
 const pyraLineSquare = lineSquareEffect(24, Pal.lightOrange, 12);
 
+const surgeSquare = squareShieldEffect(24, Pal.surge, 12);
+const surgeLineSquare = lineSquareEffect(24, Pal.surge, 12);
+
+const randLightning = new Effect(24, 100, e => {
+	function getLines() {
+		let start = Vec2(Vars.player.x, Vars.player.y);
+		let second = Vec2(Vars.player.x + Mathf.random(-Mathf.random(36), Mathf.random(36)), Vars.player.y + Mathf.random(-Mathf.random(36), Mathf.random(36)));
+		let lines = new Seq;
+		lines.add(start);
+		lines.add(second);
+		for(let i = 0;i < Mathf.random(5, 15);i++) {
+			lines.add(Vec2(lines.get(lines.size - 1).x + Mathf.random(-Mathf.random(24), Mathf.random(24)), lines.get(lines.size - 1).y + Mathf.random(-Mathf.random(24), Mathf.random(24))));
+		}
+		return lines
+	};
+	
+	let lines = getLines();
+	
+	Fx.lightning.at(e.x, e.y, Mathf.random(360), Pal.surge, getLines());
+})
+
 const purpleLaserCharge = new Effect(80, 100, e => {
 	Draw.color(purple);
 	Lines.stroke(e.fin() * 2);
@@ -77,5 +98,8 @@ module.exports = {
 	pyraLineSquare: pyraLineSquare,
 	arctifrozen: arctifrozen,
 	liquefied: liquefied,
-	enflamed: enflamed
+	enflamed: enflamed,
+	surgeSquare: surgeSquare,
+	surgeLineSquare: surgeLineSquare,
+	randLightning: randLightning
 };
