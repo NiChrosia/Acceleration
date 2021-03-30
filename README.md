@@ -4,17 +4,16 @@ A JavaScript mod that exists.
 
 Extremely unfinished, but I try to make commits whenever its stable, but is not currently meant to be played.
 
-
 # Contributors
 
 ## Code/General help
 
-_[QmelZ](https://github.com/QmelZ)_
+[QmelZ](https://github.com/QmelZ)
 
-_[Sh1penfire](https://github.com/Sh1penfire/)_
+[Sh1penfire](https://github.com/Sh1penfire/)
 
-_[MEEPofFaith](https://github.com/MEEPofFaith/)_
+[MEEPofFaith](https://github.com/MEEPofFaith/)
 
 ## Spriting
 
-_[Instinct Rage](https://github.com/InstinctRage)_
+[Instinct Rage](https://github.com/InstinctRage)
