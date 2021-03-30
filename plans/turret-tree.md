@@ -17,7 +17,7 @@ Capacitor|`silicon`, `phase-fabric`, `surge-alloy`|180
 ## Electric Piercing
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
-`capacitor`|`4x4`|Core|Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate. Optimially uses phase fabric as ammo.
+`capacitor`|`4x4`|Core|Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate. Optimally uses phase fabric as ammo.
 
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|

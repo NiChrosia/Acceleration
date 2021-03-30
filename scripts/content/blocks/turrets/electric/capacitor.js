@@ -4,7 +4,7 @@ const capacitor = extend(ItemTurret, "capacitor", {
 	rotateSpeed: 12,
 	health: 1650,
 	range: 210,
-	reloadTime: 48,
+	reloadTime: 24,
 	size: 3,
 	buildVisibility: BuildVisibility.shown,
 	category: Category.turret
@@ -13,6 +13,8 @@ const capacitor = extend(ItemTurret, "capacitor", {
 capacitor.consumes.power(3)
 
 capacitor.ammo(
+	Items.sporePod, zoneBullets.sporeBullet,
 	Items.pyratite, zoneBullets.pyraBullet,
+	Items.thorium, zoneBullets.thoriumBullet,
 	Items.surgeAlloy, zoneBullets.surgeBullet
 )

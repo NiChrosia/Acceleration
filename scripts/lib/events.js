@@ -1,6 +1,6 @@
 // Imports
 
-const {dst} = require("lib/util");
+const {dst, squareShieldEffect, lineSquareEffect, particleEffect} = require("lib/util");
 const teams = (Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue)) // Slightly increased performance in campaign.
 
 // Constants
@@ -13,7 +13,7 @@ const lightningDamage = 14;
 
 // Puddle Status Zone
 
-function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, particleEffect, size, liquid, damageSelf, damage, immuneBlocks) {
+function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, zoneParticleEffect, size, liquid, damage, immuneBlocks) {
 	if (!Vars.state.paused) {
 		Groups.puddle.each(puddle => { // Iterate over puddles
 			let build;
@@ -26,8 +26,8 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 			if (puddle.liquid == liquid) {
 				(Core.settings.getBool("status-zone") && Core.settings.getBool("animatedshields")) ? shieldEffect.at(puddle.x, puddle.y) : lineEffect.at(puddle.x, puddle.y); // If animated shields and animated status zone is on, do the shield effect. Otherwise, use the line effect.
 				Units.nearby(puddle.x - (size / 2), puddle.y - (size / 2), size, size, u => {
-					if (!u.isDead) {
-						damageSelf && (team != null ? (u.team == team) : false) ? u.apply(statusEffect, 40) : null; // Depending on damageSelf, damage unit.
+					if (!u.isDead && damage) {
+						u.apply(statusEffect, 40);
 					};
 				});
 				
@@ -35,7 +35,7 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 					let particleX = Mathf.round(Mathf.random(puddle.x - (size / 2), puddle.x + (size / 2)));
 					let particleY = Mathf.round(Mathf.random(puddle.y - (size / 2), puddle.y + (size / 2)));
 					
-					particleEffect.at(particleX, particleY);
+					zoneParticleEffect.at(particleX, particleY);
 				};
 				
 				if (damage) { // If damage blocks 
@@ -60,7 +60,7 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 							if (immuneBlocks instanceof Seq) { // calculate whether to nullify damage depending on damageSelf and immuneBlocks
 								let nullifyDamage = false;
 								immuneBlocks.each(ib => {
-									nullifyDamage = nullifyDamage ? nullifyDamage : (ib == b.block) || (damageSelf ? (team != null ? (t == team) : false) : false);
+									nullifyDamage = ib == b.block;
 									
 									if (nullifyDamage) {
 										return;
@@ -86,7 +86,10 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 
 // Bullet Status Zone
 
-function bulletStatusEffectZone(statusEffect, shieldEffect, lineEffect, particleEffect, size, matchBullet, damageSelf, damage, immuneBlocks) {
+function bulletStatusEffectZone(statusEffect, statusLength, effectColor, size, matchBullet, damageSelf, damage, immuneBlocks) {
+	const shieldEffect = squareShieldEffect(size, effectColor, 12);
+	const lineEffect = lineSquareEffect(size, effectColor, 12);
+	const zoneParticleEffect = particleEffect(effectColor);
 	if (!Vars.state.paused) {
 		Groups.bullet.each(bullet => {			
 			if (bullet.type == matchBullet) { // Get whether bullet matches
@@ -102,7 +105,7 @@ function bulletStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 					let particleY = Mathf.round(Mathf.random(bullet.y - (size / 2), bullet.y + (size / 2)));
 							
 					if (Mathf.chance(particleChance * Time.delta)) {
-						particleEffect.at(particleX, particleY);
+						zoneParticleEffect.at(particleX, particleY);
 					};
 				}
 				
@@ -120,11 +123,11 @@ function bulletStatusEffectZone(statusEffect, shieldEffect, lineEffect, particle
 						
 						Fx.hitFuse.at(lightningX, lightningY);
 						teams.each(t => {
-							Vars.indexer.eachBlock(t, lightningX, lightningY, 32, b => true, b => {
+							Vars.indexer.eachBlock(t, lightningX, lightningY, 1.5 * Vars.tilesize, b => true, b => {
 								b.damage(lightningDamage);
 							});
 						});
-						Units.nearby(lightningX - 16, lightningY - 16, 32, 32, u => {
+						Units.nearby(lightningX - 1.5 * Vars.tilesize / 2, lightningY - 1.5 * Vars.tilesize / 2, 1.5 * Vars.tilesize, 1.5 * Vars.tilesize, u => {
 							u.damage(lightningDamage);
 						});
 					};
