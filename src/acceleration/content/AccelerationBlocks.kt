@@ -4,13 +4,14 @@ import mindustry.ctype.*
 import mindustry.type.*
 
 import mindustry.world.blocks.defense.*
+import mindustry.world.*
 
 import mindustry.content.*
 
 class AccelerationBlocks : ContentList {
 
     override fun load() {
-        
+
         metaglassWall = object : Wall("metaglass-wall") {
             init {
                 requirements(Category.defense, with(Items.metaglass, 5, Items.titanium, 2))
