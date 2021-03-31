@@ -12,7 +12,7 @@ class Acceleration : Mod() {
     }
     
     override fun loadContent() {
-        AccelerationBlocks.load()
+        AccelerationBlocks().load()
 
         Log.info("Mod [accent]Acceleration [sky]Kotlin[][] loaded content successfully.")
     }
