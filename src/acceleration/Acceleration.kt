@@ -4,12 +4,16 @@ import arc.Events
 import arc.util.Log
 import mindustry.mod.Mod
 
+import acceleration.content.*
+
 class Acceleration : Mod() {
     init {
-        Log.info("Mod [accent]Acceleration [sky]Kotlin[] constructor loaded successfully.")
+        Log.info("Mod [accent]Acceleration [sky]Kotlin[][] constructor loaded successfully.")
     }
     
     override fun loadContent() {
-        Log.info("Mod [accent]Acceleration [sky]Kotlin[] loaded content successfully.")
+        AccelerationBlocks.load()
+
+        Log.info("Mod [accent]Acceleration [sky]Kotlin[][] loaded content successfully.")
     }
 }
