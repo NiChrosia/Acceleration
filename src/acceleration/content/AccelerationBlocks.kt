@@ -14,7 +14,7 @@ class AccelerationBlocks : ContentList {
 
         metaglassWall = object : Wall("metaglass-wall") {
             init {
-                requirements(Category.defense, with(Items.metaglass, 5, Items.titanium, 2))
+                requirements(Category.defense, ItemStack.with(Items.metaglass, 5, Items.titanium, 2))
 
                 size = 1
                 health = 360
