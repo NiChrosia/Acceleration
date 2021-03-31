@@ -1,14 +1,15 @@
-package example
+package acceleration
 
 import arc.Events
-import arc.util.*
-import mindustry.game.EventType.*
+import arc.util.Log
 import mindustry.mod.Mod
-import mindustry.ui.dialogs.*
 
-class Acceleration : Mod(){
-
-    override fun loadContent(){
+class Acceleration : Mod() {
+    init {
+        Log.info("Mod [accent]Acceleration [sky]Kotlin[] constructor loaded successfully.")
+    }
+    
+    override fun loadContent() {
         Log.info("Mod [accent]Acceleration [sky]Kotlin[] loaded content successfully.")
     }
 }
