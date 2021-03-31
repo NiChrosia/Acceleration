@@ -1,0 +1,7 @@
+name: "acceleration-kotlin"
+displayName: "Acceleration - Kotlin"
+author: "NiChrosia"
+main: "acceleration.Acceleration"
+description: "A kotlin mod."
+version: "0.1"
+minGameVersion: 126.2
