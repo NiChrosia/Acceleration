@@ -1,6 +1,5 @@
 package acceleration
 
-import arc.Events
 import arc.util.Log
 import mindustry.mod.Mod
 
