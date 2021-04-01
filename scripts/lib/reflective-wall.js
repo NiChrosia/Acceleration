@@ -11,6 +11,9 @@ function reflectiveWall(name, chancePercent, attributes) {
 			let pierce = bulletType == LaserBulletType
 			let rot = bullet.rotation() + 180
 			rot = rot > 360 ? rot -= 360 : rot
+			
+			if (bullet == null) return !pierce;
+
 			if (pierce && Mathf.chance(this.chanceRefract / 100)) {
 				// Calculate collision point
 				let bulletCollisionLength = Damage.findLaserLength(bullet, bullet.type.length);
@@ -40,8 +43,7 @@ function reflectiveWall(name, chancePercent, attributes) {
 				let refractY = bullet.y + diffY * (top ? -1 : 1);
 				
 				// Get new angle
-				let refractAngle = this.angleTo(refractX, refractY)
-				print(refractAngle)
+				let refractAngle = this.angleTo(refractX, refractY);
 				
 				// Refract the bullet
 				const shoot = bullet.type != null ? () => {bullet.type.create({}, this.team, collision.x, collision.y, refractAngle)} : () => {}

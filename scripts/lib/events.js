@@ -1,7 +1,6 @@
 // Imports
 
 const {dst, squareShieldEffect, lineSquareEffect, particleEffect} = require("lib/util");
-const teams = (Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue)) // Slightly increased performance in campaign.
 
 // Constants
 
@@ -15,6 +14,7 @@ const lightningDamage = 14;
 
 function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, zoneParticleEffect, size, liquid, damage, immuneBlocks) {
 	if (!Vars.state.paused) {
+		const teams = (Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue)) // Slightly increased performance in campaign.
 		Groups.puddle.each(puddle => { // Iterate over puddles
 			let build;
 			teams.each(t => {
@@ -71,8 +71,6 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, zonePart
 								b.block != immuneBlocks ? b.damage(statusEffect.damage / 10) : null;
 							} else if (immuneBlocks instanceof Array){
 								Log.err("[Acceleration/lib/events.js] Internal error: arrays not supported.") // log an error as arrays aren't supported.
-							} else if (immuneBlocks == null) {
-								// Do nothing
 							} else {
 								Log.err("[Acceleration/lib/events.js] Internal error: unknown immune blocks type.") // log an error if an unknown type 
 							}
@@ -87,16 +85,18 @@ function puddleStatusEffectZone(statusEffect, shieldEffect, lineEffect, zonePart
 // Bullet Status Zone
 
 function bulletStatusEffectZone(statusEffect, statusLength, effectColor, size, matchBullet, damageSelf, damage, immuneBlocks) {
-	const shieldEffect = squareShieldEffect(size, effectColor, 12);
-	const lineEffect = lineSquareEffect(size, effectColor, 12);
-	const zoneParticleEffect = particleEffect(effectColor);
 	if (!Vars.state.paused) {
+		const shieldEffect = squareShieldEffect(size, effectColor, 12);
+		const lineEffect = lineSquareEffect(size, effectColor, 12);
+		const zoneParticleEffect = particleEffect(effectColor);
+
+		const teams = (Vars.state.isCampaign() ?  Seq.with(Team.derelict, Team.sharded, Team.crux) : Seq.with(Team.derelict, Team.sharded, Team.crux, Team.green, Team.purple, Team.blue)) // Slightly increased performance in campaign.
 		Groups.bullet.each(bullet => {			
 			if (bullet.type == matchBullet) { // Get whether bullet matches
 				(Core.settings.getBool("status-zone") && Core.settings.getBool("animatedshields")) ? shieldEffect.at(bullet.x, bullet.y) : lineEffect.at(bullet.x, bullet.y); // If animated shields and animated status zone is on, do the shield effect. Otherwise, use the line effect.
 				Units.nearby(bullet.x - (size / 2), bullet.y - (size / 2), size, size, u => { // Get nearby units within the square of range
 					if (!u.isDead && (damageSelf ? true : !(u.team == bullet.owner.team))) {
-						u.apply(statusEffect, 40) // Inflict status effect
+						u.apply(statusEffect, statusLength) // Inflict status effect
 					};
 				});
 				
@@ -148,8 +148,6 @@ function bulletStatusEffectZone(statusEffect, statusLength, effectColor, size, m
 								b.block != immuneBlocks || (t == bullet.owner.team) ? b.damage(statusEffect.damage / 10) : null;
 							} else if (immuneBlocks instanceof Array){
 								Log.err("[Acceleration/lib/events.js] Internal error: arrays not supported.") // log an error as arrays aren't supported.
-							} else if (immuneBlocks == null) {
-								// Do nothing
 							} else {
 								Log.err("[Acceleration/lib/events.js] Internal error: unknown immune blocks type.") // log an error if an unknown type 
 							}

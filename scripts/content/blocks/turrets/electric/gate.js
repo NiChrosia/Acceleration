@@ -11,7 +11,8 @@ const gate = extend(ItemTurret, "gate", {
 	buildVisibility: BuildVisibility.shown,
 	category: Category.turret,
 	inaccuracy: 1.5,
-	shootSound: Sounds.artillery
+	shootSound: Sounds.artillery,
+	targetAir: false
 });
 
 gate.ammo(

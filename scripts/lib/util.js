@@ -22,9 +22,7 @@ function avg(/* number, number, number... */){
         let e = arguments[i];
         if(!isFinite(e) || !(e instanceof Number)) continue; // filters out Infinity, negative infinity and anything that is not a number
         total += e;
-		print(e);
-    }
-	print(total)
+    };
     return total / arguments.length;
 }
 
