@@ -6,9 +6,8 @@ import arc.graphics.g2d.Draw
 import arc.graphics.g2d.Lines
 import arc.graphics.g2d.TextureRegion
 import arc.math.Angles
-import arc.math.*
+import arc.math.Mathf
 import arc.math.geom.Vec2
-import arc.util.Log
 import arc.util.Time
 import arc.util.Tmp
 import mindustry.Vars
@@ -51,7 +50,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
         Drawf.dashCircle((x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, baseColor)
 
-        Vars.indexer.eachBlock(Vars.player.team(), (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, {_ -> true}, {b ->
+        Vars.indexer.eachBlock(Vars.player.team(), (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, {true}, { b ->
             Drawf.selected(b, Tmp.c1.set(baseColor).a(Mathf.absin(4f, 1f)))
         })
     }
@@ -75,13 +74,13 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
     }
 
     inner class MenderCoreTurretBuild : CoreBlock.CoreBuild() {
-        var charge = 0f
-        var squareSize = 0f
-        var lineSize = 0f
-        var cooldown = 0f
-        var turretRotation = 270f
-        var target: Teamc? = null
-        var recoil = 0f
+        private var charge = 0f
+        private var squareSize = 0f
+        private var lineSize = 0f
+        private var cooldown = 0f
+        private var turretRotation = 270f
+        private var target: Teamc? = null
+        private var recoil = 0f
 
         private fun findTarget(team: Team, x: Float, y: Float, sort: Units.Sortf): Teamc? {
             return Units.bestTarget(team, x, y, range, {u -> !u.dead}, {true}, sort)
@@ -135,20 +134,6 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
             charge += Time.delta
             cooldown += Time.delta
 
-            // Mend effect, TODO: sync with any other atom cores
-            if (!Vars.state.isPaused) {
-                squareSize += squareSpeed * Time.delta
-                if (squareSize >= sizeCap) {
-                    squareSize = 0f
-                    lineSize = lineCap
-                }
-
-                lineSize -= lineSpeed
-                if (lineSize <= 0.001f) {
-                    lineSize = lineCap
-                }
-            }
-
             if (charge >= mendReload) mend()
 
             posTarget((target))
@@ -171,7 +156,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
             Draw.z(Layer.turret)
 
-            var tr = Vec2()
+            val tr = Vec2()
             tr.trns(turretRotation, recoil)
             Draw.rect(turretRegion, x + tr.x, y + tr.y, turretRotation)
             Draw.reset()
@@ -182,11 +167,13 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
             Draw.rect(mendRegion, x, y)
             Draw.reset()
 
+            val f = 1f - (Time.time / 100f) % 1f
+
             Draw.z(Layer.turret - 1)
             Draw.color(baseColor)
             Draw.alpha(1f)
-            Lines.stroke(lineSize)
-            Lines.square(x, y, squareSize)
+            Lines.stroke(f * block.size + 0.15f)
+            Lines.square(x, y, (1f + (1f - f) * size * Vars.tilesize / 2f).coerceAtMost(size * Vars.tilesize / 2f))
             Draw.reset()
         }
     }
