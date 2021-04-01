@@ -14,7 +14,7 @@ class AccelerationBlocks : ContentList {
     override fun load() {
         // Cores
 
-        coreAtom = object : MenderCoreTurret("atom-core") {
+        atomCore = object : MenderCoreTurret("atom-core") {
             init {
                 requirements(Category.effect, ItemStack.with(
                     Items.copper, 24000,
@@ -53,6 +53,6 @@ class AccelerationBlocks : ContentList {
     companion object {
         lateinit var metaglassWall: Block
         lateinit var metaglassWallLarge: Block
-        lateinit var coreAtom: Block
+        lateinit var atomCore: Block
     }
 }

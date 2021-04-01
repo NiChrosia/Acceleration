@@ -37,10 +37,6 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
     open var damage = 20f
     open var turretLightningLength = 50
     open var recoilAmount = 5f
-    open var squareSpeed = 0.15f
-    open var sizeCap = 24f
-    open var lineCap = 5f
-    open var lineSpeed = (0.17 / 6).toFloat()
 
     open var turretRegion: TextureRegion? = null
     open var mendRegion: TextureRegion? = null
