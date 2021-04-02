@@ -3,12 +3,12 @@ package acceleration.content
 import mindustry.ctype.*
 import mindustry.type.*
 
-import mindustry.world.blocks.defense.*
 import mindustry.world.*
 
 import mindustry.content.*
 
 import acceleration.world.blocks.storage.*
+import acceleration.world.blocks.defense.*
 
 class AccelerationBlocks : ContentList {
     override fun load() {
@@ -31,21 +31,23 @@ class AccelerationBlocks : ContentList {
 
         // Walls
 
-        metaglassWall = object : Wall("metaglass-wall") {
+        metaglassWall = object : RefractiveWall("metaglass-wall") {
             init {
                 requirements(Category.defense, ItemStack.with(Items.metaglass, 5, Items.titanium, 2))
 
                 size = 1
                 health = 360
+                absorbLasers = true
             }
         }
 
-        metaglassWallLarge = object : Wall("metaglass-wall-large") {
+        metaglassWallLarge = object : RefractiveWall("metaglass-wall-large") {
             init {
                 requirements(Category.defense, ItemStack.with(Items.metaglass, 20, Items.titanium, 8))
 
                 size = 2
                 health = 360 * 4
+                absorbLasers = true
             }
         }
     }
