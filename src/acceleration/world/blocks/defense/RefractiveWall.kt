@@ -1,6 +1,7 @@
 package acceleration.world.blocks.defense
 
 import arc.math.geom.Vec2
+import arc.util.Log
 import mindustry.Vars
 import mindustry.entities.Damage
 import mindustry.entities.bullet.LaserBulletType
@@ -15,11 +16,8 @@ open class RefractiveWall(name: String) : Wall(name) {
             if (bullet != null) {
                 damage(bullet.damage)
 
-                val bulletType = bullet.type.javaClass.superclass
-                val pierce = bulletType == LaserBulletType().javaClass
-
-                if (pierce) {
-                    val bulletCollisionLength = Damage.findLaserLength(bullet, 200f) // Value hardcoded, doesn't matter due
+                if (bullet.type is LaserBulletType) {
+                    val bulletCollisionLength = Damage.findLaserLength(bullet, (bullet.type as LaserBulletType).length)
                     val bulletVec = Vec2()
 
                     bulletVec.trns(bullet.rotation(), bulletCollisionLength)
@@ -42,13 +40,12 @@ open class RefractiveWall(name: String) : Wall(name) {
 
                     val modifiedLaser = LaserBulletType()
                     JsonIO.copy(bullet.type, modifiedLaser)
-                    modifiedLaser.length // = bullet.type.length - bulletCollisionLength // Currently nothing happens, as bullet.type.length cannot be compiled.
+                    modifiedLaser.length = (bullet.type as LaserBulletType).length - bulletCollisionLength
 
                     val shoot = {modifiedLaser.create(bullet, this.team, collision.x, collision.y, refractAngle)}
                     if (!Vars.state.isPaused) shoot()
                 }
-
-                return !pierce
+                return bullet.type is LaserBulletType
             }
             return true
         }

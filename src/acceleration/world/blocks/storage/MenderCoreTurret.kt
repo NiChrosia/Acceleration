@@ -2,6 +2,7 @@ package acceleration.world.blocks.storage
 
 import arc.Core
 import arc.graphics.Color
+import arc.graphics.Texture
 import arc.graphics.g2d.Draw
 import arc.graphics.g2d.Lines
 import arc.graphics.g2d.TextureRegion
@@ -40,9 +41,13 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
     open var turretRegion: TextureRegion? = null
     open var mendRegion: TextureRegion? = null
+    open var iconRegion: TextureRegion? = null
 
     override fun drawPlace(x: Int, y: Int, rotation: Int, valid: Boolean) {
         super.drawPlace(x, y, rotation, valid)
+
+        Draw.z(Layer.turret + 2)
+        Draw.rect(iconRegion, (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat())
 
         Drawf.dashCircle((x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, baseColor)
 
@@ -63,6 +68,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
         turretRegion = Core.atlas.find("$name-turret")
         mendRegion = Core.atlas.find("$name-mend")
+        iconRegion = Core.atlas.find("$name-icon")
     }
 
     override fun icons(): Array<TextureRegion> {
