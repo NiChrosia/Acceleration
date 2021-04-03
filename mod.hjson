@@ -1,5 +1,5 @@
 name: "acceleration"
-displayName: "Acceleration - Kotlin"
+displayName: "Acceleration"
 author: "NiChrosia"
 main: "acceleration.Acceleration"
 description: "A kotlin mod."
