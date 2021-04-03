@@ -25,7 +25,7 @@ class AccelerationTechTree : ContentList {
     }
 
     private fun node(parent: UnlockableContent, contentType: UnlockableContent) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
+        TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
     }
 
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack) {
@@ -60,6 +60,6 @@ class AccelerationTechTree : ContentList {
         node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
         node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
 
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] tech tree successfully.")
+        Log.info("Loaded [accent]Acceleration[] tech tree successfully.")
     }
 }

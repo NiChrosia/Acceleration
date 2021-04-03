@@ -7,7 +7,7 @@ import acceleration.content.*
 
 class Acceleration : Mod() {
     init {
-        Log.info("Mod [accent]Acceleration[] [sky]Kotlin[] constructor loaded successfully.")
+        Log.info("Mod [accent]Acceleration[] constructor loaded successfully.")
     }
     
     override fun loadContent() {
@@ -21,6 +21,6 @@ class Acceleration : Mod() {
         AccelerationStatusZones().load()
         AccelerationTechTree().load()
 
-        Log.info("Mod [accent]Acceleration[] [sky]Kotlin[] loaded content successfully.")
+        Log.info("Mod [accent]Acceleration[] loaded content successfully.")
     }
 }

@@ -1,4 +1,4 @@
-name: "acceleration-kotlin"
+name: "acceleration"
 displayName: "Acceleration - Kotlin"
 author: "NiChrosia"
 main: "acceleration.Acceleration"
