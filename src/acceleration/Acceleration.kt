@@ -19,6 +19,7 @@ class Acceleration : Mod() {
         AccelerationUnits().load()
         AccelerationBlocks().load()
         AccelerationStatusZones().load()
+        AccelerationTechTree().load()
 
         Log.info("Mod [accent]Acceleration[] [sky]Kotlin[] loaded content successfully.")
     }
