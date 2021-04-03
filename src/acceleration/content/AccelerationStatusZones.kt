@@ -43,11 +43,46 @@ class AccelerationStatusZones : ContentList {
             }
         }
 
+        pyraStatusZone = object : BulletStatusZoneComp(Pal.lightOrange) {
+            init {
+                bullet = AccelerationBullets.pyraStatusZone
+                damageBuildings = false
+                damageUnits = true
+                statusEffect = StatusEffects.burning
+                statusZoneSize = 24f
+                triggerFire = true
+            }
+        }
+
+        thoriumStatusZone = object : BulletStatusZoneComp(Pal.thoriumPink) {
+            init {
+                bullet = AccelerationBullets.thoriumStatusZone
+                damageBuildings = false
+                damageUnits = true
+                statusEffect = StatusEffects.corroded
+                statusZoneSize = 24f
+            }
+        }
+
+        surgeStatusZone = object : BulletStatusZoneComp(Pal.surge) {
+            init {
+                bullet = AccelerationBullets.surgeStatusZone
+                damageBuildings = false
+                damageUnits = true
+                statusEffect = StatusEffects.shocked
+                statusZoneSize = 24f
+                triggerShock = true
+            }
+        }
+
         Events.run(EventType.Trigger.update) {
             if (!Vars.state.isPaused) {
                 arctifluidStatusZone.update()
                 quarkPlasmaStatusZone.update()
                 sporeStatusZone.update()
+                pyraStatusZone.update()
+                thoriumStatusZone.update()
+                surgeStatusZone.update()
             }
         }
     }
@@ -57,5 +92,8 @@ class AccelerationStatusZones : ContentList {
         lateinit var quarkPlasmaStatusZone : PuddleStatusZoneComp
 
         lateinit var sporeStatusZone : BulletStatusZoneComp
+        lateinit var pyraStatusZone : BulletStatusZoneComp
+        lateinit var thoriumStatusZone : BulletStatusZoneComp
+        lateinit var surgeStatusZone : BulletStatusZoneComp
     }
 }

@@ -112,7 +112,10 @@ class AccelerationBlocks : ContentList {
                 size = 3
 
                 ammo(
-                    Items.sporePod, AccelerationBullets.sporeStatusZone
+                    Items.sporePod, AccelerationBullets.sporeStatusZone,
+                    Items.pyratite, AccelerationBullets.pyraStatusZone,
+                    Items.thorium, AccelerationBullets.thoriumStatusZone,
+                    Items.surgeAlloy, AccelerationBullets.surgeStatusZone
                 )
             }
         }

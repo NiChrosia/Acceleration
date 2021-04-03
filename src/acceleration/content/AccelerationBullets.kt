@@ -106,6 +106,46 @@ class AccelerationBullets : ContentList {
                 height = 13f
                 ammoMultiplier = 4f
                 knockback = 1f
+                status = StatusEffects.sporeSlowed
+            }
+        }
+
+        pyraStatusZone = object : BasicBulletType() {
+            init {
+                speed = 5.5f
+                damage = 33f
+                width = 10f
+                height = 13f
+                incendChance = 1f
+                incendAmount = 1
+                knockback = 0.8f
+                status = StatusEffects.burning
+            }
+        }
+
+        thoriumStatusZone = object : BasicBulletType() {
+            init {
+                speed = 5f
+                damage = 36f
+                width = 10f
+                height = 13f
+                ammoMultiplier = 4f
+                knockback = 1f
+                status = StatusEffects.corroded
+            }
+        }
+
+        surgeStatusZone = object : BasicBulletType() {
+            init {
+                speed = 5.25f
+                damage = 10f
+                width = 10f
+                height = 13f
+                ammoMultiplier = 1f
+                lightning = 3
+                lightningLength = 6
+                knockback = 0.8f
+                status = StatusEffects.shocked
             }
         }
     }
@@ -117,5 +157,8 @@ class AccelerationBullets : ContentList {
         lateinit var railArtilleryIncendiary : ArtilleryBulletType
         lateinit var railArtilleryGlass : ArtilleryBulletType
         lateinit var sporeStatusZone : BasicBulletType
+        lateinit var pyraStatusZone : BasicBulletType
+        lateinit var thoriumStatusZone : BasicBulletType
+        lateinit var surgeStatusZone : BasicBulletType
     }
 }
