@@ -41,5 +41,5 @@ Events.on(ClientLoadEvent, () => {
     addCheck("status-zone", true);
 	addCheck("status-zone-particles", true);
     
-    Log.info("Mod [accent]Acceleration[] loaded successfully.");
+    Log.info("Mod [accent]Acceleration[]  [orange]JavaScript[] loaded successfully.");
 });

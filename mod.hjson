@@ -1,6 +1,6 @@
-name: acceleration
-displayName: Acceleration
+name: acceleration-js
+displayName: Acceleration JavaScript
 author: NiChrosia
-description: A mindustry mod. Extremely unfinished. Animated shields is highly reccomended for gameplay.
+description: A mindustry mod. Discontinued. Further work will only be on the Kotlin version.
 minGameVersion: "126.1"
 version: "0.7"
