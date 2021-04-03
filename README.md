@@ -4,6 +4,8 @@ A JavaScript mod that exists.
 
 Extremely unfinished, but I try to make commits whenever its stable, but is not currently meant to be played.
 
+*Discontinued. Further work on the mod will only be on the Kotlin version*
+
 # Contributors
 
 ## Code/General help
