@@ -336,12 +336,12 @@ open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color) {
     }
 
     private fun damage(units: Seq<Unit>, buildings: Seq<Building>) {
-        units.each { u ->
-            if (damageUnits) u.apply(statusEffect)
+        if (damageUnits) {
+            units.each { u -> u.apply(statusEffect) }
         }
 
-        buildings.each { b ->
-            if (damageBuildings) b.damage(statusEffect.damage)
+        if (damageBuildings) {
+            buildings.each { b -> b.damage(statusEffect.damage) }
         }
     }
 }

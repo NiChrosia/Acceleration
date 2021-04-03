@@ -38,10 +38,15 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
     open var damage = 20f
     open var turretLightningLength = 50
     open var recoilAmount = 5f
+    private var elevation = -1f
 
     open var turretRegion: TextureRegion? = null
     open var mendRegion: TextureRegion? = null
     open var iconRegion: TextureRegion? = null
+
+    init {
+        if (elevation < 0) elevation = size / 2f * Vars.tilesize
+    }
 
     override fun drawPlace(x: Int, y: Int, rotation: Int, valid: Boolean) {
         super.drawPlace(x, y, rotation, valid)
@@ -160,6 +165,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
             val tr = Vec2()
             tr.trns(turretRotation, recoil)
+            Drawf.shadow(turretRegion, x + tr.x - elevation, y + tr.y - elevation, turretRotation)
             Draw.rect(turretRegion, x + tr.x, y + tr.y, turretRotation)
             Draw.reset()
 
@@ -167,7 +173,6 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
             Draw.color(baseColor)
             Draw.alpha(Mathf.absin(Time.time, 10f, 1f))
             Draw.rect(mendRegion, x, y)
-            Draw.reset()
 
             val f = 1f - (Time.time / 100f) % 1f
 
