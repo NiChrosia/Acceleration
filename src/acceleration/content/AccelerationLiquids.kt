@@ -22,8 +22,6 @@ class AccelerationLiquids : ContentList {
                 effect = AccelerationStatusEffects.liquefying
             }
         }
-
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] liquids successfully.")
     }
 
     companion object {

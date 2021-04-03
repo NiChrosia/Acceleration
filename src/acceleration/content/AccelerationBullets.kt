@@ -108,8 +108,6 @@ class AccelerationBullets : ContentList {
                 knockback = 1f
             }
         }
-
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] bullets successfully.")
     }
 
     companion object {

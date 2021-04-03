@@ -34,7 +34,7 @@ class AccelerationBlocks : ContentList {
                 itemCapacity = 32000
                 unitCapModifier = 48
                 researchCostMultiplier = 0.25f
-                unitType = UnitTypes.gamma
+                unitType = AccelerationUnits.quark
             }
         }
 
@@ -116,8 +116,6 @@ class AccelerationBlocks : ContentList {
                 )
             }
         }
-
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] blocks successfully.")
     }
 
     companion object {

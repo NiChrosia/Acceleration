@@ -26,8 +26,6 @@ class AccelerationStatusEffects : ContentList {
                 effect = AccelerationFx.quarkPlasmaFx
             }
         }
-
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] status effects successfully.")
     }
 
     companion object {

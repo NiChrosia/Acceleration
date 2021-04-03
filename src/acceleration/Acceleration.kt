@@ -16,6 +16,7 @@ class Acceleration : Mod() {
         AccelerationStatusEffects().load()
         AccelerationLiquids().load()
         AccelerationBullets().load()
+        AccelerationUnits().load()
         AccelerationBlocks().load()
         AccelerationStatusZones().load()
 

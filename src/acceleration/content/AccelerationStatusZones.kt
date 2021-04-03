@@ -50,8 +50,6 @@ class AccelerationStatusZones : ContentList {
                 sporeStatusZone.update()
             }
         }
-
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] status zones successfully.")
     }
 
     companion object {

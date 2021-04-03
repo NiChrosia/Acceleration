@@ -26,8 +26,6 @@ class AccelerationFx : ContentList {
                 Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f);
             }
         }
-
-        Log.info("Loaded [accent]Acceleration[] [sky]Kotlin[] FX successfully.")
     }
 
     companion object {
