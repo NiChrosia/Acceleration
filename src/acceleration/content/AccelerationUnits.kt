@@ -34,7 +34,7 @@ class AccelerationUnits : ContentList {
                 weapons = Seq.with(
                     object : Weapon() {
                         init {
-                            name = "acceleration-kotlin-heal-repeater"
+                            name = "acceleration-heal-repeater"
                             bullet = AccelerationBullets.standardLaserBolt
                             reload = 16f
                             x = 1f
