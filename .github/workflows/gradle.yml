@@ -1,4 +1,4 @@
-name: Java CI
+name: Commit Checks
 
 on: [push]
 
@@ -16,7 +16,10 @@ jobs:
       with:
         java-version: 14
     - name: Mark as executable
-      run: chmod +x gradlew
+      run: |
+        chmod +x gradlew
+        chmod +x alpha-bleed
+        chmod +x alpha-bleeding-linux.exe
     - name: Build mod jar
       run: ./gradlew deploy
     - name: Upload built jar file

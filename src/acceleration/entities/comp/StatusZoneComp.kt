@@ -1,4 +1,4 @@
-package acceleration.content.entities.comp
+package acceleration.entities.comp
 
 import arc.Core
 import arc.graphics.Color

@@ -6,12 +6,19 @@ import mindustry.ai.types.BuilderAI
 import mindustry.content.UnitTypes
 import mindustry.ctype.ContentList
 import mindustry.gen.Sounds
+import mindustry.gen.UnitEntity
 import mindustry.type.AmmoTypes
 import mindustry.type.UnitType
 import mindustry.type.Weapon
+import mindustry.gen.EntityMapping
 
 class AccelerationUnits : ContentList {
+    private fun setEntity(name: String, c: Prov<*>) {
+        EntityMapping.nameMap.put(name, c)
+    }
+
     override fun load() {
+        setEntity("quark") { UnitEntity.create() }
         quark = object : UnitType("quark") {
             init {
                 defaultController = Prov { BuilderAI() }

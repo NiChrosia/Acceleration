@@ -1,11 +1,11 @@
 version '1.0'
 
-buildscript{
-    repositories{
+buildscript {
+    repositories {
         mavenCentral()
     }
 
-    ext{
+    ext {
         kotlinVersion = "1.4.32"
         //the build number that this mod is made for
         mindustryVersion = 'v126.2'
@@ -26,7 +26,7 @@ buildscript{
 
 apply plugin: "kotlin"
 
-sourceSets.main.kotlin.srcDirs = ["src"]
+sourceSets.main.kotlin.srcDirs = ["src", "assets"]
 
 repositories{
     mavenCentral()
@@ -67,7 +67,21 @@ jar{
     }
 }
 
+task alphableed doFirst{
+    exec{
+        workingDir "$rootDir"
+
+        println "Alpha-bleeding sprites..."
+        if(System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")){
+            commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
+        } else {
+            commandLine("./alpha-bleed", "--replace", "./assets/sprites/")
+        }
+    }
+}
+
 task deploy(type: Jar){
+    dependsOn alphableed
     dependsOn jarAndroid
     dependsOn jar
     archiveFileName = "${project.archivesBaseName}.jar"

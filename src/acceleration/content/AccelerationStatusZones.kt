@@ -1,7 +1,7 @@
 package acceleration.content
 
-import acceleration.content.entities.comp.BulletStatusZoneComp
-import acceleration.content.entities.comp.PuddleStatusZoneComp
+import acceleration.entities.comp.BulletStatusZoneComp
+import acceleration.entities.comp.PuddleStatusZoneComp
 import arc.Events
 import arc.util.Log
 import mindustry.Vars

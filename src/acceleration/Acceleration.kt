@@ -19,6 +19,7 @@ class Acceleration : Mod() {
         AccelerationUnits().load()
         AccelerationBlocks().load()
         AccelerationStatusZones().load()
+        AccelerationPlanets().load()
         AccelerationTechTree().load()
 
         Log.info("Mod [accent]Acceleration[] loaded content successfully.")
