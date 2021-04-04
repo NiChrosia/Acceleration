@@ -75,7 +75,7 @@ task alphableed doFirst{
         if(System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")){
             commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
         } else {
-            commandLine("./alpha-bleed", "--replace", "./assets/sprites/")
+            commandLine("./alpha-bleed", "./assets/sprites/")
         }
     }
 }
