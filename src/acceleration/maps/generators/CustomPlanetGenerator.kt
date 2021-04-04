@@ -49,10 +49,12 @@ open class CustomPlanetGenerator : PlanetGenerator() {
     var water: Float = 2f / arr[0].size
     var scl = 5f
     var waterOffset = 0.07f
-    var tars: ObjectMap<Block, Block> = ObjectMap.of<Block, Block>(
+    var tars: ObjectMap<Block, Block> = ObjectMap.of(
         Blocks.sporeMoss, Blocks.shale,
         Blocks.moss, Blocks.shale
     )
+    var alwaysEnemyBase = Seq<Int>()
+    var alwaysNoEnemyBase = Seq<Int>()
 
     private fun rawHeight(position: Vec3): Float {
         var pos = position
@@ -66,12 +68,6 @@ open class CustomPlanetGenerator : PlanetGenerator() {
     }
 
     override fun generateSector(sector: Sector) {
-
-        //these always have bases
-        if (sector.id == 154 || sector.id == 0) {
-            sector.generateEnemyBase = true
-            return
-        }
         val tile = sector.tile
         var any = false
         val poles = abs(tile.v.y)
@@ -92,7 +88,16 @@ open class CustomPlanetGenerator : PlanetGenerator() {
                 }
             }
         }
+
         sector.generateEnemyBase = any
+
+        alwaysEnemyBase.each { e ->
+            if (sector.id == e) sector.generateEnemyBase = true
+        }
+
+        alwaysNoEnemyBase.each { e ->
+            if (sector.id == e) sector.generateEnemyBase = false
+        }
     }
 
     override fun getHeight(position: Vec3): Float {
@@ -405,7 +410,7 @@ open class CustomPlanetGenerator : PlanetGenerator() {
                 }
             }
             if (Mathf.rand.chance(0.0075)) {
-                //random spore trees
+                //random trees
                 var any = false
                 var all = true
                 for (p: Point2 in Geometry.d4) {
@@ -420,7 +425,7 @@ open class CustomPlanetGenerator : PlanetGenerator() {
                         0.03
                     )))
                 ) {
-                    block = if (Mathf.rand.chance(0.5)) Blocks.whiteTree else Blocks.whiteTreeDead
+                    block = Blocks.whiteTreeDead
                 }
             }
 

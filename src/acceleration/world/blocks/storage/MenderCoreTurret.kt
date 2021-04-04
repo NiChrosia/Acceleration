@@ -2,7 +2,6 @@ package acceleration.world.blocks.storage
 
 import arc.Core
 import arc.graphics.Color
-import arc.graphics.Texture
 import arc.graphics.g2d.Draw
 import arc.graphics.g2d.Lines
 import arc.graphics.g2d.TextureRegion
@@ -24,7 +23,6 @@ import mindustry.world.blocks.storage.CoreBlock
 import mindustry.world.meta.Stat
 import mindustry.world.meta.StatUnit
 import kotlin.math.abs
-
 
 open class MenderCoreTurret(name: String) : CoreBlock(name) {
 

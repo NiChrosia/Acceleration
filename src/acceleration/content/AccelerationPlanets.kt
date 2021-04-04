@@ -3,6 +3,7 @@ package acceleration.content
 import acceleration.maps.generators.CustomPlanetGenerator
 import arc.func.Prov
 import arc.graphics.Color
+import arc.struct.Seq
 import mindustry.content.Blocks
 import mindustry.content.Planets
 import mindustry.ctype.ContentList
@@ -27,7 +28,7 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.sand,
                                 Blocks.sand,
                                 Blocks.sand,
-                                Blocks.darksandTaintedWater,
+                                Blocks.deepwater,
                                 Blocks.stone,
                                 Blocks.stone
                             ),
@@ -41,7 +42,7 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.sand,
                                 Blocks.sand,
                                 Blocks.sand,
-                                Blocks.darksandTaintedWater,
+                                Blocks.deepwater,
                                 Blocks.stone,
                                 Blocks.stone,
                                 Blocks.stone
@@ -56,7 +57,7 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.sand,
                                 Blocks.sand,
                                 Blocks.sand,
-                                Blocks.darksandTaintedWater,
+                                Blocks.deepwater,
                                 Blocks.stone,
                                 Blocks.stone,
                                 Blocks.stone
@@ -98,7 +99,7 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.sand,
                                 Blocks.sand,
                                 Blocks.sand,
-                                Blocks.moss,
+                                Blocks.ice,
                                 Blocks.iceSnow,
                                 Blocks.snow,
                                 Blocks.snow,
@@ -111,8 +112,8 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.sandWater,
                                 Blocks.sand,
                                 Blocks.sand,
-                                Blocks.moss,
-                                Blocks.moss,
+                                Blocks.ice,
+                                Blocks.ice,
                                 Blocks.snow,
                                 Blocks.basalt,
                                 Blocks.basalt,
@@ -123,11 +124,11 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                             ),
                             arrayOf(
                                 Blocks.taintedWater,
-                                Blocks.darksandTaintedWater,
+                                Blocks.deepwater,
                                 Blocks.darksand,
                                 Blocks.darksand,
                                 Blocks.basalt,
-                                Blocks.moss,
+                                Blocks.ice,
                                 Blocks.basalt,
                                 Blocks.hotrock,
                                 Blocks.basalt,
@@ -141,8 +142,8 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.darksand,
                                 Blocks.darksand,
                                 Blocks.darksand,
-                                Blocks.moss,
-                                Blocks.sporeMoss,
+                                Blocks.ice,
+                                Blocks.snow,
                                 Blocks.snow,
                                 Blocks.basalt,
                                 Blocks.basalt,
@@ -155,7 +156,7 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.darksandWater,
                                 Blocks.darksand,
                                 Blocks.darksand,
-                                Blocks.sporeMoss,
+                                Blocks.snow,
                                 Blocks.ice,
                                 Blocks.ice,
                                 Blocks.snow,
@@ -168,10 +169,10 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                             ),
                             arrayOf(
                                 Blocks.taintedWater,
-                                Blocks.darksandTaintedWater,
+                                Blocks.deepwater,
                                 Blocks.darksand,
-                                Blocks.sporeMoss,
-                                Blocks.sporeMoss,
+                                Blocks.snow,
+                                Blocks.snow,
                                 Blocks.ice,
                                 Blocks.ice,
                                 Blocks.snow,
@@ -182,12 +183,12 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.ice
                             ),
                             arrayOf(
-                                Blocks.darksandTaintedWater,
-                                Blocks.darksandTaintedWater,
+                                Blocks.deepwater,
+                                Blocks.deepwater,
                                 Blocks.darksand,
-                                Blocks.sporeMoss,
-                                Blocks.moss,
-                                Blocks.sporeMoss,
+                                Blocks.snow,
+                                Blocks.ice,
+                                Blocks.snow,
                                 Blocks.iceSnow,
                                 Blocks.snow,
                                 Blocks.ice,
@@ -212,6 +213,11 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                                 Blocks.ice
                             )
                         )
+
+                        alwaysNoEnemyBase = Seq.with(
+                            117,
+                            120
+                        )
                     }
                 }
 
@@ -220,7 +226,7 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                 atmosphereRadOut = 0.45f
                 bloom = false
                 meshLoader = Prov { HexMesh(this, 6) }
-                startSector = 10
+                startSector = 5
             }
         }
     }
