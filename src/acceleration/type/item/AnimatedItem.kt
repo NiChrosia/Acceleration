@@ -10,6 +10,8 @@ import arc.graphics.Texture
 import arc.graphics.Pixmap
 import arc.struct.Seq
 
+/** An animated item. Requires sprites for all the frames, and supports blending between sprites
+Credits to sk7725 for the idea and majority of code */
 open class AnimatedItem(name: String) : Item(name) {
     private val animIcon = TextureRegion()
     private var animRegions: Seq<TextureRegion> = Seq()
@@ -20,14 +22,14 @@ open class AnimatedItem(name: String) : Item(name) {
     /** Number of initial sprites. */
     var sprites = 10
 
-    /** # of transition frames inserted between two sprites.  */
+    /** # of transition frames inserted between two sprites. */
     var transition = 0
 
-    //set in load()
+    // set in load()
     private var n = 0
 
-    /** Lerps 2 TextureRegions.  */
-    open fun blendSprites(a: TextureRegion?, b: TextureRegion?, f: Float, name: String): TextureRegion {
+    /** Lerps 2 TextureRegions. */
+    open fun blendSprites(a: TextureRegion, b: TextureRegion, f: Float, name: String): TextureRegion {
         val r1 = Core.atlas.getPixmap(a)
         val r2 = Core.atlas.getPixmap(b)
         val out = Pixmap(r1.width, r1.height, r1.pixmap.format)
@@ -79,7 +81,7 @@ open class AnimatedItem(name: String) : Item(name) {
         animRegions = animatedRegions
     }
 
-    //should be called in Trigger.update
+    // Needs to be called in Trigger.update for correct performance
     open fun update() {
         animate = Core.settings.getBool("animateditems")
         if (animate) animIcon.set(animRegions[(Time.globalTime / animDelay).toInt() % n])
