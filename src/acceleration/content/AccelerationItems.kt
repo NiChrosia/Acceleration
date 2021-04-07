@@ -14,6 +14,7 @@ class AccelerationItems : ContentList {
                 color = Color.valueOf("12071f")
                 transition = 1
                 sprites = 18
+                charge = 0.45f
             }
         }
 

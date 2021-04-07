@@ -50,9 +50,6 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
         Draw.z(Layer.block)
         super.drawPlace(x, y, rotation, valid)
 
-        Draw.z(Layer.turret)
-        Draw.rect(turretRegion, x.toFloat(), y.toFloat())
-
         Draw.z(Layer.darkness - 1)
         Drawf.dashCircle((x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, baseColor)
 
