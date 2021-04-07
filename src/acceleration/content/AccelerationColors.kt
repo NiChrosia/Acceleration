@@ -1,7 +1,6 @@
 package acceleration.content
 
 import arc.graphics.Color
-import arc.util.Log
 import mindustry.ctype.ContentList
 
 class AccelerationColors : ContentList {

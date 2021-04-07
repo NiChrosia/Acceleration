@@ -10,7 +10,6 @@ import arc.math.Mathf
 import arc.math.geom.Vec2
 import arc.util.Time
 import arc.util.Tmp
-import mindustry.Vars
 import mindustry.content.Fx
 import mindustry.entities.Lightning
 import mindustry.entities.Units
@@ -23,6 +22,8 @@ import mindustry.world.blocks.storage.CoreBlock
 import mindustry.world.meta.Stat
 import mindustry.world.meta.StatUnit
 import kotlin.math.abs
+import mindustry.Vars
+
 
 open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
@@ -40,18 +41,19 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
     open var turretRegion: TextureRegion? = null
     open var mendRegion: TextureRegion? = null
-    open var iconRegion: TextureRegion? = null
 
     init {
         if (elevation < 0) elevation = size / 2f * Vars.tilesize
     }
 
     override fun drawPlace(x: Int, y: Int, rotation: Int, valid: Boolean) {
+        Draw.z(Layer.block)
         super.drawPlace(x, y, rotation, valid)
 
-        Draw.z(Layer.turret + 2)
-        Draw.rect(iconRegion, (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat())
+        Draw.z(Layer.turret)
+        Draw.rect(turretRegion, x.toFloat(), y.toFloat())
 
+        Draw.z(Layer.darkness - 1)
         Drawf.dashCircle((x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, baseColor)
 
         Vars.indexer.eachBlock(Vars.player.team(), (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, {true}, { b ->
@@ -71,7 +73,6 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
         turretRegion = Core.atlas.find("$name-turret")
         mendRegion = Core.atlas.find("$name-mend")
-        iconRegion = Core.atlas.find("$name-icon")
     }
 
     override fun icons(): Array<TextureRegion> {
@@ -80,10 +81,8 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
     inner class MenderCoreTurretBuild : CoreBlock.CoreBuild() {
         private var charge = 0f
-        private var squareSize = 0f
-        private var lineSize = 0f
         private var cooldown = 0f
-        private var turretRotation = 270f
+        private var turretRotation = 90f
         private var target: Teamc? = null
         private var recoil = 0f
 
