@@ -9,6 +9,7 @@ import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
 import mindustry.entities.bullet.ArtilleryBulletType
 import mindustry.entities.bullet.BasicBulletType
+import mindustry.entities.bullet.FlakBulletType
 import mindustry.entities.bullet.LaserBoltBulletType
 import mindustry.graphics.Pal
 import mindustry.io.JsonIO
@@ -23,6 +24,64 @@ class AccelerationBullets : ContentList {
                 backColor = Pal.lancerLaser
                 lifetime = 30f
                 speed = 5.4f
+            }
+        }
+
+        quarkLaserBolt = object : LaserBoltBulletType() {
+            init {
+                damage = 13f
+                frontColor = Color.white
+                backColor = Pal.heal
+                lifetime = 70f
+                speed = 5.4f
+                buildingDamageMultiplier = 0.01f
+            }
+        }
+
+        lightEnergyLaser = object : LaserBoltBulletType() {
+            init {
+                damage = 12f
+                frontColor = Color.white
+                backColor = Pal.lancerLaser
+                lifetime = 20f
+                speed = 5.6f
+            }
+        }
+
+        // Shock
+        shockPierceBullet = object : BasicBulletType() {
+            init {
+                width = 11f
+                height = 13f
+
+                damage = 12f
+                speed = 3.7f
+                pierceCap = 2
+                pierce = true
+                shootEffect = Fx.shootBig
+                collidesGround = true
+                status = StatusEffects.shocked
+            }
+        }
+
+        shockPierceLargeBullet = object : FlakBulletType() {
+            init {
+                lifetime = 85f
+
+                damage = 22f
+                speed = 3.2f
+                pierceCap = 3
+                pierce = true
+                shootEffect = Fx.shootBig
+                collidesGround = true
+                lightning = 3
+                lightningLength = 7
+
+                splashDamage = 40f * 1.5f
+                splashDamageRadius = 26f
+                explodeRange = 25f
+
+                status = StatusEffects.shocked
             }
         }
 
@@ -137,6 +196,7 @@ class AccelerationBullets : ContentList {
 
         surgeStatusZone = object : BasicBulletType() {
             init {
+                ammoMultiplier = 5f
                 speed = 5.25f
                 damage = 10f
                 width = 10f
@@ -152,6 +212,12 @@ class AccelerationBullets : ContentList {
 
     companion object {
         lateinit var standardLaserBolt : LaserBoltBulletType
+        lateinit var quarkLaserBolt : LaserBoltBulletType
+        lateinit var lightEnergyLaser : LaserBoltBulletType
+
+        lateinit var shockPierceBullet : BasicBulletType
+        lateinit var shockPierceLargeBullet : FlakBulletType
+
         lateinit var railArtilleryDense : ArtilleryBulletType
         lateinit var railArtilleryHoming : ArtilleryBulletType
         lateinit var railArtilleryIncendiary : ArtilleryBulletType

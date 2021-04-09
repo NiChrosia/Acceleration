@@ -3,7 +3,6 @@ package acceleration.content
 import acceleration.entities.comp.BulletStatusZoneComp
 import acceleration.entities.comp.PuddleStatusZoneComp
 import arc.Events
-import arc.util.Log
 import mindustry.Vars
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
@@ -75,14 +74,28 @@ class AccelerationStatusZones : ContentList {
             }
         }
 
+        shockPierceLargeStatusZone = object : BulletStatusZoneComp(Pal.surge) {
+            init {
+                bullet = AccelerationBullets.shockPierceLargeBullet
+                damageBuildings = false
+                damageUnits = true
+                statusEffect = StatusEffects.shocked
+                statusZoneSize = 24f
+                triggerShock = true
+            }
+        }
+
         Events.run(EventType.Trigger.update) {
             if (!Vars.state.isPaused) {
                 arctifluidStatusZone.update()
                 quarkPlasmaStatusZone.update()
+
                 sporeStatusZone.update()
                 pyraStatusZone.update()
                 thoriumStatusZone.update()
                 surgeStatusZone.update()
+
+                shockPierceLargeStatusZone.update()
             }
         }
     }
@@ -95,5 +108,7 @@ class AccelerationStatusZones : ContentList {
         lateinit var pyraStatusZone : BulletStatusZoneComp
         lateinit var thoriumStatusZone : BulletStatusZoneComp
         lateinit var surgeStatusZone : BulletStatusZoneComp
+
+        lateinit var shockPierceLargeStatusZone : BulletStatusZoneComp
     }
 }

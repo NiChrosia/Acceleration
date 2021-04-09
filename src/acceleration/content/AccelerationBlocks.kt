@@ -60,6 +60,16 @@ class AccelerationBlocks : ContentList {
             }
         }
 
+        // Menders
+
+        configurableMender = object : ConfigurableMender("configurable-mender") {
+            init {
+                requirements(Category.effect, ItemStack.with())
+
+                size = 5
+            }
+        }
+
         // Turrets
 
         transistor = object : PowerTurret("transistor") {
@@ -126,6 +136,8 @@ class AccelerationBlocks : ContentList {
 
         lateinit var metaglassWall: Block
         lateinit var metaglassWallLarge: Block
+
+        lateinit var configurableMender : ConfigurableMender
 
         lateinit var transistor : PowerTurret
         lateinit var gate : LogicOverlayItemTurret

@@ -41,6 +41,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
     open var turretRegion: TextureRegion? = null
     open var mendRegion: TextureRegion? = null
+    open var iconRegion: TextureRegion? = null
 
     init {
         if (elevation < 0) elevation = size / 2f * Vars.tilesize
@@ -70,10 +71,11 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
         turretRegion = Core.atlas.find("$name-turret")
         mendRegion = Core.atlas.find("$name-mend")
+        iconRegion = Core.atlas.find("$name-icon")
     }
 
     override fun icons(): Array<TextureRegion> {
-        return arrayOf(region, teamRegion, turretRegion!!)
+        return arrayOf(iconRegion!!)
     }
 
     inner class MenderCoreTurretBuild : CoreBlock.CoreBuild() {

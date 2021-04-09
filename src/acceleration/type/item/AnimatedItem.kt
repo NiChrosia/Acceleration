@@ -1,5 +1,6 @@
 package acceleration.type.item
 
+import acceleration.graphics.Drawm
 import arc.Core
 import arc.graphics.Color
 import mindustry.type.Item
@@ -28,25 +29,6 @@ open class AnimatedItem(name: String) : Item(name) {
     // set in load()
     private var n = 0
 
-    /** Lerps 2 TextureRegions. */
-    open fun blendSprites(a: TextureRegion, b: TextureRegion, f: Float, name: String): TextureRegion {
-        val r1 = Core.atlas.getPixmap(a)
-        val r2 = Core.atlas.getPixmap(b)
-        val out = Pixmap(r1.width, r1.height, r1.pixmap.format)
-        out.blending = Pixmap.Blending.none
-        val color1 = Color()
-        val color2 = Color()
-        for (x in 0 until r1.width) {
-            for (y in 0 until r1.height) {
-                r1.getPixel(x, y, color1)
-                r2.getPixel(x, y, color2)
-                out.draw(x, y, color1.lerp(color2, f))
-            }
-        }
-        val texture = Texture(out)
-        return Core.atlas.addRegion(name + "-blended-" + (f * 100).toInt(), TextureRegion(texture))
-    }
-
     override fun load() {
         super.load()
         val spriteArr = Seq<TextureRegion>()
@@ -72,7 +54,8 @@ open class AnimatedItem(name: String) : Item(name) {
 
             for (t in 0 until transition) {
                 val f = (t / (transition + 1)).toFloat()
-                animatedRegions.add(blendSprites(
+                animatedRegions.add(
+                    Drawm().blendSprites(
                     sprite, lastSprite, f, name
                 ))
             }

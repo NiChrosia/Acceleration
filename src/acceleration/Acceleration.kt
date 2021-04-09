@@ -4,6 +4,7 @@ import arc.util.Log
 import mindustry.mod.Mod
 
 import acceleration.content.*
+import acceleration.graphics.Drawm
 import arc.Events
 import mindustry.game.EventType
 
@@ -15,6 +16,7 @@ class Acceleration : Mod() {
     override fun loadContent() {
         AccelerationColors().load()
         AccelerationFx().load()
+        AccelerationTeams().load()
         AccelerationStatusEffects().load()
         AccelerationLiquids().load()
         AccelerationBullets().load()
