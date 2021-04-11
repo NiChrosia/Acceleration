@@ -13,6 +13,7 @@ import acceleration.world.blocks.defense.turrets.LogicOverlayItemTurret
 import mindustry.gen.Sounds
 import mindustry.world.blocks.defense.turrets.ItemTurret
 import mindustry.world.blocks.defense.turrets.PowerTurret
+import mindustry.world.meta.BuildVisibility
 
 class AccelerationBlocks : ContentList {
     override fun load() {
@@ -56,6 +57,33 @@ class AccelerationBlocks : ContentList {
                 size = 2
                 health = 360 * 4
                 absorbLasers = true
+            }
+        }
+
+        // Icons
+
+        noneIcon = object : Block("none-icon") {
+            init {
+                buildVisibility = BuildVisibility.hidden
+            }
+        }
+
+
+        mendIcon = object : Block("mend-icon") {
+            init {
+                buildVisibility = BuildVisibility.hidden
+            }
+        }
+
+        overdriveIcon = object : Block("overdrive-icon") {
+            init {
+                buildVisibility = BuildVisibility.hidden
+            }
+        }
+
+        forceIcon = object : Block("force-icon") {
+            init {
+                buildVisibility = BuildVisibility.hidden
             }
         }
 
@@ -135,6 +163,11 @@ class AccelerationBlocks : ContentList {
 
         lateinit var metaglassWall: Block
         lateinit var metaglassWallLarge: Block
+
+        lateinit var noneIcon : Block
+        lateinit var mendIcon : Block
+        lateinit var overdriveIcon : Block
+        lateinit var forceIcon : Block
 
         lateinit var configurableProjector : ConfigurableProjector
 

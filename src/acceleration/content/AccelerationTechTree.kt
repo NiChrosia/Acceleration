@@ -60,6 +60,14 @@ class AccelerationTechTree : ContentList {
         node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
         node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
 
+        node(Blocks.arc, AccelerationBlocks.transistor)
+        node(AccelerationBlocks.transistor, AccelerationBlocks.gate)
+        node(AccelerationBlocks.gate, AccelerationBlocks.capacitor)
+
+        node(Blocks.forceProjector, AccelerationBlocks.configurableProjector, Seq.with(
+            Objectives.Research(Blocks.mendProjector), Objectives.Research(Blocks.overdriveDome), Objectives.Research(Blocks.forceProjector)
+        ))
+
         Log.info("Loaded [accent]Acceleration[] tech tree successfully.")
     }
 }
