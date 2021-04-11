@@ -10,7 +10,6 @@ import mindustry.content.*
 import acceleration.world.blocks.storage.*
 import acceleration.world.blocks.defense.*
 import acceleration.world.blocks.defense.turrets.LogicOverlayItemTurret
-import arc.util.Log
 import mindustry.gen.Sounds
 import mindustry.world.blocks.defense.turrets.ItemTurret
 import mindustry.world.blocks.defense.turrets.PowerTurret
@@ -62,7 +61,7 @@ class AccelerationBlocks : ContentList {
 
         // Menders
 
-        configurableMender = object : ConfigurableMender("configurable-mender") {
+        configurableProjector = object : ConfigurableProjector("configurable-projector") {
             init {
                 requirements(Category.effect, ItemStack.with())
 
@@ -137,7 +136,7 @@ class AccelerationBlocks : ContentList {
         lateinit var metaglassWall: Block
         lateinit var metaglassWallLarge: Block
 
-        lateinit var configurableMender : ConfigurableMender
+        lateinit var configurableProjector : ConfigurableProjector
 
         lateinit var transistor : PowerTurret
         lateinit var gate : LogicOverlayItemTurret
