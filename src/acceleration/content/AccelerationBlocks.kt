@@ -10,6 +10,7 @@ import mindustry.content.*
 import acceleration.world.blocks.storage.*
 import acceleration.world.blocks.defense.*
 import acceleration.world.blocks.defense.turrets.LogicOverlayItemTurret
+import acceleration.world.blocks.units.Collector
 import mindustry.gen.Sounds
 import mindustry.world.blocks.defense.turrets.ItemTurret
 import mindustry.world.blocks.defense.turrets.PowerTurret
@@ -91,7 +92,13 @@ class AccelerationBlocks : ContentList {
 
         configurableProjector = object : ConfigurableProjector("configurable-projector") {
             init {
-                requirements(Category.effect, ItemStack.with())
+                requirements(Category.effect, ItemStack.with(
+                    Items.lead, 550,
+                    Items.titanium, 350,
+                    Items.silicon, 250,
+                    Items.plastanium, 225,
+                    Items.surgeAlloy, 175
+                ))
 
                 size = 5
             }
@@ -101,7 +108,7 @@ class AccelerationBlocks : ContentList {
 
         transistor = object : PowerTurret("transistor") {
             init {
-                requirements(Category.turret, ItemStack.with())
+                requirements(Category.turret, ItemStack.with(Items.copper, 50, Items.lead, 25, Items.silicon, 15))
 
                 rotateSpeed = 8f
                 health = 360
@@ -117,7 +124,7 @@ class AccelerationBlocks : ContentList {
 
         gate = object : LogicOverlayItemTurret("gate") {
             init {
-                requirements(Category.turret, ItemStack.with())
+                requirements(Category.turret, ItemStack.with(Items.copper, 75, Items.lead, 50, Items.silicon, 45, Items.metaglass, 25))
 
                 rotateSpeed = 8f
                 health = 1150
@@ -140,7 +147,7 @@ class AccelerationBlocks : ContentList {
 
         capacitor = object : ItemTurret("capacitor") {
             init {
-                requirements(Category.turret, ItemStack.with())
+                requirements(Category.turret, ItemStack.with(Items.lead, 150, Items.titanium, 150, Items.thorium, 120, Items.plastanium, 75))
 
                 rotateSpeed = 12f
                 health = 1650
@@ -154,6 +161,17 @@ class AccelerationBlocks : ContentList {
                     Items.thorium, AccelerationBullets.thoriumStatusZone,
                     Items.surgeAlloy, AccelerationBullets.surgeStatusZone
                 )
+            }
+        }
+
+        // Collectors
+
+        collector = object : Collector("collector") {
+            init {
+                requirements(Category.effect, ItemStack.with())
+
+                size = 5
+                itemCapacity = 1000
             }
         }
     }
@@ -174,5 +192,7 @@ class AccelerationBlocks : ContentList {
         lateinit var transistor : PowerTurret
         lateinit var gate : LogicOverlayItemTurret
         lateinit var capacitor : ItemTurret
+
+        lateinit var collector : Collector
     }
 }

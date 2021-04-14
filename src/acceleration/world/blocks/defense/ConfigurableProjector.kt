@@ -39,39 +39,43 @@ import arc.math.geom.Intersector
 import mindustry.gen.Bullet
 import arc.graphics.g2d.Fill
 import mindustry.content.StatusEffects
+import mindustry.entities.Effect
 import mindustry.entities.Units
 import mindustry.graphics.Layer
 import mindustry.type.Liquid
 import mindustry.ui.Bar
 
 open class ConfigurableProjector(name: String) : MendProjector(name) {
+    /** Ticks between each autoadjust. */
     open var adjustTime = 10
 
+    /** The maximum number of levels in the configurable projector. */
     open var maxLevels = 5.0
 
-    open var minReload = 20f
-    open var maxReload = 350f
+    /** The numerous minimum and maximum values, these should really be calculated according to a base value */
+    var minReload = 50f
+    var maxReload = 300f
 
-    open var minRange = 12f * Vars.tilesize
-    open var maxRange = 36f * Vars.tilesize
+    var minRange = 12f * Vars.tilesize
+    var maxRange = 36f * Vars.tilesize
 
-    open var minHealPercent = 5f
-    open var maxHealPercent = 45f
+    var minHealPercent = 5f
+    var maxHealPercent = 45f
 
-    open var minPowerUse = 0.25f
-    open var maxPowerUse = 10f
+    var minPowerUse = 0.25f
+    var maxPowerUse = 10f
 
     var minRadius = 101.7f
-    var maxRadius = 350f
+    var maxRadius = 250f
 
     var minOverdrive = 150f
     var maxOverdrive = 350f
 
     var minShieldHealth = 700f
-    var maxShieldHealth = 1400f
+    var maxShieldHealth = 8800f
 
     var cooldownNormal = 1.75f
-    var cooldownLiquid = 1.5f
+    var cooldownLiquid = 1f
     var cooldownBrokenBase = 0.35f
 
     var paramEntity: ConfigurableProjectorBuild? = null
@@ -87,7 +91,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         }
     }
 
-    private var iconRegion: TextureRegion? = null
+    /** ObjectMaps for converting between values internally. */
 
     private val modeMap: ObjectMap<Block, String> = ObjectMap.of(
         AccelerationBlocks.noneIcon, "none",
@@ -110,6 +114,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         "force", Color.valueOf("ffd37f")
     )
 
+    /** Adds two bars; power, and the configurable bar. The configurable bar depends on what the mode is. */
     override fun setBars() {
         super.setBars()
 
@@ -164,14 +169,10 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
     }
 
     /** Set necessary stats upon load */
-    override fun load() {
-        super.load()
-
+    init {
         configurable = true
         hasItems = false
         hasPower = true
-
-        iconRegion = Core.atlas.find("$name-icon")
 
         consumes.add(
             ConsumeLiquidFilter(
@@ -181,8 +182,9 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         ).boost().update(false)
     }
 
+    /** Sets the icons (dysfunctional for some reason) */
     override fun icons(): Array<TextureRegion> {
-        return arrayOf(iconRegion!!)
+        return arrayOf(Core.atlas.find("$name-icon"))
     }
 
     open inner class ConfigurableProjectorBuild : MendProjector.MendBuild() {
@@ -191,16 +193,17 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         var autoadjust = false
         var adjustTicks = 0
 
-        var heat = 0f
+        private var heat = 0f
         var charge = 0f
-        var smoothEfficiency = 0f
+        private var smoothEfficiency = 0f
 
-        open var buildReload = reload
-        open var buildRange = range
-        open var buildHealPercent = healPercent
-        open var buildRadius = minRadius
-        open var buildShieldHealth = minShieldHealth
-        open var buildOverdrive = minOverdrive
+        /** Slightly better icon visualization */
+        open var buildReload = minReload + (maxReload - minReload) / 2
+        open var buildRange = minRange + (maxRange - minRange) / 2
+        open var buildHealPercent = minHealPercent + (maxHealPercent - minHealPercent) / 2
+        open var buildRadius = minRadius + (maxRadius - minRadius) / 2
+        open var buildShieldHealth = minShieldHealth + (maxShieldHealth - minShieldHealth) / 2
+        open var buildOverdrive = minOverdrive + (maxOverdrive - minOverdrive) / 2
 
         var broken = true
         var buildup = 0f
@@ -266,7 +269,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             }
 
             for (l in 0 until maxLevels.toInt()) {
-                table.button(l.toString(), Styles.clearTogglet) {
+                table.button((l + 1).toString(), Styles.clearTogglet) {
                     configure(l)
 
                     table.clear()
@@ -318,7 +321,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                 }
             }
 
-            buildReload = calculateReload(minReload, maxReload, ((decLevel + (1 / maxLevels / 2)) - 0.5) * 2) // Modify value to be more accurate
+            buildReload = calculateReload(minReload, maxReload, (decLevel - 0.5) * 2) // Modify value to be more accurate
             buildRange = calculateSpeed(minRange, maxRange, decLevel)
             buildHealPercent = calculateSpeed(minHealPercent, maxHealPercent, decLevel)
             buildRadius = calculateSpeed(minRadius, maxRadius, decLevel)
@@ -487,22 +490,25 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         }
 
         private fun drawShield() {
-            if (!broken) {
-                val radius: Float = buildRadius
-                Draw.z(Layer.shields)
-                Draw.color(team.color, Color.white, Mathf.clamp(hit))
-                if (Core.settings.getBool("animatedshields")) {
-                    Fill.poly(x, y, 6, radius)
-                } else {
-                    Lines.stroke(1.5f)
-                    Draw.alpha(0.09f + Mathf.clamp(0.08f * hit))
-                    Fill.poly(x, y, 6, radius)
-                    Draw.alpha(1f)
-                    Lines.poly(x, y, 6, radius)
-                    Draw.reset()
+            val shieldDraw = Effect(10f) {
+                if (!broken) {
+                    Draw.z(Layer.shields)
+                    Draw.color(team.color, Color.white, Mathf.clamp(hit))
+                    if (Core.settings.getBool("animatedshields")) {
+                        Fill.poly(x, y, 6, buildRadius)
+                    } else {
+                        Lines.stroke(1.5f)
+                        Draw.alpha(0.09f + Mathf.clamp(0.08f * hit))
+                        Fill.poly(x, y, 6, buildRadius)
+                        Draw.alpha(1f)
+                        Lines.poly(x, y, 6, buildRadius)
+                        Draw.reset()
+                    }
                 }
+                Draw.reset()
             }
-            Draw.reset()
+
+            shieldDraw.at(Vars.player.x, Vars.player.y) // Draw at player location to avoid sudden disappearance of force field
         }
 
         override fun drawSelect() {

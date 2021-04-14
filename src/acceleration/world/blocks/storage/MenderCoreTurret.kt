@@ -98,7 +98,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
         }
 
         private fun validateShoot(target: Teamc?): Boolean {
-            if (target == null) return false
+            if (target == null || !enabled) return false
 
             return abs(angleTo(target.x, target.y) - turretRotation) <= 5 && cooldown >= turretReload
         }
@@ -129,19 +129,21 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
 
         override fun updateTile() {
             super.updateTile()
+            if (enabled) {
 
-            target = findTarget(team, x, y) { u, _, _ -> u.maxHealth }
+                target = findTarget(team, x, y) { u, _, _ -> u.maxHealth }
 
-            updateRecoil()
+                updateRecoil()
 
-            charge += Time.delta
-            cooldown += Time.delta
+                charge += Time.delta
+                cooldown += Time.delta
 
-            if (charge >= mendReload) mend()
+                if (charge >= mendReload) mend()
 
-            posTarget((target))
+                posTarget((target))
 
-            if (validateShoot(target)) shoot(target)
+                if (validateShoot(target)) shoot(target)
+            }
         }
 
         override fun drawSelect() {
@@ -165,19 +167,21 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
             Draw.rect(turretRegion, x + tr.x, y + tr.y, turretRotation)
             Draw.reset()
 
-            Draw.z(Layer.block)
-            Draw.color(baseColor)
-            Draw.alpha(Mathf.absin(Time.time, 10f, 1f))
-            Draw.rect(mendRegion, x, y)
+            if (enabled) {
+                Draw.z(Layer.block)
+                Draw.color(baseColor)
+                Draw.alpha(Mathf.absin(Time.time, 10f, 1f))
+                Draw.rect(mendRegion, x, y)
 
-            val f = 1f - (Time.time / 100f) % 1f
+                val f = 1f - (Time.time / 100f) % 1f
 
-            Draw.z(Layer.turret - 1)
-            Draw.color(baseColor)
-            Draw.alpha(1f)
-            Lines.stroke(f * block.size + 0.15f)
-            Lines.square(x, y, (1f + (1f - f) * size * Vars.tilesize / 2f).coerceAtMost(size * Vars.tilesize / 2f))
-            Draw.reset()
+                Draw.z(Layer.turret - 1)
+                Draw.color(baseColor)
+                Draw.alpha(1f)
+                Lines.stroke(f * block.size + 0.15f)
+                Lines.square(x, y, (1f + (1f - f) * size * Vars.tilesize / 2f).coerceAtMost(size * Vars.tilesize / 2f))
+                Draw.reset()
+            }
         }
     }
 }

@@ -6,8 +6,8 @@ import mindustry.game.Team
 
 class AccelerationTeams : ContentList {
     override fun load() {
-        arche = MultiColorTeam(6, "arche", AccelerationColors.archaiColor,
-            AccelerationColors.archaiPal1, AccelerationColors.archaiPal2, AccelerationColors.archaiPal3
+        arche = MultiColorTeam(6, "arche", AccelerationColors.archeColor,
+            AccelerationColors.archePal1, AccelerationColors.archePal2, AccelerationColors.archePal3
         )
     }
 

@@ -2,15 +2,11 @@ package acceleration.content
 
 import arc.struct.Seq
 import arc.util.Log
-import mindustry.content.TechTree
+import mindustry.content.*
 import mindustry.ctype.ContentList
 import mindustry.ctype.UnlockableContent
 import mindustry.game.Objectives
 import mindustry.type.ItemStack
-
-import mindustry.content.Blocks
-
-import mindustry.content.Liquids
 
 
 class AccelerationTechTree : ContentList {
@@ -52,20 +48,37 @@ class AccelerationTechTree : ContentList {
     }
 
     override fun load() {
+        // Liquids
         nodeProduce(Liquids.cryofluid, AccelerationLiquids.arctifluid)
         nodeProduce(Liquids.slag, AccelerationLiquids.quarkPlasma)
 
+        // Items
+        nodeProduce(Items.thorium, AccelerationItems.velosium)
+        nodeProduce(AccelerationItems.velosium, AccelerationItems.arcaneVelosium)
+        nodeProduce(AccelerationItems.velosium, AccelerationItems.electricVelosium)
+
+        // Blocks
+
+        /// Cores
         node(Blocks.coreNucleus, AccelerationBlocks.atomCore)
 
+        /// Walls
         node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
         node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
 
+        /// Turrets
         node(Blocks.arc, AccelerationBlocks.transistor)
         node(AccelerationBlocks.transistor, AccelerationBlocks.gate)
         node(AccelerationBlocks.gate, AccelerationBlocks.capacitor)
 
+        /// Projectors
         node(Blocks.forceProjector, AccelerationBlocks.configurableProjector, Seq.with(
             Objectives.Research(Blocks.mendProjector), Objectives.Research(Blocks.overdriveDome), Objectives.Research(Blocks.forceProjector)
+        ))
+
+        // Sectors
+        node(SectorPresets.planetaryTerminal, AccelerationSectors.glacialGlade, Seq.with(
+            Objectives.SectorComplete(SectorPresets.planetaryTerminal)
         ))
 
         Log.info("Loaded [accent]Acceleration[] tech tree successfully.")

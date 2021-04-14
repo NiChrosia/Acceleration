@@ -166,6 +166,9 @@ class AccelerationBullets : ContentList {
                 ammoMultiplier = 4f
                 knockback = 1f
                 status = StatusEffects.sporeSlowed
+
+                frontColor = Pal.spore
+                backColor = Pal.spore
             }
         }
 
@@ -179,6 +182,9 @@ class AccelerationBullets : ContentList {
                 incendAmount = 1
                 knockback = 0.8f
                 status = StatusEffects.burning
+
+                frontColor = Pal.lighterOrange
+                backColor = Pal.lightOrange
             }
         }
 
