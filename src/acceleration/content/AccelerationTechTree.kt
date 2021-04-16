@@ -60,20 +60,60 @@ class AccelerationTechTree : ContentList {
         // Blocks
 
         /// Cores
-        node(Blocks.coreNucleus, AccelerationBlocks.atomCore)
+        node(Blocks.coreNucleus, AccelerationBlocks.atomCore, Seq.with(
+            Objectives.Research(Items.copper),
+            Objectives.Research(Items.lead),
+            Objectives.Research(Items.thorium),
+            Objectives.Research(Items.silicon),
+            Objectives.Research(Items.surgeAlloy)
+        ))
 
         /// Walls
-        node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
-        node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
+        node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall, Seq.with(
+            Objectives.Research(Items.titanium),
+            Objectives.Research(Items.metaglass)
+        ))
+        node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge, Seq.with(
+            Objectives.Research(Items.titanium),
+            Objectives.Research(Items.metaglass)
+        ))
 
         /// Turrets
-        node(Blocks.arc, AccelerationBlocks.transistor)
-        node(AccelerationBlocks.transistor, AccelerationBlocks.gate)
-        node(AccelerationBlocks.gate, AccelerationBlocks.capacitor)
+        node(Blocks.arc, AccelerationBlocks.transistor, Seq.with(
+            Objectives.Research(Items.copper),
+            Objectives.Research(Items.lead),
+            Objectives.Research(Items.silicon)
+        ))
+        node(AccelerationBlocks.transistor, AccelerationBlocks.gate, Seq.with(
+            Objectives.Research(Items.copper),
+            Objectives.Research(Items.lead),
+            Objectives.Research(Items.silicon),
+            Objectives.Research(Items.metaglass)
+        ))
+        node(AccelerationBlocks.gate, AccelerationBlocks.capacitor, Seq.with(
+            Objectives.Research(Items.lead),
+            Objectives.Research(Items.titanium),
+            Objectives.Research(Items.thorium),
+            Objectives.Research(Items.plastanium)
+        ))
 
         /// Projectors
         node(Blocks.forceProjector, AccelerationBlocks.configurableProjector, Seq.with(
+            Objectives.Research(Items.lead),
+            Objectives.Research(Items.titanium),
+            Objectives.Research(Items.silicon),
+            Objectives.Research(Items.plastanium),
+            Objectives.Research(Items.surgeAlloy),
             Objectives.Research(Blocks.mendProjector), Objectives.Research(Blocks.overdriveDome), Objectives.Research(Blocks.forceProjector)
+        ))
+
+        /// Reclaimers
+        node(Blocks.container, AccelerationBlocks.reclaimer, Seq.with(
+            Objectives.Research(Items.copper),
+            Objectives.Research(Items.lead),
+            Objectives.Research(Items.graphite),
+            Objectives.Research(Items.titanium),
+            Objectives.SectorComplete(SectorPresets.windsweptIslands)
         ))
 
         // Sectors

@@ -168,10 +168,16 @@ class AccelerationBlocks : ContentList {
 
         reclaimer = object : Reclaimer("reclaimer") {
             init {
-                requirements(Category.effect, ItemStack.with())
+                requirements(Category.effect, ItemStack.with(
+                    Items.copper, 200,
+                    Items.lead, 200,
+                    Items.graphite, 150,
+                    Items.titanium, 200
+                ))
 
-                tier = 5f
-                size = 5
+                tier = 3f
+                health = 850
+                size = 3
                 itemCapacity = 400
             }
         }
