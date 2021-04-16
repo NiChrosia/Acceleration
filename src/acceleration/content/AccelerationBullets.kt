@@ -1,5 +1,7 @@
 package acceleration.content
 
+import acceleration.entities.EnergyOrbBulletType
+import acceleration.graphics.Colorm
 import arc.graphics.Color
 import arc.util.Log
 import mindustry.Vars
@@ -7,12 +9,14 @@ import mindustry.content.Bullets
 import mindustry.content.Fx
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
-import mindustry.entities.bullet.ArtilleryBulletType
-import mindustry.entities.bullet.BasicBulletType
-import mindustry.entities.bullet.FlakBulletType
-import mindustry.entities.bullet.LaserBoltBulletType
+import mindustry.entities.Units
+import mindustry.gen.Bullet
 import mindustry.graphics.Pal
 import mindustry.io.JsonIO
+import arc.graphics.g2d.Lines
+import mindustry.entities.Effect
+import mindustry.entities.bullet.*
+
 
 class AccelerationBullets : ContentList {
     override fun load() {
@@ -59,8 +63,6 @@ class AccelerationBullets : ContentList {
                 pierceCap = 2
                 pierce = true
                 shootEffect = Fx.shootBig
-                collidesGround = true
-                status = StatusEffects.shocked
             }
         }
 
@@ -74,14 +76,16 @@ class AccelerationBullets : ContentList {
                 pierce = true
                 shootEffect = Fx.shootBig
                 collidesGround = true
-                lightning = 3
-                lightningLength = 7
+                lightning = 1
+                lightningLength = 4
 
                 splashDamage = 40f * 1.5f
                 splashDamageRadius = 26f
                 explodeRange = 25f
 
                 status = StatusEffects.shocked
+
+                trailEffect = AccelerationFx.shockTrail
             }
         }
 
@@ -214,6 +218,75 @@ class AccelerationBullets : ContentList {
                 status = StatusEffects.shocked
             }
         }
+
+        // Overload Bullets
+        overloadBullet = object : LaserBoltBulletType() {
+            init {
+                width = 2.25f
+                height = 6f
+
+                damage = 34f
+                speed = 3.8f
+
+                pierce = true
+
+                status = AccelerationStatusEffects.overloaded
+
+                despawnEffect = AccelerationFx.overloadLaserHit
+                smokeEffect = AccelerationFx.overloadLaserCharge
+            }
+        }
+
+        overloadBulletLight = object : EnergyOrbBulletType() {
+            init {
+                size = 3f
+
+                damage = 16f
+                speed = 3.8f
+
+                pierce = true
+
+                color = Colorm().mix(Color.white, AccelerationColors.overdrive)
+
+                status = AccelerationStatusEffects.overloaded
+
+                despawnEffect = AccelerationFx.overloadLaserHit
+                smokeEffect = AccelerationFx.overloadLaserCharge
+            }
+        }
+
+        // Cryo Bullets
+        cryoenergyBullet = object : EnergyOrbBulletType() {
+            init {
+                size = 5f
+
+                damage = 125f
+                speed = 3.8f
+
+                pierce = true
+
+                status = AccelerationStatusEffects.arctifreezing
+
+                despawnEffect = AccelerationFx.cryoLaserHit
+                smokeEffect = AccelerationFx.cryoLaserCharge
+
+                color = AccelerationColors.arctifluidColor
+            }
+        }
+
+        cryoRail = object : RailBulletType() {
+            init {
+                shootEffect = AccelerationFx.cryorailShoot
+                length = 250f
+                updateEffectSeg = 35f
+                pierceEffect = AccelerationFx.cryorailHit
+                updateEffect = AccelerationFx.cryorailTrail
+                hitEffect = Fx.massiveExplosion
+                smokeEffect = Fx.shootBig2
+                damage = 450f
+                pierceDamageFactor = 0.5f
+            }
+        }
     }
 
     companion object {
@@ -228,9 +301,16 @@ class AccelerationBullets : ContentList {
         lateinit var railArtilleryHoming : ArtilleryBulletType
         lateinit var railArtilleryIncendiary : ArtilleryBulletType
         lateinit var railArtilleryGlass : ArtilleryBulletType
+
         lateinit var sporeStatusZone : BasicBulletType
         lateinit var pyraStatusZone : BasicBulletType
         lateinit var thoriumStatusZone : BasicBulletType
         lateinit var surgeStatusZone : BasicBulletType
+
+        lateinit var overloadBullet : LaserBoltBulletType
+        lateinit var overloadBulletLight : EnergyOrbBulletType
+
+        lateinit var cryoenergyBullet : EnergyOrbBulletType
+        lateinit var cryoRail : RailBulletType
     }
 }

@@ -1,10 +1,8 @@
 package acceleration.world.blocks.units
 
 import arc.Events
-import arc.math.geom.Geometry
 import arc.struct.ObjectMap
 import arc.struct.Seq
-import arc.util.Log
 import arc.util.io.Reads
 import mindustry.Vars
 import mindustry.game.EventType
@@ -22,21 +20,28 @@ import mindustry.world.consumers.ConsumeType
 import mindustry.world.consumers.ConsumeItems
 import mindustry.world.modules.ItemModule
 
-open class Collector(name: String) : Block(name) {
+open class Reclaimer(name: String) : Block(name) {
     private val unitMap = ObjectMap<UnitType, Array<out ItemStack>>()
-    private val collectors = Seq<CollectorBuild>()
+    private val reclaimers = Seq<CollectorBuild>()
 
     val range = 120f
-    val tier = 5f
+    var tier = 1f
 
     private fun tierScale(x: Float): Float {
-        return -((x * 15) + 15) + 100
+        return (x * 15 + 15) / 100
+    }
+
+    private fun unitScale(u: UnitType): Float {
+        return (u.hitSize) / 100
     }
 
     init {
+        super.init()
+
         solid = true
         update = true
         destructible = true
+        hasItems = true
 
         Vars.content.blocks().each { b ->
             if (b is UnitFactory) {
@@ -52,9 +57,15 @@ open class Collector(name: String) : Block(name) {
                 }
             }
         }
+
+        Events.on(EventType.ResetEvent::class.java) {
+            reclaimers.clear()
+        }
     }
 
     override fun drawPlace(x: Int, y: Int, rotation: Int, valid: Boolean) {
+        super.drawPlace(x, y, rotation, valid)
+
         Drawf.dashCircle(x * Vars.tilesize + offset, y * Vars.tilesize + offset, range, Pal.placing)
     }
 
@@ -72,19 +83,19 @@ open class Collector(name: String) : Block(name) {
                 }
             }
 
-            collectors.add(this)
+            reclaimers.add(this)
         }
 
         override fun read(read: Reads, revision: Byte) {
             super.read(read, revision)
 
-            collectors.add(this)
+            reclaimers.add(this)
         }
 
         override fun onRemoved() {
             super.onRemoved()
 
-            collectors.remove(this)
+            reclaimers.remove(this)
         }
 
         override fun updateTile() {
@@ -110,7 +121,8 @@ open class Collector(name: String) : Block(name) {
             units.each { u ->
                 val unitItems = unitMap.get(u.type) ?: return@each
 
-                val percent = tierScale(tier)
+                val tierPercent = tierScale(tier) // The scale for the block tier
+                val unitPercent = unitScale(u.type) // The scale for the unit hitSize
 
                 for (iterItem in unitItems.iterator()) {
                     val item = iterItem.item
@@ -118,11 +130,11 @@ open class Collector(name: String) : Block(name) {
 
                     var divideAmount = 1
 
-                    collectors.each { c -> if (c.dst(x, y) <= range && !(c.x == x && c.y == y)) divideAmount++ }
+                    reclaimers.each { c -> if (c.dst(x, y) <= range && !(c.x == x && c.y == y)) divideAmount++ }
 
                     if (divideAmount > 1) divideAmount -= (divideAmount / 2)
 
-                    val percentAmount = ((amount * (percent / 100)) / divideAmount).toInt()
+                    val percentAmount = ((amount * tierPercent * unitPercent) / divideAmount).toInt()
 
                     queuedItems.add(ItemStack.with(item, percentAmount))
                 }
@@ -141,6 +153,8 @@ open class Collector(name: String) : Block(name) {
             Drawf.dashCircle(x, y, range, team.color)
         }
 
-        override fun acceptItem(source: Building?, item: Item?) = false
+        override fun acceptItem(source: Building?, item: Item?): Boolean {
+            return false
+        }
     }
 }

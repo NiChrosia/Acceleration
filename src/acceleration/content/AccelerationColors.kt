@@ -12,6 +12,8 @@ class AccelerationColors : ContentList {
         archePal1 = Color.valueOf("dbdbdb")
         archePal2 = Color.valueOf("c9c9c9")
         archePal3 = Color.valueOf("b5b5b5")
+
+        overdrive = Color.valueOf("feb380")
     }
 
     companion object {
@@ -22,5 +24,7 @@ class AccelerationColors : ContentList {
         lateinit var archePal1 : Color
         lateinit var archePal2 : Color
         lateinit var archePal3 : Color
+
+        lateinit var overdrive : Color
     }
 }

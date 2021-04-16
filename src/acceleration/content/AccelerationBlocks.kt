@@ -10,7 +10,7 @@ import mindustry.content.*
 import acceleration.world.blocks.storage.*
 import acceleration.world.blocks.defense.*
 import acceleration.world.blocks.defense.turrets.LogicOverlayItemTurret
-import acceleration.world.blocks.units.Collector
+import acceleration.world.blocks.units.Reclaimer
 import mindustry.gen.Sounds
 import mindustry.world.blocks.defense.turrets.ItemTurret
 import mindustry.world.blocks.defense.turrets.PowerTurret
@@ -166,12 +166,13 @@ class AccelerationBlocks : ContentList {
 
         // Collectors
 
-        collector = object : Collector("collector") {
+        reclaimer = object : Reclaimer("reclaimer") {
             init {
                 requirements(Category.effect, ItemStack.with())
 
+                tier = 5f
                 size = 5
-                itemCapacity = 1000
+                itemCapacity = 400
             }
         }
     }
@@ -193,6 +194,6 @@ class AccelerationBlocks : ContentList {
         lateinit var gate : LogicOverlayItemTurret
         lateinit var capacitor : ItemTurret
 
-        lateinit var collector : Collector
+        lateinit var reclaimer : Reclaimer
     }
 }

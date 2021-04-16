@@ -349,6 +349,10 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                             baseColor
                         )
                     }
+
+                    Units.nearby(team, x - buildRange / 2, y - buildRange / 2, buildRange, buildRange) { u ->
+                        u.heal(u.maxHealth * (buildHealPercent / 1000))
+                    }
                 }
             }
             if (mode == "overdrive") {
@@ -361,7 +365,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
                 Units.nearby(team, x - (buildRadius / 2), y - (buildRadius / 2), buildRadius, buildRadius) { u ->
                     if (Mathf.chance(0.95)) {
-                        u.apply(StatusEffects.overclock, 40f)
+                        u.apply(StatusEffects.overdrive, 40f)
                     }
                 }
             }
