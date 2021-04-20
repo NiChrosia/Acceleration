@@ -24,7 +24,7 @@ open class Reclaimer(name: String) : Block(name) {
     private val unitMap = ObjectMap<UnitType, Array<out ItemStack>>()
     private val reclaimers = Seq<CollectorBuild>()
 
-    val range = 120f
+    var range = 120f
     var tier = 1f
 
     private fun tierScale(x: Float): Float {

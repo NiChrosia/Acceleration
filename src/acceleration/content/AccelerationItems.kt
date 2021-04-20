@@ -17,20 +17,16 @@ class AccelerationItems : ContentList {
             }
         }
 
-        arcaneVelosium = object : AnimatedItem("arcane-velosium") {
+        arcaneVelosium = object : Item("arcane-velosium") {
             init {
                 color = Color.valueOf("270330")
-                transition = 1
-                sprites = 18
                 charge = 0.25f
             }
         }
 
-        electricVelosium = object : AnimatedItem("electric-velosium") {
+        electricVelosium = object : Item("electric-velosium") {
             init {
                 color = Color.valueOf("b8b80d")
-                transition = 1
-                sprites = 18
                 charge = 1.25f
             }
         }
@@ -52,8 +48,8 @@ class AccelerationItems : ContentList {
 
     companion object {
         lateinit var velosium : Item
-        lateinit var arcaneVelosium : AnimatedItem
-        lateinit var electricVelosium : AnimatedItem
+        lateinit var arcaneVelosium : Item
+        lateinit var electricVelosium : Item
 
         lateinit var cryocatalyst : AnimatedItem
     }

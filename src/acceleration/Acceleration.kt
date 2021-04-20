@@ -4,11 +4,12 @@ import arc.util.Log
 import mindustry.mod.Mod
 import acceleration.content.*
 import arc.Events
+import mindustry.Vars
 import mindustry.game.EventType
 
 class Acceleration : Mod() {
     init {
-        Log.info("Mod [accent]Acceleration[] constructor loaded successfully.")
+        if (Vars.net.client()) Log.info("Mod [accent]Acceleration[] constructor loaded successfully.") else Log.info("Mod Acceleration constructor loaded successfully.")
     }
     
     override fun loadContent() {
@@ -30,6 +31,6 @@ class Acceleration : Mod() {
             AccelerationSettings().load()
         }
 
-        Log.info("Mod [accent]Acceleration[] loaded content successfully.")
+        if (Vars.net.client()) Log.info("Mod [accent]Acceleration[] loaded content successfully.") else Log.info("Mod Acceleration loaded content successfully.")
     }
 }

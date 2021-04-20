@@ -1,40 +1,26 @@
 # Turret tree
 
-## Electric
-|`parent`|`size`|`name`|`description`|
-|:-:|:-:|:-:|:-:|
-`arc`|`1x1`|Transistor|Shoots small electric bolts with a high power consumption.
-`transistor`|`2x2`|Gate|Shoots electromagnetically accelerated artillery.
-`gate`|`3x3`|Capacitor|Shoots shocking bullets with a damaging electric field.
-
-### Ammo Types
-|`name`|`ammoType`|`powerUsage`|
-|:-:|:-:|:-:|
-Transistor|`power`|15
-Gate|`silicon`, `phase-fabric`|60
-Capacitor|`silicon`, `phase-fabric`, `surge-alloy`|180
-
 ## Electric Piercing
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
 `capacitor`|`4x4`|Core|Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate. Optimally uses phase fabric as ammo.
 
 ### Ammo Types
-|`name`|`ammoType`|`powerUsage`|
+|`name`|`ammoType`|`ammo-optional`|`powerUsage`|
 |:-:|:-:|:-:|
-Core|`silicon`, `phase-fabric`|720
+Core|`silicon`, `phase-fabric`|true|720
 
 ## Cryogenic (Railgun)
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
-`gate`|`2x2`|Frost|Utilizes cryocatalyst for its cryogenic properties. Fires clumps of damaging cryocatalyst at enemies. Slows enemy weapons down in a radius around the impact.
+`gate`|`2x2`|Frost|Utilizes cryogem for its cold properties. Fires clumps of damaging cryocatalyst at enemies. Slows enemy weapons down in a radius around the impact.
 `frost`|`3x3`|Snowflake|Shoots razor sharp whirling cryocatalyst shards. Requires large amounts of power for sharpening and hyperrotation. Bullets temporarily disarm enemies.
 `snowflake`|`4x4`|Sleet|Shoots insanely sharpened projectiles at enemies. Requires massive amounts of power for laser cutting and spinning the projectile to extreme speeds. Bullets slice through enemies, resulting in usually fatal damage.
 
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|
 |:-:|:-:|:-:|
-Frost|`cryocatalyst`|`0`
+Frost|`cryogem`|`0`
 Snowflake|`cryocatalyst`|`180`
 Sleet|`cryocatalyst`|`720`
 
@@ -48,9 +34,9 @@ Sleet|`cryocatalyst`|`720`
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|
 |:-:|:-:|:-:|
-Lepton|`copper`, `titanium`, `silicon`|60
-Neutrino|`silicon`, `titanium`, `thorium`, `surge-alloy`|180
-Tachyon|`thorium`, `surge-alloy`, `plastanium`, `blast-compound`, `phase-fabric`|720
+Lepton|`graphite`, `titanium`, `silicon`|60
+Neutrino|`titanium`, `thorium`, `silicon`, `plastanium`|180
+Tachyon|`thorium`, `plastanium`, `surge-alloy`|720
 
 ## Support
 |`parent`|`size`|`name`|`description`|
@@ -61,5 +47,28 @@ Tachyon|`thorium`, `surge-alloy`, `plastanium`, `blast-compound`, `phase-fabric`
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|
 |:-:|:-:|:-:|
-Restorer|`silicon`, `phase-fabric`|`60`
-Rejuvenator|`silicon`, `phase-fabric`|`120`
+Restorer|`silicon`|`60`
+Rejuvenator|`silicon` (mandatory), `phase-fabric` (optional)|`120`
+
+## Flame
+|`parent`|`size`|`name`|`description`|
+|:-:|:-:|:-:|:-:|
+`scorch`|`2x2`|Singe|Shoots very high temperature flames at the enemy. Requires energy for igniting and sustaining the flames. Slightly larger flames than the Scorch.
+`singe`|`3x3`|Char|Shoots white-hot flames at the enemy. Requires energy for igniting and sustaining the flames. Much larger flames than the Scorch.
+
+### Ammo Types
+|`name`|`ammoType`|`powerUsage`|
+|:-:|:-:|:-:|
+Singe|`none`|`60`
+Char|`none`|`240`
+
+## Shrapnel
+
+`fuse`|`4x4`|Alloy|Shoots four blasts at close range at enemies.
+`alloy`|`5x5`|Compound|Fires six blasts at close range at enemies. Significantly more concentrated than the Fuse.
+
+### Ammo Types
+|`name`|`ammoType`|`powerUsage`|
+|:-:|:-:|:-:|
+Alloy|`thorium`, `electric-velosium`, `surge-alloy`|`0`
+Compound|`electric-velosium`, `surge-alloy`, `cryocatalyst`|`0`

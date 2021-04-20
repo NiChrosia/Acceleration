@@ -39,6 +39,8 @@ class AccelerationBullets : ContentList {
                 lifetime = 70f
                 speed = 5.4f
                 buildingDamageMultiplier = 0.01f
+                collidesTeam = true
+                healPercent = 0.01f
             }
         }
 

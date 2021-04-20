@@ -2,6 +2,7 @@ package acceleration.content
 
 import arc.struct.Seq
 import arc.util.Log
+import mindustry.Vars
 import mindustry.content.*
 import mindustry.ctype.ContentList
 import mindustry.ctype.UnlockableContent
@@ -12,21 +13,33 @@ import mindustry.type.ItemStack
 class AccelerationTechTree : ContentList {
     private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack) {
         val techNode = TechTree.TechNode(TechTree.get(parent), contentType, arrayOf(requirements))
+        arrayOf(requirements).forEach { i ->
+            techNode.objectives.add(Objectives.Research(i.item))
+        }
         objectives?: techNode.objectives.addAll(objectives)
     }
 
     private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
         val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
+        contentType.researchRequirements().forEach { i ->
+            techNode.objectives.add(Objectives.Research(i.item))
+        }
         objectives?: techNode.objectives.addAll(objectives)
     }
 
     private fun node(parent: UnlockableContent, contentType: UnlockableContent) {
-        TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
+        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
+        contentType.researchRequirements().forEach { i ->
+            techNode.objectives.add(Objectives.Research(i.item))
+        }
     }
 
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack) {
         val techNode = TechTree.TechNode(TechTree.get(parent), contentType, arrayOf(requirements))
 
+        contentType.researchRequirements().forEach { i ->
+            techNode.objectives.add(Objectives.Research(i.item))
+        }
         techNode.objectives.add(Objectives.Produce(contentType))
         objectives?: techNode.objectives.addAll(objectives)
 
@@ -35,6 +48,9 @@ class AccelerationTechTree : ContentList {
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
         val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
 
+        contentType.researchRequirements().forEach { i ->
+            techNode.objectives.add(Objectives.Research(i.item))
+        }
         techNode.objectives.add(Objectives.Produce(contentType))
         objectives?: techNode.objectives.addAll(objectives)
 
@@ -43,6 +59,9 @@ class AccelerationTechTree : ContentList {
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent) {
         val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
 
+        contentType.researchRequirements().forEach { i ->
+            techNode.objectives.add(Objectives.Research(i.item))
+        }
         techNode.objectives.add(Objectives.Produce(contentType))
 
     }
@@ -60,67 +79,32 @@ class AccelerationTechTree : ContentList {
         // Blocks
 
         /// Cores
-        node(Blocks.coreNucleus, AccelerationBlocks.atomCore, Seq.with(
-            Objectives.Research(Items.copper),
-            Objectives.Research(Items.lead),
-            Objectives.Research(Items.thorium),
-            Objectives.Research(Items.silicon),
-            Objectives.Research(Items.surgeAlloy)
-        ))
+        node(Blocks.coreNucleus, AccelerationBlocks.atomCore)
 
         /// Walls
-        node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall, Seq.with(
-            Objectives.Research(Items.titanium),
-            Objectives.Research(Items.metaglass)
-        ))
-        node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge, Seq.with(
-            Objectives.Research(Items.titanium),
-            Objectives.Research(Items.metaglass)
-        ))
+        node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
+        node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
 
         /// Turrets
-        node(Blocks.arc, AccelerationBlocks.transistor, Seq.with(
-            Objectives.Research(Items.copper),
-            Objectives.Research(Items.lead),
-            Objectives.Research(Items.silicon)
-        ))
-        node(AccelerationBlocks.transistor, AccelerationBlocks.gate, Seq.with(
-            Objectives.Research(Items.copper),
-            Objectives.Research(Items.lead),
-            Objectives.Research(Items.silicon),
-            Objectives.Research(Items.metaglass)
-        ))
-        node(AccelerationBlocks.gate, AccelerationBlocks.capacitor, Seq.with(
-            Objectives.Research(Items.lead),
-            Objectives.Research(Items.titanium),
-            Objectives.Research(Items.thorium),
-            Objectives.Research(Items.plastanium)
-        ))
+        node(Blocks.arc, AccelerationBlocks.transistor)
+        node(AccelerationBlocks.transistor, AccelerationBlocks.gate)
+        node(AccelerationBlocks.gate, AccelerationBlocks.capacitor)
 
         /// Projectors
         node(Blocks.forceProjector, AccelerationBlocks.configurableProjector, Seq.with(
-            Objectives.Research(Items.lead),
-            Objectives.Research(Items.titanium),
-            Objectives.Research(Items.silicon),
-            Objectives.Research(Items.plastanium),
-            Objectives.Research(Items.surgeAlloy),
-            Objectives.Research(Blocks.mendProjector), Objectives.Research(Blocks.overdriveDome), Objectives.Research(Blocks.forceProjector)
+            Objectives.Research(Blocks.mendProjector),
+            Objectives.Research(Blocks.overdriveDome),
+            Objectives.Research(Blocks.forceProjector)
         ))
 
         /// Reclaimers
-        node(Blocks.container, AccelerationBlocks.reclaimer, Seq.with(
-            Objectives.Research(Items.copper),
-            Objectives.Research(Items.lead),
-            Objectives.Research(Items.graphite),
-            Objectives.Research(Items.titanium),
-            Objectives.SectorComplete(SectorPresets.windsweptIslands)
-        ))
+        node(Blocks.container, AccelerationBlocks.reclaimer)
 
         // Sectors
         node(SectorPresets.planetaryTerminal, AccelerationSectors.glacialGlade, Seq.with(
             Objectives.SectorComplete(SectorPresets.planetaryTerminal)
         ))
 
-        Log.info("Loaded [accent]Acceleration[] tech tree successfully.")
+        if (Vars.net.client()) Log.info("Mod [accent]Acceleration[] tech tree loaded successfully.") else Log.info("Mod Acceleration tech tree loaded successfully.")
     }
 }

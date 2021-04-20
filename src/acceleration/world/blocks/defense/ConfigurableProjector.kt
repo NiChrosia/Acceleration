@@ -20,8 +20,6 @@ import arc.util.Time
 import arc.util.Tmp
 import arc.util.io.Reads
 import arc.util.io.Writes
-import mindustry.gen.Building
-import mindustry.gen.Tex
 import mindustry.graphics.Drawf
 import mindustry.graphics.Pal
 import mindustry.ui.Styles
@@ -32,15 +30,15 @@ import kotlin.math.abs
 import kotlin.math.min
 import arc.math.geom.Geometry
 import kotlin.math.max
-import mindustry.gen.Groups
 import mindustry.world.consumers.ConsumeType
 import mindustry.world.consumers.ConsumeLiquidFilter
 import arc.math.geom.Intersector
-import mindustry.gen.Bullet
 import arc.graphics.g2d.Fill
 import mindustry.content.StatusEffects
 import mindustry.entities.Effect
 import mindustry.entities.Units
+import mindustry.gen.*
+import mindustry.gen.Unit
 import mindustry.graphics.Layer
 import mindustry.type.Liquid
 import mindustry.ui.Bar
@@ -173,6 +171,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         configurable = true
         hasItems = false
         hasPower = true
+        sync = true
 
         consumes.add(
             ConsumeLiquidFilter(
@@ -211,8 +210,26 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         var hit: Float = 0f
         var warmup: Float = 0f
 
-        private fun configure(l: Int) {
-            level = l
+        override fun configure(value: Any?) {
+            if (value is String && value.split(" ").toTypedArray().size == 3) {
+                val valueSeq = Seq(value.split(" ").toTypedArray())
+
+                level = valueSeq[0].toInt()
+                autoadjust = valueSeq[1].toBoolean()
+                mode = valueSeq[2]
+            }
+
+            Call.tileConfig(Vars.player, this, value)
+        }
+
+        override fun configured(builder: Unit?, value: Any?) {
+            if (value is String && value.split(" ").toTypedArray().size == 3) {
+                val valueSeq = Seq(value.split(" ").toTypedArray())
+
+                level = valueSeq[0].toInt()
+                autoadjust = valueSeq[1].toBoolean()
+                mode = valueSeq[2]
+            }
         }
 
         /** Gets the value between min and max depending on speed */
@@ -265,12 +282,12 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             table.background(Tex.inventory)
 
             table.check("AA", autoadjust) { value -> // AA = Auto Adjust
-                autoadjust = value
+                configure("$level $value $mode")
             }
 
             for (l in 0 until maxLevels.toInt()) {
                 table.button((l + 1).toString(), Styles.clearTogglet) {
-                    configure(l)
+                    configure("$l $autoadjust $mode")
 
                     table.clear()
                     buildConfiguration(table)
@@ -282,7 +299,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             ItemSelection.buildTable(table, Seq.with(AccelerationBlocks.noneIcon, AccelerationBlocks.mendIcon, AccelerationBlocks.overdriveIcon, AccelerationBlocks.forceIcon), {if (mode == "none") null else blockMap.get(mode)}) { block ->
                 if (block != null) {
                     val output = modeMap.get(block)
-                    if (output != null) mode = output
+                    if (output != null) configure("$level $autoadjust $output")
                 }
             }
         }
@@ -355,7 +372,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                     }
                 }
             }
-            if (mode == "overdrive") {
+            if (mode == "overdrive" && efficiency() > 0) {
 
                 charge = 0f
 

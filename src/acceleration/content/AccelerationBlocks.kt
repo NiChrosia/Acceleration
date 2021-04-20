@@ -179,6 +179,8 @@ class AccelerationBlocks : ContentList {
                 health = 850
                 size = 3
                 itemCapacity = 400
+
+                range = 200f
             }
         }
     }
