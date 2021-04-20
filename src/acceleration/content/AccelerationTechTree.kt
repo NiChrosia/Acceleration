@@ -74,7 +74,7 @@ class AccelerationTechTree : ContentList {
         // Items
         nodeProduce(Items.thorium, AccelerationItems.velosium)
         nodeProduce(AccelerationItems.velosium, AccelerationItems.arcaneVelosium)
-        nodeProduce(AccelerationItems.velosium, AccelerationItems.electricVelosium)
+        nodeProduce(AccelerationItems.velosium, AccelerationItems.voltaicVelosium)
 
         // Blocks
 

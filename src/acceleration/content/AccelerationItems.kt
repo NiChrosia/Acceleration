@@ -24,7 +24,7 @@ class AccelerationItems : ContentList {
             }
         }
 
-        electricVelosium = object : Item("electric-velosium") {
+        voltaicVelosium = object : Item("voltaic-velosium") {
             init {
                 color = Color.valueOf("b8b80d")
                 charge = 1.25f
@@ -49,7 +49,7 @@ class AccelerationItems : ContentList {
     companion object {
         lateinit var velosium : Item
         lateinit var arcaneVelosium : Item
-        lateinit var electricVelosium : Item
+        lateinit var voltaicVelosium : Item
 
         lateinit var cryocatalyst : AnimatedItem
     }
