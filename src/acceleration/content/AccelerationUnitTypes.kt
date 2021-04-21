@@ -244,8 +244,8 @@ class AccelerationUnitTypes : ContentList {
                 )
 
                 abilities = Seq.with(
-                    ForceFieldAbility(64f, 12.5f, 8500f, 60f * 30f),
-                    ShieldRegenFieldAbility(60f, 360f, 60f * 2, 90f)
+                    ForceFieldAbility(64f, 0.6f, 1600f, 60f * 30f),
+                    ShieldRegenFieldAbility(32f, 360f, 60f * 12, 90f)
                 )
             }
         }
