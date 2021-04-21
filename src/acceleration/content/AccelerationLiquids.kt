@@ -1,6 +1,5 @@
 package acceleration.content
 
-import arc.util.Log
 import mindustry.ctype.ContentList
 import mindustry.type.Liquid
 
@@ -10,7 +9,7 @@ class AccelerationLiquids : ContentList {
             init {
                 heatCapacity = 1.3f
                 temperature = 0.05f
-                color = AccelerationColors.arctifluidColor
+                color = AccelerationPal.arctifluid
                 effect = AccelerationStatusEffects.arctifreezing
             }
         }
@@ -18,7 +17,7 @@ class AccelerationLiquids : ContentList {
         quarkPlasma = object : Liquid("quark-plasma") {
             init {
                 temperature = 2.5f
-                color = AccelerationColors.quarkPlasmaColor
+                color = AccelerationPal.quarkPlasma
                 effect = AccelerationStatusEffects.liquefying
             }
         }

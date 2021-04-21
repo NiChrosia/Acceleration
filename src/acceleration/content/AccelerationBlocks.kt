@@ -35,7 +35,7 @@ class AccelerationBlocks : ContentList {
                 itemCapacity = 32000
                 unitCapModifier = 48
                 researchCostMultiplier = 0.25f
-                unitType = AccelerationUnits.quark
+                unitType = AccelerationUnitTypes.quark
             }
         }
 

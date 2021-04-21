@@ -13,13 +13,13 @@ class Acceleration : Mod() {
     }
     
     override fun loadContent() {
-        AccelerationColors().load()
+        AccelerationPal().load()
         AccelerationFx().load()
         AccelerationTeams().load()
         AccelerationStatusEffects().load()
         AccelerationLiquids().load()
         AccelerationBullets().load()
-        AccelerationUnits().load()
+        AccelerationUnitTypes().load()
         AccelerationItems().load()
         AccelerationBlocks().load()
         AccelerationStatusZones().load()

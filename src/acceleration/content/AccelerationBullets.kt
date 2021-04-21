@@ -1,22 +1,16 @@
 package acceleration.content
 
-import acceleration.entities.EnergyOrbBulletType
+import acceleration.entities.OrbBulletType
 import acceleration.graphics.Colorm
 import arc.graphics.Color
-import arc.util.Log
 import mindustry.Vars
 import mindustry.content.Bullets
 import mindustry.content.Fx
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
-import mindustry.entities.Units
-import mindustry.gen.Bullet
 import mindustry.graphics.Pal
 import mindustry.io.JsonIO
-import arc.graphics.g2d.Lines
-import mindustry.entities.Effect
 import mindustry.entities.bullet.*
-
 
 class AccelerationBullets : ContentList {
     override fun load() {
@@ -40,7 +34,7 @@ class AccelerationBullets : ContentList {
                 speed = 5.4f
                 buildingDamageMultiplier = 0.01f
                 collidesTeam = true
-                healPercent = 0.01f
+                healPercent = 1f
             }
         }
 
@@ -239,7 +233,7 @@ class AccelerationBullets : ContentList {
             }
         }
 
-        overloadBulletLight = object : EnergyOrbBulletType() {
+        overloadBulletLight = object : OrbBulletType() {
             init {
                 size = 3f
 
@@ -248,7 +242,7 @@ class AccelerationBullets : ContentList {
 
                 pierce = true
 
-                color = Colorm().mix(Color.white, AccelerationColors.overdrive)
+                color = Colorm.mix(Color.white, AccelerationPal.overdrive)
 
                 status = AccelerationStatusEffects.overloaded
 
@@ -258,34 +252,40 @@ class AccelerationBullets : ContentList {
         }
 
         // Cryo Bullets
-        cryoenergyBullet = object : EnergyOrbBulletType() {
+        cryoenergyBullet = object : OrbBulletType() {
             init {
-                size = 5f
+                size = 4f
 
-                damage = 125f
+                damage = 45f
                 speed = 3.8f
 
                 pierce = true
+                recoil = 0.1f
 
                 status = AccelerationStatusEffects.arctifreezing
 
                 despawnEffect = AccelerationFx.cryoLaserHit
                 smokeEffect = AccelerationFx.cryoLaserCharge
 
-                color = AccelerationColors.arctifluidColor
+                color = AccelerationPal.cryo
             }
         }
 
         cryoRail = object : RailBulletType() {
             init {
                 shootEffect = AccelerationFx.cryorailShoot
+
                 length = 250f
                 updateEffectSeg = 35f
                 pierceEffect = AccelerationFx.cryorailHit
                 updateEffect = AccelerationFx.cryorailTrail
                 hitEffect = Fx.massiveExplosion
+
                 smokeEffect = Fx.shootBig2
-                damage = 450f
+
+                recoil = 0.5f
+
+                damage = 250f
                 pierceDamageFactor = 0.5f
             }
         }
@@ -310,9 +310,9 @@ class AccelerationBullets : ContentList {
         lateinit var surgeStatusZone : BasicBulletType
 
         lateinit var overloadBullet : LaserBoltBulletType
-        lateinit var overloadBulletLight : EnergyOrbBulletType
+        lateinit var overloadBulletLight : OrbBulletType
 
-        lateinit var cryoenergyBullet : EnergyOrbBulletType
+        lateinit var cryoenergyBullet : OrbBulletType
         lateinit var cryoRail : RailBulletType
     }
 }

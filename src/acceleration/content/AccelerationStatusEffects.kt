@@ -1,6 +1,5 @@
 package acceleration.content
 
-import arc.util.Log
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
 import mindustry.type.StatusEffect
@@ -11,13 +10,12 @@ class AccelerationStatusEffects : ContentList {
             init {
                 speedMultiplier = 0.75f
                 reloadMultiplier = 0.8f
-                damage = 2.5f
-                healthMultiplier = 1.2f
+                damage = 1f
                 effectChance = 0.85f
                 transitionDamage = 24f
 
                 effect = AccelerationFx.arctifluidFx
-                color = AccelerationColors.arctifluidColor
+                color = AccelerationPal.arctifluid
             }
 
             override fun init() {
@@ -41,7 +39,7 @@ class AccelerationStatusEffects : ContentList {
             init {
                 damage = 10f
                 effectChance = 1f
-                color = AccelerationColors.quarkPlasmaColor
+                color = AccelerationPal.quarkPlasma
                 effect = AccelerationFx.quarkPlasmaFx
             }
 

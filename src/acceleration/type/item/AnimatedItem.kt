@@ -55,7 +55,7 @@ open class AnimatedItem(name: String) : Item(name) {
             for (t in 0 until transition) {
                 val f = (t / (transition + 1)).toFloat()
                 animatedRegions.add(
-                    Drawm().blendSprites(
+                    Drawm.blendSprites(
                     sprite, lastSprite, f, name
                 ))
             }

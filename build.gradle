@@ -88,8 +88,13 @@ task deploy(type: Jar){
 
     from{ [zipTree("$buildDir/libs/${project.archivesBaseName}Desktop.jar")/*, zipTree("$buildDir/libs/${project.archivesBaseName}Android.jar")*/] }
 
-    doLast{
-        delete{ delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar" }
-        delete{ delete "$buildDir/libs/${project.archivesBaseName}Android.jar" }
+    doLast {
+        delete { delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar" }
+        delete { delete "$buildDir/libs/${project.archivesBaseName}Android.jar" }
+
+        // Temporary code so I don't have to move the file myself.
+        exec {
+            commandLine("powershell.exe", "mv -Force build/libs/Acceleration-kotlin.jar ../../Acceleration-kotlin.jar")
+        }
     }
 }

@@ -15,7 +15,7 @@ import mindustry.graphics.Drawf
 class AccelerationFx : ContentList {
     override fun load() {
         arctifluidFx = Effect(40f) { e ->
-            Draw.color(AccelerationColors.arctifluidColor, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id.toLong(), 0.12f))
+            Draw.color(AccelerationPal.arctifluid, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id.toLong(), 0.12f))
 
             Angles.randLenVectors(e.id.toLong(), 2, 1 + e.fin() * 3) { x, y ->
                 Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f);
@@ -23,7 +23,7 @@ class AccelerationFx : ContentList {
         }
 
         quarkPlasmaFx = Effect(40f) { e ->
-            Draw.color(AccelerationColors.quarkPlasmaColor, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id.toLong(), 0.12f))
+            Draw.color(AccelerationPal.quarkPlasma, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id.toLong(), 0.12f))
 
             Angles.randLenVectors(e.id.toLong(), 2, 1 + e.fin() * 3) { x, y ->
                 Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f);
@@ -37,7 +37,7 @@ class AccelerationFx : ContentList {
         }
 
         overloadLaserHit = Effect(8f) { e ->
-            Draw.color(Color.white, AccelerationColors.overdrive, e.fin())
+            Draw.color(Color.white, AccelerationPal.overdrive, e.fin())
             Lines.stroke(0.5f + e.fout())
             Lines.circle(e.x, e.y, e.fin() * 5f)
 
@@ -46,7 +46,7 @@ class AccelerationFx : ContentList {
         }
 
         overloadLaserCharge = Effect(8f) { e ->
-            Draw.color(Color.white, AccelerationColors.overdrive, e.fin())
+            Draw.color(Color.white, AccelerationPal.overdrive, e.fin())
             Lines.stroke(0.35f + e.fout())
             Lines.circle(e.x, e.y, e.fin() * 5f)
 
@@ -55,7 +55,7 @@ class AccelerationFx : ContentList {
         }
 
         cryoLaserHit = Effect(8f) { e ->
-            Draw.color(Color.white, AccelerationColors.arctifluidColor, e.fin())
+            Draw.color(Color.white, AccelerationPal.arctifluid, e.fin())
             Lines.stroke(0.5f + e.fout())
             Lines.circle(e.x, e.y, e.fin() * 5f)
 
@@ -64,7 +64,7 @@ class AccelerationFx : ContentList {
         }
 
         cryoLaserCharge = Effect(8f) { e ->
-            Draw.color(Color.white, AccelerationColors.arctifluidColor, e.fin())
+            Draw.color(Color.white, AccelerationPal.arctifluid, e.fin())
             Lines.stroke(0.35f + e.fout())
             Lines.circle(e.x, e.y, e.fin() * 5f)
 
@@ -72,30 +72,27 @@ class AccelerationFx : ContentList {
             Lines.poly(e.x, e.y, 12, 6f * e.fout())
         }
 
-        cryorailShoot = Effect(18f, 250f) { e ->
-            e.scaled(10f) { b ->
-                Draw.color(Color.white, Color.lightGray, b.fin())
-                Lines.stroke(b.fout() * 3f + 0.2f)
-                Lines.circle(b.x, b.y, b.fin() * 50f)
-            }
+        cryorailShoot = Effect(36f, 250f) { e ->
+            Draw.color(AccelerationPal.arctifluid, Color.white, e.fin())
+            Fill.poly(e.x, e.y, 8, 16f * e.fout(), 360f * e.fout())
 
-            Draw.color(AccelerationColors.arctifluidColor)
+            Draw.color(AccelerationPal.cryo)
 
             for (i in Mathf.signs) {
-                Drawf.tri(e.x, e.y, 13f * e.fout(), 85f, e.rotation + 90f * i)
+                Drawf.tri(e.x, e.y, 15f * (e.fout()), 40f, e.rotation + 90f * i)
             }
         }
 
-        cryorailHit = Effect(1f) { e ->
-            Draw.color(AccelerationColors.arctifluidColor)
+        cryorailHit = Effect(16f) { e ->
+            Draw.color(AccelerationPal.cryo)
 
             for (i in Mathf.signs) {
                 Drawf.tri(e.x, e.y, 10f * e.fout(), 60f, e.rotation + 140f * i)
             }
         }
 
-        cryorailTrail = Effect(16f) { e ->
-            Draw.color(AccelerationColors.arctifluidColor)
+        cryorailTrail = Effect(36f) { e ->
+            Draw.color(AccelerationPal.cryo)
 
             for (i in Mathf.signs) {
                 Drawf.tri(e.x, e.y, 10f * e.fout(), 24f, e.rotation + 90 + 90f * i)

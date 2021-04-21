@@ -3,9 +3,7 @@ package acceleration.content
 import arc.func.Prov
 import arc.struct.ObjectSet
 import arc.struct.Seq
-import mindustry.Vars
 import mindustry.ai.types.BuilderAI
-import mindustry.content.Fx
 import mindustry.content.Items
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
@@ -22,7 +20,7 @@ import mindustry.type.Weapon
 import mindustry.gen.EntityMapping
 import mindustry.gen.Unit
 
-class AccelerationUnits : ContentList {
+class AccelerationUnitTypes : ContentList {
     private fun setEntity(name: String, c: Prov<*>) {
         EntityMapping.nameMap.put(name, c)
     }
@@ -269,7 +267,7 @@ class AccelerationUnits : ContentList {
                 itemCapacity = 750
                 mineTier = 5 // For mining modded ores.
                 buildSpeed = 6.5f
-                commandLimit = 16
+                commandLimit = 8
 
                 range = 100f
                 ammoType = AmmoTypes.powerHigh
@@ -293,7 +291,8 @@ class AccelerationUnits : ContentList {
                         init {
                             name = "cryo-railgun"
                             bullet = AccelerationBullets.cryoRail
-                            reload = 80f
+
+                            reload = 250f
                             rotateSpeed = 2.2f
                             x = 0f
                             mirror = false
@@ -305,10 +304,10 @@ class AccelerationUnits : ContentList {
                 )
 
                 abilities = Seq.with(
-                    ForceFieldAbility(84f, 25f, 24800f, 60f * 45f),
-                    ShieldRegenFieldAbility(180f, 1440f, 60f * 4, 120f),
-                    StatusFieldAbility(StatusEffects.overdrive, 60f, 60f * 5, 80f),
-                    RepairFieldAbility(120f, 45f, 160f)
+                    ForceFieldAbility(84f, 1f, 3200f, 60f * 45f),
+                    ShieldRegenFieldAbility(64f, 1440f, 60f * 8, 120f),
+                    StatusFieldAbility(StatusEffects.overdrive, 60f, 60f, 80f),
+                    RepairFieldAbility(120f, 60f * 0.75f, 320f)
                 )
             }
         }

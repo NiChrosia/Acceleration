@@ -381,7 +381,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                 ) { other: Building -> other.applyBoost((buildOverdrive / 100f * efficiency()), reload + 1f) }
 
                 Units.nearby(team, x - (buildRadius / 2), y - (buildRadius / 2), buildRadius, buildRadius) { u ->
-                    if (Mathf.chance(0.95)) {
+                    if (Mathf.chance(0.95) && u.team == team) {
                         u.apply(StatusEffects.overdrive, 40f)
                     }
                 }

@@ -7,7 +7,7 @@ import mindustry.entities.bullet.BasicBulletType
 import mindustry.gen.Bullet
 import mindustry.graphics.Pal
 
-open class EnergyOrbBulletType : BasicBulletType() {
+open class OrbBulletType : BasicBulletType() {
     var size: Float = 1f
     var color: Color = Pal.lancerLaser
 

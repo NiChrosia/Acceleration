@@ -11,7 +11,7 @@ import mindustry.graphics.Pal
 
 class AccelerationStatusZones : ContentList {
     override fun load() {
-        arctifluidStatusZone = object : PuddleStatusZoneComp(AccelerationColors.arctifluidColor) {
+        arctifluidStatusZone = object : PuddleStatusZoneComp(AccelerationPal.arctifluid) {
             init {
                 liquid = AccelerationLiquids.arctifluid
                 damageBuildings = false
@@ -21,7 +21,7 @@ class AccelerationStatusZones : ContentList {
             }
         }
 
-        quarkPlasmaStatusZone = object : PuddleStatusZoneComp(AccelerationColors.quarkPlasmaColor) {
+        quarkPlasmaStatusZone = object : PuddleStatusZoneComp(AccelerationPal.quarkPlasma) {
             init {
                 liquid = AccelerationLiquids.quarkPlasma
                 damageBuildings = true
