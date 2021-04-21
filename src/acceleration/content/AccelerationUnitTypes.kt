@@ -1,5 +1,6 @@
 package acceleration.content
 
+import acceleration.entities.abilities.LightningFieldAbility
 import acceleration.math.geom.Geometrym
 import arc.func.Prov
 import arc.math.Mathf
@@ -338,51 +339,14 @@ class AccelerationUnitTypes : ContentList {
                 abilities = Seq.with(
                     ShieldRegenFieldAbility(64f, 1440f, 60f * 8, 120f),
                     StatusFieldAbility(StatusEffects.overdrive, 60f, 60f, 80f),
-                    RepairFieldAbility(120f, 60f * 0.75f, 320f)
+                    RepairFieldAbility(120f, 60f * 0.75f, 320f),
+                    LightningFieldAbility(12,
+                        15f,
+                        20f,
+                        2.5f,
+                        AccelerationPal.cryo
+                    )
                 )
-            }
-
-            val lightningPoints = 16
-            val baseHitSizeOffset = 15f
-            var hitSizeOffset = baseHitSizeOffset
-            val hitSizeMultiplier = 2.5f
-            val lightningLengthDivisor = 2.15f
-            val lightningDamage = 2f
-
-            override fun update(unit: Unit?) {
-                super.update(unit)
-
-                if (unit != null) {
-                    hitSizeOffset = baseHitSizeOffset * Mathf.absin(65f, hitSizeMultiplier)
-
-                    circleLightning(((Time.time % 1) * 360).toInt(), unit)
-                }
-            }
-
-            fun circleLightning(offset: Int, unit: Unit) {
-                val pointSeq = Geometrym.normalPoly(lightningPoints, unit.hitSize + hitSizeOffset, offset)
-
-                pointSeq.onEachIndexed { index, vec ->
-                    val next: Vec2? = try {
-                        pointSeq.get(index + 1)
-                    } catch(e: Exception) {
-                        pointSeq.get(0)
-                    }
-
-                    next?.let { nextVector ->
-                        Lightning.create(
-                            unit.team, AccelerationPal.cryo, lightningDamage,
-
-                            unit.x + vec.x,
-                            unit.y + vec.y,
-
-                            vec.angleTo(nextVector.x, nextVector.y),
-                            (vec.dst(nextVector) / lightningLengthDivisor).toInt()
-                        )
-
-                        Sounds.spark.at(unit.x, unit.y, Mathf.random(0.9f, 1.1f), 0.5f)
-                    }
-                }
             }
         }
     }
