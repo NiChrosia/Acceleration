@@ -92,9 +92,11 @@ task deploy(type: Jar){
         delete { delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar" }
         delete { delete "$buildDir/libs/${project.archivesBaseName}Android.jar" }
 
-        // Temporary code so I don't have to move the file myself.
-        exec {
-            commandLine("powershell.exe", "mv -Force build/libs/Acceleration-kotlin.jar ../../Acceleration-kotlin.jar")
+        if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
+            // Temporary code so I don't have to move the file myself.
+            exec {
+                commandLine("powershell.exe", "mv -Force build/libs/Acceleration-kotlin.jar ../../Acceleration-kotlin.jar")
+            }
         }
     }
 }
