@@ -6,7 +6,7 @@ import acceleration.math.Mathm
 open class Colorm {
     companion object {
         fun mix(a: Color, b: Color): Color {
-            return Color(Mathm().avg(a.r, b.r), Mathm().avg(a.g, b.g), Mathm().avg(a.b, b.b))
+            return Color(Mathm.avg(a.r, b.r), Mathm.avg(a.g, b.g), Mathm.avg(a.b, b.b))
         }
     }
 }

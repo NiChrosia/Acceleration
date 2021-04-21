@@ -98,6 +98,12 @@ class AccelerationFx : ContentList {
                 Drawf.tri(e.x, e.y, 10f * e.fout(), 24f, e.rotation + 90 + 90f * i)
             }
         }
+
+        cryoHexagon = Effect(96f) { e ->
+            Draw.color(AccelerationPal.arctifluid, Color.white, e.fin())
+            Lines.stroke(5f * e.fout())
+            Lines.poly(e.x, e.y, 8, 64f * e.fout(), 360f * Mathf.pow(1.1f, e.fout() * 10) % 360)
+        }
     }
 
     companion object {
@@ -115,5 +121,6 @@ class AccelerationFx : ContentList {
         lateinit var cryorailShoot : Effect
         lateinit var cryorailHit : Effect
         lateinit var cryorailTrail : Effect
+        lateinit var cryoHexagon : Effect
     }
 }

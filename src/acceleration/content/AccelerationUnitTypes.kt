@@ -1,12 +1,17 @@
 package acceleration.content
 
+import acceleration.math.geom.Geometrym
 import arc.func.Prov
+import arc.math.Mathf
+import arc.math.geom.Vec2
 import arc.struct.ObjectSet
 import arc.struct.Seq
+import arc.util.Time
 import mindustry.ai.types.BuilderAI
 import mindustry.content.Items
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
+import mindustry.entities.Lightning
 import mindustry.entities.Units
 import mindustry.entities.abilities.ForceFieldAbility
 import mindustry.entities.abilities.RepairFieldAbility
@@ -19,6 +24,7 @@ import mindustry.type.UnitType
 import mindustry.type.Weapon
 import mindustry.gen.EntityMapping
 import mindustry.gen.Unit
+import kotlin.math.abs
 
 class AccelerationUnitTypes : ContentList {
     private fun setEntity(name: String, c: Prov<*>) {
@@ -240,10 +246,11 @@ class AccelerationUnitTypes : ContentList {
                 weapons = Seq.with(
                     object : Weapon() {
                         init {
-                            name = "overload-orb-machine-gun"
-                            bullet = AccelerationBullets.overloadOrbLight
-                            reload = 6f
+                            name = "cryo-missile-swarmer"
+                            bullet = AccelerationBullets.cryoMissile
+                            reload = 12f
                             alternate = true
+                            inaccuracy = 6f
 
                             x = 6f
                             y = 4f
@@ -256,7 +263,7 @@ class AccelerationUnitTypes : ContentList {
                         init {
                             name = "overload-laser-machine-gun"
                             bullet = AccelerationBullets.overloadLaserLight
-                            reload = 3f
+                            reload = 16f
                             alternate = true
 
                             x = 10f
@@ -299,16 +306,16 @@ class AccelerationUnitTypes : ContentList {
                 weapons = Seq.with(
                     object : Weapon() {
                         init {
-                            name = "cryo-energy-heavy-machine-gun"
+                            name = "cryo-energy-machine-gun"
                             bullet = AccelerationBullets.cryoenergyBullet
-                            reload = 20f
+                            reload = 35f
                             alternate = true
+                            inaccuracy = 5f
 
-                            x = 7f
+                            x = 10f
+                            y = 2f
 
                             shootSound = Sounds.lasershoot
-
-                            firstShotDelay = 5f
                         }
                     },
 
@@ -329,11 +336,53 @@ class AccelerationUnitTypes : ContentList {
                 )
 
                 abilities = Seq.with(
-                    ForceFieldAbility(84f, 1f, 3200f, 60f * 45f),
                     ShieldRegenFieldAbility(64f, 1440f, 60f * 8, 120f),
                     StatusFieldAbility(StatusEffects.overdrive, 60f, 60f, 80f),
                     RepairFieldAbility(120f, 60f * 0.75f, 320f)
                 )
+            }
+
+            val lightningPoints = 16
+            val baseHitSizeOffset = 15f
+            var hitSizeOffset = baseHitSizeOffset
+            val hitSizeMultiplier = 2.5f
+            val lightningLengthDivisor = 2.15f
+            val lightningDamage = 2f
+
+            override fun update(unit: Unit?) {
+                super.update(unit)
+
+                if (unit != null) {
+                    hitSizeOffset = baseHitSizeOffset * Mathf.absin(65f, hitSizeMultiplier)
+
+                    circleLightning(((Time.time % 1) * 360).toInt(), unit)
+                }
+            }
+
+            fun circleLightning(offset: Int, unit: Unit) {
+                val pointSeq = Geometrym.normalPoly(lightningPoints, unit.hitSize + hitSizeOffset, offset)
+
+                pointSeq.onEachIndexed { index, vec ->
+                    val next: Vec2? = try {
+                        pointSeq.get(index + 1)
+                    } catch(e: Exception) {
+                        pointSeq.get(0)
+                    }
+
+                    next?.let { nextVector ->
+                        Lightning.create(
+                            unit.team, AccelerationPal.cryo, lightningDamage,
+
+                            unit.x + vec.x,
+                            unit.y + vec.y,
+
+                            vec.angleTo(nextVector.x, nextVector.y),
+                            (vec.dst(nextVector) / lightningLengthDivisor).toInt()
+                        )
+
+                        Sounds.spark.at(unit.x, unit.y, Mathf.random(0.9f, 1.1f), 0.5f)
+                    }
+                }
             }
         }
     }
