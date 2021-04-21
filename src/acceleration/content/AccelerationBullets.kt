@@ -233,7 +233,7 @@ class AccelerationBullets : ContentList {
             }
         }
 
-        overloadBulletLight = object : OrbBulletType() {
+        overloadOrbLight = object : OrbBulletType() {
             init {
                 size = 3f
 
@@ -243,6 +243,26 @@ class AccelerationBullets : ContentList {
                 pierce = true
 
                 color = Colorm.mix(Color.white, AccelerationPal.overdrive)
+
+                status = AccelerationStatusEffects.overloaded
+
+                despawnEffect = AccelerationFx.overloadLaserHit
+                smokeEffect = AccelerationFx.overloadLaserCharge
+            }
+        }
+
+        overloadLaserLight = object : LaserBoltBulletType() {
+            init {
+                width = 2f
+                height = 6f
+
+                damage = 12f
+                speed = 3.8f
+
+                pierce = true
+
+                frontColor = AccelerationPal.overdrive
+                backColor = Color.white
 
                 status = AccelerationStatusEffects.overloaded
 
@@ -310,7 +330,8 @@ class AccelerationBullets : ContentList {
         lateinit var surgeStatusZone : BasicBulletType
 
         lateinit var overloadBullet : LaserBoltBulletType
-        lateinit var overloadBulletLight : OrbBulletType
+        lateinit var overloadOrbLight : OrbBulletType
+        lateinit var overloadLaserLight : LaserBoltBulletType
 
         lateinit var cryoenergyBullet : OrbBulletType
         lateinit var cryoRail : RailBulletType

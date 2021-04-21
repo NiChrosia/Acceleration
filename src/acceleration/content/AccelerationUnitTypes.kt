@@ -29,21 +29,26 @@ class AccelerationUnitTypes : ContentList {
         setEntity("quark") { UnitEntity.create() }
         quark = object : UnitType("quark") {
             init {
-                defaultController = Prov { BuilderAI() }
-                flying = true
                 speed = 3.75f
                 rotateSpeed = 21f
                 drag = 0.05f
                 accel = 0.12f
+
+                defaultController = Prov { BuilderAI() }
+                flying = true
                 health = 250f
                 range = 330f
+
                 aimDst = 25f
                 commandLimit = 6
                 ammoType = AmmoTypes.power
                 itemCapacity = 90
+
                 mineTier = 3
                 mineSpeed = 10f
                 buildSpeed = 1.25f
+                mineSpeed = 4f
+
                 hitSize = 11f
                 canHeal = true
                 weapons = Seq.with(
@@ -81,6 +86,7 @@ class AccelerationUnitTypes : ContentList {
                 itemCapacity = 40
                 mineTier = 2
                 buildSpeed = 0.85f
+                mineSpeed = 5f
                 commandLimit = 4
 
                 range = 380f
@@ -120,6 +126,7 @@ class AccelerationUnitTypes : ContentList {
                 itemCapacity = 70
                 mineTier = 3
                 buildSpeed = 1.5f
+                mineSpeed = 6f
                 commandLimit = 5
 
                 range = 380f
@@ -177,6 +184,7 @@ class AccelerationUnitTypes : ContentList {
                 itemCapacity = 100
                 mineTier = 3
                 buildSpeed = 2.25f
+                mineSpeed = 9f
                 commandLimit = 6
 
                 range = 150f
@@ -224,6 +232,7 @@ class AccelerationUnitTypes : ContentList {
                 itemCapacity = 250
                 mineTier = 4
                 buildSpeed = 4.75f
+                mineSpeed = 12f
                 commandLimit = 12
 
                 range = 150f
@@ -231,12 +240,27 @@ class AccelerationUnitTypes : ContentList {
                 weapons = Seq.with(
                     object : Weapon() {
                         init {
-                            name = "laser-machine-gun"
-                            bullet = AccelerationBullets.overloadBulletLight
-                            reload = 4f
+                            name = "overload-orb-machine-gun"
+                            bullet = AccelerationBullets.overloadOrbLight
+                            reload = 6f
                             alternate = true
 
-                            x = 4f
+                            x = 6f
+                            y = 4f
+
+                            shootSound = Sounds.lasershoot
+                        }
+                    },
+
+                    object : Weapon() {
+                        init {
+                            name = "overload-laser-machine-gun"
+                            bullet = AccelerationBullets.overloadLaserLight
+                            reload = 3f
+                            alternate = true
+
+                            x = 10f
+                            y = -12f
 
                             shootSound = Sounds.lasershoot
                         }
@@ -267,6 +291,7 @@ class AccelerationUnitTypes : ContentList {
                 itemCapacity = 750
                 mineTier = 5 // For mining modded ores.
                 buildSpeed = 6.5f
+                mineSpeed = 15f
                 commandLimit = 8
 
                 range = 100f
