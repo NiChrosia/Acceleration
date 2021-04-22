@@ -249,7 +249,7 @@ class AccelerationUnitTypes : ContentList {
                         init {
                             name = "cryo-missile-swarmer"
                             bullet = AccelerationBullets.cryoMissile
-                            reload = 12f
+                            reload = 18f
                             alternate = true
                             inaccuracy = 6f
 
@@ -322,13 +322,20 @@ class AccelerationUnitTypes : ContentList {
 
                     object : Weapon() {
                         init {
-                            name = "cryo-railgun"
-                            bullet = AccelerationBullets.cryoRail
+                            name = "cryo-swarmer-enhanced"
+                            bullet = AccelerationBullets.cryoMissile
 
-                            reload = 250f
-                            rotateSpeed = 2.2f
-                            x = 0f
-                            mirror = false
+                            reload = 14f
+                            rotateSpeed = 2.5f
+                            shotDelay = 3f
+                            shots = 4
+                            xRand = 1f
+                            inaccuracy = 8f
+
+                            alternate = true
+
+                            x = 16f
+                            y = -12f
                             rotate = true
 
                             shootSound = Sounds.railgun
@@ -343,7 +350,7 @@ class AccelerationUnitTypes : ContentList {
                     LightningFieldAbility(12,
                         15f,
                         20f,
-                        2.5f,
+                        1.5f,
                         AccelerationPal.cryo
                     )
                 )

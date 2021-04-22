@@ -85,11 +85,6 @@ class AccelerationTechTree : ContentList {
         node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
         node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
 
-        /// Turrets
-        node(Blocks.arc, AccelerationBlocks.transistor)
-        node(AccelerationBlocks.transistor, AccelerationBlocks.gate)
-        node(AccelerationBlocks.gate, AccelerationBlocks.capacitor)
-
         /// Projectors
         node(Blocks.forceProjector, AccelerationBlocks.configurableProjector, Seq.with(
             Objectives.Research(Blocks.mendProjector),

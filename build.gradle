@@ -92,6 +92,7 @@ task deploy(type: Jar){
         delete { delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar" }
         delete { delete "$buildDir/libs/${project.archivesBaseName}Android.jar" }
 
+        // Comment the below code out if you're compiling manually on Linux.
         if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
             // Temporary code so I don't have to move the file myself.
             exec {

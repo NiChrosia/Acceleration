@@ -2,19 +2,14 @@ package acceleration.content
 
 import acceleration.entities.OrbBulletType
 import arc.graphics.Color
-import arc.util.Log
-import arc.util.Time
-import arc.util.Timer
 import mindustry.Vars
 import mindustry.content.Bullets
 import mindustry.content.Fx
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
-import mindustry.entities.Units
 import mindustry.graphics.Pal
 import mindustry.io.JsonIO
 import mindustry.entities.bullet.*
-import mindustry.gen.Bullet
 
 class AccelerationBullets : ContentList {
     override fun load() {
@@ -242,6 +237,8 @@ class AccelerationBullets : ContentList {
                 damage = 89f
                 speed = 4.2f
 
+                lifetime = 85f
+
                 frontColor = AccelerationPal.arctifluid
                 backColor = Color.white
 
@@ -253,7 +250,8 @@ class AccelerationBullets : ContentList {
                 status = AccelerationStatusEffects.arctifreezing
 
                 despawnEffect = AccelerationFx.cryoLaserHit
-                smokeEffect = AccelerationFx.cryoLaserCharge
+
+                trailColor = AccelerationPal.cryo
             }
         }
 
@@ -277,6 +275,20 @@ class AccelerationBullets : ContentList {
             }
         }
 
+        cryoenergyBulletFrag = object : BombBulletType()  {
+            init {
+                sprite = "large-bomb"
+
+                lifetime = 0f
+                splashDamage = 225f
+                splashDamageRadius = 25f
+
+                collidesAir = true
+
+                despawnEffect = AccelerationFx.cryoHexagonInverted
+            }
+        }
+
         // Cryo Bullets
         cryoenergyBullet = object : OrbBulletType() {
             init {
@@ -291,8 +303,10 @@ class AccelerationBullets : ContentList {
 
                 status = AccelerationStatusEffects.arctifreezing
 
-                despawnEffect = AccelerationFx.cryoHexagon
                 smokeEffect = AccelerationFx.cryoLaserCharge
+
+                fragBullet = cryoenergyBulletFrag
+                fragBullets = 1
 
                 color = AccelerationPal.cryo
 
@@ -321,6 +335,33 @@ class AccelerationBullets : ContentList {
                 pierceDamageFactor = 0.5f
             }
         }
+
+        voltaicRail = object : PointBulletType() {
+            init {
+                shootEffect = AccelerationFx.voltaicShoot
+                hitEffect = AccelerationFx.voltaicHit
+                smokeEffect = Fx.smokeCloud
+                trailEffect = AccelerationFx.voltaicTrail
+                despawnEffect = AccelerationFx.voltaicBomb
+
+                trailSpacing = 25f
+
+                damage = 1250f
+
+                speed = range()
+                hitShake = 7f
+                ammoMultiplier = 1f
+
+                buildingDamageMultiplier = 0.05f
+
+                lightning = 4
+                lightningLength = 8
+                lightningDamage = 185f
+
+                splashDamage = 120f
+                splashDamageRadius = 24f
+            }
+        }
     }
 
     companion object {
@@ -344,8 +385,11 @@ class AccelerationBullets : ContentList {
         lateinit var overloadBullet : LaserBoltBulletType
         lateinit var overloadLaserLight : LaserBoltBulletType
 
+        lateinit var cryoenergyBulletFrag : BombBulletType
         lateinit var cryoenergyBullet : OrbBulletType
         lateinit var cryoMissile : MissileBulletType
         lateinit var cryoRail : RailBulletType
+
+        lateinit var voltaicRail : PointBulletType
     }
 }

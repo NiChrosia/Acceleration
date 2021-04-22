@@ -26,16 +26,8 @@ class AccelerationItems : ContentList {
 
         voltaicVelosium = object : Item("voltaic-velosium") {
             init {
-                color = Color.valueOf("b8b80d")
+                color = Color.valueOf("e6e15a")
                 charge = 1.25f
-            }
-        }
-
-        cryocatalyst = object : AnimatedItem("cryocatalyst") {
-            init {
-                color = Color.sky
-                transition = 3
-                sprites = 6
             }
         }
 

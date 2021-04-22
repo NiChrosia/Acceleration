@@ -1,28 +1,14 @@
 # Turret tree
 
-## Electric Piercing
-|`parent`|`size`|`name`|`description`|
-|:-:|:-:|:-:|:-:|
-`capacitor`|`4x4`|Core|Shoots thin electric piercing bullets with extreme damage, slow rate of fire, requires a large amount of power to operate. Optimally uses phase fabric as ammo.
-
-### Ammo Types
-|`name`|`ammoType`|`ammo-optional`|`powerUsage`|
-|:-:|:-:|:-:|
-Core|`silicon`, `phase-fabric`|true|720
-
 ## Cryogenic (Railgun)
 |`parent`|`size`|`name`|`description`|
 |:-:|:-:|:-:|:-:|
-`gate`|`2x2`|Frost|Utilizes cryogem for its cold properties. Fires clumps of damaging cryocatalyst at enemies. Slows enemy weapons down in a radius around the impact.
-`frost`|`3x3`|Snowflake|Shoots razor sharp whirling cryocatalyst shards. Requires large amounts of power for sharpening and hyperrotation. Bullets temporarily disarm enemies.
-`snowflake`|`4x4`|Sleet|Shoots insanely sharpened projectiles at enemies. Requires massive amounts of power for laser cutting and spinning the projectile to extreme speeds. Bullets slice through enemies, resulting in usually fatal damage.
+`foreshadow`|`3x3`|Sleet|Slowly fires hypersonic projectiles. Enemies hit by it are heavily stunned, and cannot move. Sprite made by xjamiex.
 
 ### Ammo Types
 |`name`|`ammoType`|`powerUsage`|
 |:-:|:-:|:-:|
-Frost|`cryogem`|`0`
-Snowflake|`cryocatalyst`|`180`
-Sleet|`cryocatalyst`|`720`
+Sleet|`voltaic-velosium`|350
 
 ## Accelerated (Machine Gun)
 |`parent`|`size`|`name`|`description`|
