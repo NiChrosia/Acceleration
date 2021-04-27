@@ -1,8 +1,5 @@
 package acceleration.math
 
-import arc.math.geom.Vec2
-import arc.struct.Seq
-
 open class Mathm {
     companion object {
         fun avg(vararg args: Int): Int {

@@ -1,18 +1,13 @@
 package acceleration.content
 
 import acceleration.entities.abilities.LightningFieldAbility
-import acceleration.math.geom.Geometrym
 import arc.func.Prov
-import arc.math.Mathf
-import arc.math.geom.Vec2
 import arc.struct.ObjectSet
 import arc.struct.Seq
-import arc.util.Time
 import mindustry.ai.types.BuilderAI
 import mindustry.content.Items
 import mindustry.content.StatusEffects
 import mindustry.ctype.ContentList
-import mindustry.entities.Lightning
 import mindustry.entities.Units
 import mindustry.entities.abilities.ForceFieldAbility
 import mindustry.entities.abilities.RepairFieldAbility
@@ -25,7 +20,6 @@ import mindustry.type.UnitType
 import mindustry.type.Weapon
 import mindustry.gen.EntityMapping
 import mindustry.gen.Unit
-import kotlin.math.abs
 
 class AccelerationUnitTypes : ContentList {
     private fun setEntity(name: String, c: Prov<*>) {
