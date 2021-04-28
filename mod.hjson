@@ -3,5 +3,5 @@ displayName: "Acceleration"
 author: "NiChrosia"
 main: "acceleration.Acceleration"
 description: "A kotlin mod."
-version: "0.1"
+version: "0.2"
 minGameVersion: 126.2
