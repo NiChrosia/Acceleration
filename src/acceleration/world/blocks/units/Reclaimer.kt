@@ -35,7 +35,15 @@ open class Reclaimer(name: String) : Block(name) {
     }
 
     private fun unitScale(u: UnitType): Float {
-        return (u.hitSize) / 100
+        val divideAmount = 20
+
+        var output = u.hitSize / divideAmount
+
+        if (output > 1) {
+            output = 1f
+        }
+
+        return output
     }
 
     init {
@@ -150,9 +158,20 @@ open class Reclaimer(name: String) : Block(name) {
 
                     if (divideAmount > 1) divideAmount -= (divideAmount / 2)
 
-                    queuedItems.add(ItemStack.with(item,
-                        ((amount * tierPercent * unitPercent) / divideAmount).toInt())
-                    )
+                    var percentAmount = ((amount * tierPercent * unitPercent) / divideAmount).toInt()
+
+                    if (percentAmount > amount) {
+                        percentAmount = amount
+                    }
+
+                    for (i in 1..percentAmount) {
+                        val seconds = (u.hitSize / 10)
+                        val time = seconds / percentAmount * i
+
+                        Timer.schedule({
+                            queuedItems.add(ItemStack.with(item, 1))
+                        }, time)
+                    }
                 }
             }
 
