@@ -26,6 +26,7 @@ import mindustry.world.modules.ItemModule
 open class Reclaimer(name: String) : Block(name) {
     private val unitMap = ObjectMap<UnitType, Array<out ItemStack>>()
     private val reclaimers = Seq<ReclaimerBuild>()
+    private var nearby = 0
 
     var range = 120f
     var tier = 1f
@@ -122,21 +123,26 @@ open class Reclaimer(name: String) : Block(name) {
             reclaimers.remove(this)
         }
 
+        override fun onDestroyed() {
+            super.onDestroyed()
+
+            reclaimers.remove(this)
+        }
+
         override fun updateTile() {
             super.updateTile()
 
             updateItems()
 
-            queuedItems.each { i ->
-                for (iterItem in i.iterator()) {
-                    val item = iterItem.item
-                    val amount = iterItem.amount
-
-                    items.add(item, amount)
-                    for (unused in 0 until amount) {
-                        offload(item)
-                    }
+            nearby = 0
+            reclaimers.each {
+                if (it.dst(this) <= range && it.tile != tile) {
+                    nearby++
                 }
+            }
+
+            queuedItems.each { i ->
+                for (iterItem in i.iterator()) { items.add(iterItem.item, iterItem.amount) }
             }
             queuedItems.clear()
         }
@@ -152,13 +158,7 @@ open class Reclaimer(name: String) : Block(name) {
                     val item = iterItem.item
                     val amount = iterItem.amount
 
-                    var divideAmount = 1
-
-                    reclaimers.each { c -> if (c.dst(x, y) <= range && !(c.x == x && c.y == y)) divideAmount++ }
-
-                    if (divideAmount > 1) divideAmount -= (divideAmount / 2)
-
-                    var percentAmount = ((amount * tierPercent * unitPercent) / divideAmount).toInt()
+                    var percentAmount = ((amount * tierPercent * unitPercent) / (nearby + 1)).toInt()
 
                     if (percentAmount > amount) {
                         percentAmount = amount
