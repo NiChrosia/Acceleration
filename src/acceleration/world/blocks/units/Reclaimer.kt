@@ -1,10 +1,13 @@
 package acceleration.world.blocks.units
 
 import arc.Events
+import arc.math.Mathf
 import arc.struct.ObjectMap
 import arc.struct.Seq
+import arc.util.Timer
 import arc.util.io.Reads
 import mindustry.Vars
+import mindustry.content.Fx
 import mindustry.game.EventType
 import mindustry.gen.Building
 import mindustry.gen.Unit
@@ -22,7 +25,7 @@ import mindustry.world.modules.ItemModule
 
 open class Reclaimer(name: String) : Block(name) {
     private val unitMap = ObjectMap<UnitType, Array<out ItemStack>>()
-    private val reclaimers = Seq<CollectorBuild>()
+    private val reclaimers = Seq<ReclaimerBuild>()
 
     var range = 120f
     var tier = 1f
@@ -69,7 +72,7 @@ open class Reclaimer(name: String) : Block(name) {
         Drawf.dashCircle(x * Vars.tilesize + offset, y * Vars.tilesize + offset, range, Pal.placing)
     }
 
-    inner class CollectorBuild : Building() {
+    inner class ReclaimerBuild : Building() {
         private val units = Seq<Unit>()
         private var queuedItems = Seq<Array<out ItemStack>>()
 
@@ -78,8 +81,21 @@ open class Reclaimer(name: String) : Block(name) {
 
             if (items == null) items = ItemModule()
             Events.on(EventType.UnitDestroyEvent::class.java) { e ->
-                if (e.unit.dst(x, y) < range) {
+                if (e.unit.dst(x, y) < range && tile.build is ReclaimerBuild) {
                     units.add(e.unit)
+
+                    if (unitMap.containsKey(e.unit.type)) {
+                        for (i in 0..e.unit.hitSize.toInt()) {
+                            Timer.schedule({
+                                Fx.itemTransfer.at(
+                                    e.unit.x + Mathf.random(-e.unit.hitSize / 3, e.unit.hitSize / 3),
+                                    e.unit.y + Mathf.random(-e.unit.hitSize / 3, e.unit.hitSize / 3),
+                                    0f,
+                                    if (tile.build is ReclaimerBuild) this else null
+                                )
+                            }, i / 10f)
+                        }
+                    }
                 }
             }
 
@@ -134,9 +150,9 @@ open class Reclaimer(name: String) : Block(name) {
 
                     if (divideAmount > 1) divideAmount -= (divideAmount / 2)
 
-                    val percentAmount = ((amount * tierPercent * unitPercent) / divideAmount).toInt()
-
-                    queuedItems.add(ItemStack.with(item, percentAmount))
+                    queuedItems.add(ItemStack.with(item,
+                        ((amount * tierPercent * unitPercent) / divideAmount).toInt())
+                    )
                 }
             }
 
