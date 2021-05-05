@@ -34,20 +34,8 @@ class AccelerationTechTree : ContentList {
     }
 
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack?) {
-        val realRequirements = if (requirements != null) {
-            arrayOf(requirements)
-        } else {
-            contentType.researchRequirements()
-        }
-
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, realRequirements)
-
-        realRequirements.forEach { i ->
-            techNode.objectives.add(Objectives.Research(i.item))
-        }
-        techNode.objectives.add(Objectives.Produce(contentType))
-        objectives?: techNode.objectives.addAll(objectives)
-
+        objectives?.add(Objectives.Produce(contentType))
+        node(parent, contentType, objectives, requirements)
     }
 
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
