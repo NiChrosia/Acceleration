@@ -2,37 +2,30 @@ package acceleration.math
 
 open class Mathm {
     companion object {
-        fun avg(vararg args: Int): Int {
-            var total = 0
-            var totalCount = 0
-            for (i in args) {
-                totalCount++
-                total += i
-            }
-
-            return total / totalCount
-        }
-
-        fun avg(vararg args: Float): Float {
+        inline fun <reified T : Number> avg(vararg args: Number): T {
             var total = 0f
             var totalCount = 0
-            for (i in args) {
+
+            args.forEach { t ->
                 totalCount++
-                total += i
+                total += t.toFloat()
             }
 
-            return total / totalCount
+            val output = (total / totalCount)
+
+            return convert(output)
         }
+        
+        inline fun <reified T : Number> convert(number: Number): T {
+            return when(T::class) {
+                Int::class -> number.toInt() as T
+                Float::class -> number as T
+                Double::class -> number.toDouble() as T
+                Short::class -> number.toInt().toShort() as T
+                Long::class -> number.toLong() as T
 
-        fun avg(vararg args: Double): Double {
-            var total = 0.0
-            var totalCount = 0
-            for (i in args) {
-                totalCount++
-                total += i
+                else -> throw ArithmeticException("Unsupported Number Type: ${T::class}")
             }
-
-            return total / totalCount
         }
     }
 }

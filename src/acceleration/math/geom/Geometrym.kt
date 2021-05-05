@@ -2,6 +2,7 @@ package acceleration.math.geom
 
 import arc.math.geom.Vec2
 import arc.struct.Seq
+import arc.util.Tmp
 
 class Geometrym {
     companion object {
@@ -13,8 +14,7 @@ class Geometrym {
             val pointSeq = Seq<Vec2>()
 
             for (i in 1..pointCount) {
-                val vec = Vec2()
-
+                val vec = Tmp.v1.set(Vec2())
                 vec.trns(((i * (360f / pointCount)) + offsetRotation) % 360, distance)
 
                 pointSeq.add(vec)
