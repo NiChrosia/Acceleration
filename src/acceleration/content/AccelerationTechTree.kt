@@ -9,35 +9,40 @@ import mindustry.ctype.UnlockableContent
 import mindustry.game.Objectives
 import mindustry.type.ItemStack
 
-
 class AccelerationTechTree : ContentList {
-    private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, arrayOf(requirements))
-        arrayOf(requirements).forEach { i ->
+    private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack?) {
+        val realRequirements = if (requirements != null) {
+            arrayOf(requirements)
+        } else {
+            contentType.researchRequirements()
+        }
+
+        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, realRequirements)
+
+        realRequirements.forEach { i ->
             techNode.objectives.add(Objectives.Research(i.item))
         }
         objectives?: techNode.objectives.addAll(objectives)
     }
 
     private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
-        contentType.researchRequirements().forEach { i ->
-            techNode.objectives.add(Objectives.Research(i.item))
-        }
-        objectives?: techNode.objectives.addAll(objectives)
+        node(parent, contentType, objectives, null)
     }
 
     private fun node(parent: UnlockableContent, contentType: UnlockableContent) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
-        contentType.researchRequirements().forEach { i ->
-            techNode.objectives.add(Objectives.Research(i.item))
-        }
+        node(parent, contentType, null)
     }
 
-    private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, arrayOf(requirements))
+    private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack?) {
+        val realRequirements = if (requirements != null) {
+            arrayOf(requirements)
+        } else {
+            contentType.researchRequirements()
+        }
 
-        contentType.researchRequirements().forEach { i ->
+        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, realRequirements)
+
+        realRequirements.forEach { i ->
             techNode.objectives.add(Objectives.Research(i.item))
         }
         techNode.objectives.add(Objectives.Produce(contentType))
@@ -46,24 +51,11 @@ class AccelerationTechTree : ContentList {
     }
 
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
-
-        contentType.researchRequirements().forEach { i ->
-            techNode.objectives.add(Objectives.Research(i.item))
-        }
-        techNode.objectives.add(Objectives.Produce(contentType))
-        objectives?: techNode.objectives.addAll(objectives)
-
+        nodeProduce(parent, contentType, objectives, null)
     }
 
     private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent) {
-        val techNode = TechTree.TechNode(TechTree.get(parent), contentType, contentType.researchRequirements())
-
-        contentType.researchRequirements().forEach { i ->
-            techNode.objectives.add(Objectives.Research(i.item))
-        }
-        techNode.objectives.add(Objectives.Produce(contentType))
-
+        nodeProduce(parent, contentType, null)
     }
 
     override fun load() {

@@ -90,11 +90,11 @@ open class Reclaimer(name: String) : Block(name) {
 
             if (items == null) items = ItemModule()
             Events.on(EventType.UnitDestroyEvent::class.java) { e ->
-                if (e.unit.dst(x, y) < range && tile.build is ReclaimerBuild) {
+                if (e.unit.dst(x, y) < range && tile.build is ReclaimerBuild && !dead) {
                     units.add(e.unit)
 
                     if (unitMap.containsKey(e.unit.type)) {
-                        for (i in 0..e.unit.hitSize.toInt()) {
+                        for (i in 0..e.unit.hitSize.toInt() / (nearby + 1)) {
                             Timer.schedule({
                                 Fx.itemTransfer.at(
                                     e.unit.x + Mathf.random(-e.unit.hitSize / 3, e.unit.hitSize / 3),

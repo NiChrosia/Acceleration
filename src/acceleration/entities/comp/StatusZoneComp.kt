@@ -91,7 +91,7 @@ open class PuddleStatusZoneComp(color: Color) : StatusZoneComp(color) {
         val units = searchUnits(puddles, triggers)
         val buildings = searchBuildings(puddles)
 
-        activateTriggers(triggers)
+        activateTriggers(puddles)
         draw(puddles, triggers)
         damage(units, buildings)
     }
@@ -152,8 +152,8 @@ open class PuddleStatusZoneComp(color: Color) : StatusZoneComp(color) {
         return output
     }
 
-    private fun activateTriggers(triggers: Seq<Seq<Float>>) {
-        triggers.each { t ->
+    private fun activateTriggers(puddles: Seq<Puddle>) {
+        getTriggers(puddles).each { t ->
             if (triggerFire) Fires.create(Vars.world.tile(t.get(0).toInt(), t.get(1).toInt()))
         }
     }
@@ -242,7 +242,7 @@ open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color) {
         val units = searchUnits(bullets, triggers)
         val buildings = searchBuildings(bullets)
 
-        activateTriggers(triggers)
+        activateTriggers(bullets)
         draw(bullets, triggers)
         damage(units, buildings)
     }
@@ -303,8 +303,8 @@ open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color) {
         return output
     }
 
-    private fun activateTriggers(triggers: Seq<Seq<Float>>) {
-        triggers.each { t ->
+    private fun activateTriggers(bullets: Seq<Bullet>) {
+        getTriggers(bullets).each { t ->
             if (triggerFire) Fires.create(Vars.world.tile(t.get(0).toInt(), t.get(1).toInt()))
         }
     }

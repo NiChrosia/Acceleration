@@ -1,17 +1,13 @@
 package acceleration.content
 
-import arc.func.Cons
-import arc.func.Floatc2
 import arc.graphics.Color
 import arc.graphics.g2d.Draw
 import arc.graphics.g2d.Fill
 import arc.graphics.g2d.Lines
 import arc.math.Angles
 import arc.math.Mathf
-import arc.math.geom.Geometry
 import mindustry.ctype.ContentList
 import mindustry.entities.Effect
-import mindustry.entities.Effect.EffectContainer
 import mindustry.graphics.Pal
 
 import mindustry.graphics.Drawf
@@ -22,7 +18,7 @@ class AccelerationFx : ContentList {
             Draw.color(AccelerationPal.arctifluid, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id.toLong(), 0.12f))
 
             Angles.randLenVectors(e.id.toLong(), 2, 1 + e.fin() * 3) { x, y ->
-                Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f);
+                Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f)
             }
         }
 
@@ -30,7 +26,7 @@ class AccelerationFx : ContentList {
             Draw.color(AccelerationPal.quarkPlasma, Color.white, e.fout() / 5 + Mathf.randomSeedRange(e.id.toLong(), 0.12f))
 
             Angles.randLenVectors(e.id.toLong(), 2, 1 + e.fin() * 3) { x, y ->
-                Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f);
+                Fill.circle(e.x + x, e.y + y, 0.2f + e.fout() * 1.2f)
             }
         }
 

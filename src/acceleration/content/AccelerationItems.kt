@@ -42,7 +42,5 @@ class AccelerationItems : ContentList {
         lateinit var velosium : Item
         lateinit var arcaneVelosium : Item
         lateinit var voltaicVelosium : Item
-
-        lateinit var cryocatalyst : AnimatedItem
     }
 }
