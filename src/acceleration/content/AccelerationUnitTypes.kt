@@ -13,13 +13,11 @@ import mindustry.entities.abilities.ForceFieldAbility
 import mindustry.entities.abilities.RepairFieldAbility
 import mindustry.entities.abilities.ShieldRegenFieldAbility
 import mindustry.entities.abilities.StatusFieldAbility
-import mindustry.gen.Sounds
-import mindustry.gen.UnitEntity
+import mindustry.gen.*
+import mindustry.gen.Unit
 import mindustry.type.AmmoTypes
 import mindustry.type.UnitType
 import mindustry.type.Weapon
-import mindustry.gen.EntityMapping
-import mindustry.gen.Unit
 
 class AccelerationUnitTypes : ContentList {
     private fun setEntity(name: String, c: Prov<*>) {

@@ -3,7 +3,6 @@ package acceleration.world.blocks.defense
 import acceleration.content.AccelerationBlocks
 import arc.Core
 import arc.Events
-import arc.func.Cons
 import arc.graphics.Blending
 import arc.graphics.Color
 import arc.graphics.g2d.Draw
@@ -137,27 +136,21 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                     "mend" -> Core.bundle.format("bar.mend")
                     "overdrive" -> Core.bundle.format("bar.boost", entity.buildOverdrive)
                     "force" -> Core.bundle.format("stat.shieldhealth")
-                    else -> {
-                        Core.bundle.format("bar.none")
-                    }
+                    else -> Core.bundle.format("bar.none")
                 } },
 
                 { when (entity.mode) {
                     "mend" -> Pal.heal
                     "overdrive" -> Pal.accent
                     "force" -> Pal.accent
-                    else -> {
-                        Color.white
-                    }
+                    else -> Color.white
                 } },
 
                 { when (entity.mode) {
                     "mend" -> if ((entity.charge / entity.buildReload) == 0f) 1f else entity.charge / entity.buildReload
                     "overdrive" -> entity.buildOverdrive / entity.calculateSpeed(minOverdrive, maxOverdrive, 1.0) /* Actual max speed. */
                     "force" -> (if (entity.broken) 0f else 1f - entity.buildup / entity.buildShieldHealth)
-                    else -> {
-                        1f
-                    }
+                    else -> 1f
                 } }
             )
         }
