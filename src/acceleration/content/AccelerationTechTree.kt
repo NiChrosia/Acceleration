@@ -22,7 +22,8 @@ class AccelerationTechTree : ContentList {
         realRequirements.forEach { i ->
             techNode.objectives.add(Objectives.Research(i.item))
         }
-        objectives?: techNode.objectives.addAll(objectives)
+
+        if (objectives != null) techNode.objectives.addAll(objectives)
     }
 
     private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {

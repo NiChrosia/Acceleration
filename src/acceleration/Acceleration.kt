@@ -8,8 +8,11 @@ import mindustry.Vars
 import mindustry.game.EventType
 
 class Acceleration : Mod() {
+    private val accent = if (Vars.net.client()) "[accent]" else ""
+    private val end = if (Vars.net.client()) "[]" else ""
+
     init {
-        if (Vars.net.client()) Log.info("Mod [accent]Acceleration[] constructor loaded successfully.") else Log.info("Mod Acceleration constructor loaded successfully.")
+        Log.info("Mod ${accent}Acceleration${end} constructor loaded successfully.")
     }
     
     override fun loadContent() {
@@ -31,6 +34,8 @@ class Acceleration : Mod() {
             AccelerationSettings().load()
         }
 
-        if (Vars.net.client()) Log.info("Mod [accent]Acceleration[] loaded content successfully.") else Log.info("Mod Acceleration loaded content successfully.")
+        Log.info("Mod ${accent}Acceleration${end} loaded content successfully.")
+
+        Any().takeUnless { true }
     }
 }

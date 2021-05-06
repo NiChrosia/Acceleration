@@ -1,9 +1,11 @@
 package acceleration.world.blocks.units
 
+import arc.Core
 import arc.Events
 import arc.math.Mathf
 import arc.struct.ObjectMap
 import arc.struct.Seq
+import arc.util.Log
 import arc.util.Timer
 import arc.util.io.Reads
 import mindustry.Vars
@@ -24,7 +26,10 @@ import mindustry.world.consumers.ConsumeItems
 import mindustry.world.modules.ItemModule
 
 open class Reclaimer(name: String) : Block(name) {
-    private val unitMap = ObjectMap<UnitType, Array<out ItemStack>>()
+    private val individualRequirementMap = ObjectMap<UnitType, Array<out ItemStack>>()
+    private val requirementMap = ObjectMap<UnitType, Array<out ItemStack>>()
+    private val upgradeMap = ObjectMap<UnitType, UnitType>()
+    private var T1Units = Seq<UnitType>()
     private val reclaimers = Seq<ReclaimerBuild>()
     private var nearby = 0
 
@@ -58,21 +63,64 @@ open class Reclaimer(name: String) : Block(name) {
         Vars.content.blocks().each { b ->
             if (b is UnitFactory) {
                 b.plans.each { p ->
-                    unitMap.put(p.unit, p.requirements)
+                    individualRequirementMap.put(p.unit, p.requirements)
+                    T1Units.add(p.unit)
                 }
             }
             if (b is Reconstructor) {
                 b.upgrades.each { u ->
                     val items = b.consumes.get<ConsumeItems>(ConsumeType.item).items
 
-                    unitMap.put(u[1], items)
+                    individualRequirementMap.put(u[1], items)
+                    upgradeMap.put(u[0], u[1])
                 }
             }
         }
 
+        var index = 0
+
+        var lastUpgrade: UnitType? = T1Units[index]
+        var prevUnits: Seq<UnitType> = Seq.with(lastUpgrade)
+
+        addRequirements(lastUpgrade, prevUnits)
+
+        Log.info("[accent]units:[]")
+        while (individualRequirementMap.containsKey(lastUpgrade)) {
+            if (upgradeMap.containsKey(lastUpgrade)) {
+                lastUpgrade = upgradeMap.get(lastUpgrade)
+                prevUnits.add(lastUpgrade)
+
+                addRequirements(lastUpgrade, prevUnits)
+            } else if (index < T1Units.size - 2) {
+                index++
+                lastUpgrade = T1Units[index]
+                prevUnits = Seq.with(lastUpgrade)
+
+                addRequirements(lastUpgrade, prevUnits)
+            } else {
+                break
+            }
+        }
+
+        Log.info(requirementMap)
+
         Events.on(EventType.ResetEvent::class.java) {
             reclaimers.clear()
         }
+    }
+
+    private fun addRequirements(lastUnit: UnitType?, units: Seq<UnitType>) {
+        if (lastUnit == null) return
+
+        var items = arrayOf<ItemStack>()
+        units.forEach { unit ->
+            val unitItems = individualRequirementMap.get(unit)
+            unitItems?.forEach {
+                items = items.plus(it)
+            }
+        }
+
+        requirementMap.put(lastUnit, items)
     }
 
     override fun drawPlace(x: Int, y: Int, rotation: Int, valid: Boolean) {
@@ -93,7 +141,7 @@ open class Reclaimer(name: String) : Block(name) {
                 if (e.unit.dst(x, y) < range && tile.build is ReclaimerBuild && !dead) {
                     units.add(e.unit)
 
-                    if (unitMap.containsKey(e.unit.type)) {
+                    if (individualRequirementMap.containsKey(e.unit.type)) {
                         for (i in 0..e.unit.hitSize.toInt() / (nearby + 1)) {
                             Timer.schedule({
                                 Fx.itemTransfer.at(
@@ -149,7 +197,7 @@ open class Reclaimer(name: String) : Block(name) {
 
         private fun updateItems() {
             units.each { u ->
-                val unitItems = unitMap.get(u.type) ?: return@each
+                val unitItems = requirementMap.get(u.type) ?: return@each
 
                 val tierPercent = tierScale(tier) // The scale for the block tier
                 val unitPercent = unitScale(u.type) // The scale for the unit hitSize
