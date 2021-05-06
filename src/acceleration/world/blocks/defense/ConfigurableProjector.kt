@@ -2,6 +2,7 @@ package acceleration.world.blocks.defense
 
 import acceleration.content.AccelerationBlocks
 import arc.Core
+import arc.Events
 import arc.func.Cons
 import arc.graphics.Blending
 import arc.graphics.Color
@@ -15,7 +16,6 @@ import mindustry.content.Fx
 import arc.math.Mathf
 import arc.struct.ObjectMap
 import arc.struct.Seq
-import arc.util.Log
 import arc.util.Time
 import arc.util.Tmp
 import arc.util.io.Reads
@@ -37,6 +37,7 @@ import arc.graphics.g2d.Fill
 import mindustry.content.StatusEffects
 import mindustry.entities.Effect
 import mindustry.entities.Units
+import mindustry.game.EventType
 import mindustry.gen.*
 import mindustry.gen.Unit
 import mindustry.graphics.Layer
@@ -77,15 +78,17 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
     var cooldownBrokenBase = 0.35f
 
     var paramEntity: ConfigurableProjectorBuild? = null
-    val shieldConsumer = Cons { trait: Bullet ->
-        if (trait.team !== paramEntity!!.team && trait.type.absorbable && Intersector.isInsideHexagon(
-                paramEntity!!.x, paramEntity!!.y, paramEntity!!.buildRadius * 2f, trait.x(), trait.y()
-            )
-        ) {
-            trait.absorb()
-            Fx.absorb.at(trait)
-            paramEntity!!.hit = 1f
-            paramEntity!!.buildup += trait.damage() * paramEntity!!.warmup
+    val shieldConsumer = { trait: Bullet ->
+        paramEntity!!.let {
+            if (trait.team !== it.team && trait.type.absorbable && Intersector.isInsideHexagon(
+                            it.x, it.y, it.buildRadius * 2f, trait.x(), trait.y()
+                    )
+            ) {
+                trait.absorb()
+                Fx.absorb.at(trait)
+                paramEntity!!.hit = 1f
+                paramEntity!!.buildup += trait.damage() * paramEntity!!.warmup
+            }
         }
     }
 
@@ -188,9 +191,9 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
     open inner class ConfigurableProjectorBuild : MendProjector.MendBuild() {
         var mode: String = "none"
-        var level = 0
-        var autoadjust = false
-        var adjustTicks = 0
+        private var level = 0
+        private var autoadjust = false
+        private var adjustTicks = 0
 
         private var heat = 0f
         var charge = 0f
@@ -203,15 +206,30 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         open var buildRadius = minRadius + (maxRadius - minRadius) / 2
         open var buildShieldHealth = minShieldHealth + (maxShieldHealth - minShieldHealth) / 2
         open var buildOverdrive = minOverdrive + (maxOverdrive - minOverdrive) / 2
+        open var buildPowerUse = 0f
 
         var broken = true
         var buildup = 0f
-        var radscl: Float = 0f
+        private var radscl: Float = 0f
         var hit: Float = 0f
         var warmup: Float = 0f
 
+        override fun created() {
+            Events.on(EventType.Trigger.update::class.java) {
+                consumes.remove(ConsumeType.power)
+
+                var powerUse = 0f
+                consumes.powerCond<ConfigurableProjectorBuild>(0f) { entity ->
+                    if (entity.tile == tile) powerUse = entity.buildPowerUse
+                    false
+                }
+
+                consumes.powerCond<ConfigurableProjectorBuild>(powerUse) { entity -> entity.tile == tile }
+            }
+        }
+
         override fun configure(value: Any?) {
-            if (value is String && value.split(" ").toTypedArray().size == 3) {
+            if (value is String && value.split(" ").size == 3) {
                 val valueSeq = Seq(value.split(" ").toTypedArray())
 
                 level = valueSeq[0].toInt()
@@ -223,7 +241,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         }
 
         override fun configured(builder: Unit?, value: Any?) {
-            if (value is String && value.split(" ").toTypedArray().size == 3) {
+            if (value is String && value.split(" ").size == 3) {
                 val valueSeq = Seq(value.split(" ").toTypedArray())
 
                 level = valueSeq[0].toInt()
@@ -310,7 +328,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
         override fun updateTile() {
             var decLevel: Double = ((level + 1) / maxLevels)
-            val powerUse = if (mode != "none") calculateSpeed(minPowerUse, maxPowerUse, decLevel) else 0f
+            buildPowerUse = if (mode != "none") calculateSpeed(minPowerUse, maxPowerUse, decLevel) else 0f
 
             if (mode != "force" && mode != "none") {
                 val cons = consumes.get<ConsumeLiquidFilter>(ConsumeType.liquid)
@@ -331,7 +349,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
                 val powerBal = power.graph.powerBalance * 60
 
-                if (powerBal > powerUse) {
+                if (powerBal > buildPowerUse) {
                     if (level.toDouble() < maxLevels - 1) level += 1
                 } else if (level > 0) {
                     level -= 1
@@ -344,8 +362,6 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             buildRadius = calculateSpeed(minRadius, maxRadius, decLevel)
             buildShieldHealth = calculateSpeed(minShieldHealth, maxShieldHealth, decLevel)
             buildOverdrive = calculateSpeed(minOverdrive, maxOverdrive, decLevel)
-
-            consumes.power(powerUse)
 
             smoothEfficiency = Mathf.lerpDelta(smoothEfficiency, efficiency(), 0.08f)
             heat = Mathf.lerpDelta(heat, if (consValid() || cheating()) 1f else 0f, 0.08f)

@@ -13,13 +13,13 @@ open class Mathm {
 
             val output = (total / totalCount)
 
-            return convert(output)
+            return convert<T>(output)
         }
         
         inline fun <reified T : Number> convert(number: Number): T {
             return when(T::class) {
                 Int::class -> number.toInt() as T
-                Float::class -> number as T
+                Float::class -> number.toFloat() as T
                 Double::class -> number.toDouble() as T
                 Short::class -> number.toInt().toShort() as T
                 Long::class -> number.toLong() as T

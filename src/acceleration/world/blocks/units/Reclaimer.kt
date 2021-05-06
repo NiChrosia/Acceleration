@@ -1,6 +1,5 @@
 package acceleration.world.blocks.units
 
-import arc.Core
 import arc.Events
 import arc.math.Mathf
 import arc.struct.ObjectMap
@@ -29,6 +28,7 @@ open class Reclaimer(name: String) : Block(name) {
     private val individualRequirementMap = ObjectMap<UnitType, Array<out ItemStack>>()
     private val requirementMap = ObjectMap<UnitType, Array<out ItemStack>>()
     private val upgradeMap = ObjectMap<UnitType, UnitType>()
+    private val tierMap = ObjectMap<UnitType, Int>()
     private var T1Units = Seq<UnitType>()
     private val reclaimers = Seq<ReclaimerBuild>()
     private var nearby = 0
@@ -36,20 +36,12 @@ open class Reclaimer(name: String) : Block(name) {
     var range = 120f
     var tier = 1f
 
-    private fun tierScale(x: Float): Float {
-        return (x * 15 + 15) / 100
+    private fun tierScale(tier: Float): Double {
+        return (tier * 15 + 15) / 100 % 1.0
     }
 
-    private fun unitScale(u: UnitType): Float {
-        val divideAmount = 20
-
-        var output = u.hitSize / divideAmount
-
-        if (output > 1) {
-            output = 1f
-        }
-
-        return output
+    private fun unitScale(tier: Int): Double {
+        return tier * 20.0
     }
 
     init {
@@ -78,11 +70,13 @@ open class Reclaimer(name: String) : Block(name) {
         }
 
         var index = 0
+        var tier = 1
 
         var lastUpgrade: UnitType? = T1Units[index]
         var prevUnits: Seq<UnitType> = Seq.with(lastUpgrade)
 
         addRequirements(lastUpgrade, prevUnits)
+        tierMap.put(lastUpgrade, tier)
 
         Log.info("[accent]units:[]")
         while (individualRequirementMap.containsKey(lastUpgrade)) {
@@ -90,13 +84,16 @@ open class Reclaimer(name: String) : Block(name) {
                 lastUpgrade = upgradeMap.get(lastUpgrade)
                 prevUnits.add(lastUpgrade)
 
+                tier++
                 addRequirements(lastUpgrade, prevUnits)
+                tierMap.put(lastUpgrade, tier)
             } else if (index < T1Units.size - 2) {
                 index++
                 lastUpgrade = T1Units[index]
                 prevUnits = Seq.with(lastUpgrade)
 
                 addRequirements(lastUpgrade, prevUnits)
+                tier = 1
             } else {
                 break
             }
@@ -200,7 +197,7 @@ open class Reclaimer(name: String) : Block(name) {
                 val unitItems = requirementMap.get(u.type) ?: return@each
 
                 val tierPercent = tierScale(tier) // The scale for the block tier
-                val unitPercent = unitScale(u.type) // The scale for the unit hitSize
+                val unitPercent = unitScale(tierMap.get(u.type)) // The scale for the unit hitSize
 
                 for (iterItem in unitItems.iterator()) {
                     val item = iterItem.item
