@@ -43,7 +43,7 @@ if __name__ == '__main__':
     commit_name = get_commit_name(*sys.argv[1:])
     info = get_info(*sys.argv[1:])
 
-    with(open("output.json", "w")) as f:
+    with(open("output.json", "w+")) as f:
         data = {
             "commit_name": commit_name,
             "info": info["full"],
