@@ -72,16 +72,6 @@ tasks.register<Jar>("jarAndroid") {
     archiveFileName.set("$dirName-Android")
 
     doLast {
-        /*val files = (
-            configurations.compileClasspath.get().files +
-            configurations.runtimeClasspath.get().files +
-            setOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
-        ).toTypedArray()
-
-        val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
-        */
-        //exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName.get()}-Android.jar ${archiveBaseName.get()}-Desktop.jar") }
-
         val files = (
             configurations.compileClasspath.get().files +
             configurations.runtimeClasspath.get().files +
@@ -111,6 +101,8 @@ tasks.register<Jar>("deploy") {
     dependsOn("alphableed")
     dependsOn("jar")
 
+
+
     doLast {
         delete { delete("$buildDir/libs/${archiveBaseName}-Desktop.jar") }
 
@@ -126,6 +118,13 @@ tasks.register<Jar>("deployDexed") {
     dependsOn("alphableed")
     dependsOn("jar")
     dependsOn("jarAndroid")
+
+    from(rootDir) {
+        arrayOf(
+            zipTree("$buildDir/libs/${archiveBaseName}-Desktop.jar"),
+            zipTree("$buildDir/libs/${archiveBaseName}-Android.jar")
+        )
+    }
 
     doLast {
         delete {
