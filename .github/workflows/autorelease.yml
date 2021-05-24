@@ -6,7 +6,7 @@ on:
     types: [completed]
 
 jobs:
-  on-success:
+  createRelease:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -19,22 +19,15 @@ jobs:
 
     - name: Create Release
       id: createRelease
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: "v1"
-        release_name: ""
-        body: ""
-        draft: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifact: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
+        artifactContentType: application/zip
 
-    - name: Upload artifacts
-      id: uploadArtifacts
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.createRelease.outputs.upload_url }}
-        asset_path: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}-1.0.jar
-        asset_name: ${{ github.event.repository.name }}.jar
-        asset_content_type: application/zip
+        tag: "snapshot"
+        name: "Bleeding-Edge Release"
+        omitBody: true
+        draft: true
+        prerelease: true
+        allowUpdates: true
