@@ -61,8 +61,9 @@ tasks.register<Jar>("jarAndroid") {
                 ).toTypedArray()
 
         val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
+        var dependencyString = ""; dependencies.forEach { dependencyString += it }
 
-        exec { commandLine("d8 $dependencies --min-api 14 --output ${archiveBaseName}Android.jar ${archiveBaseName}Desktop.jar") }
+        exec { commandLine("d8 $dependencyString --min-api 14 --output ${archiveBaseName}Android.jar ${archiveBaseName}Desktop.jar") }
     }
 }
 
