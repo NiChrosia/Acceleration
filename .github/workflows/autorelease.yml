@@ -44,8 +44,8 @@ jobs:
           artifactContentType: application/zip
 
           tag: dev
-          name: Bleeding-Edge Release
-          body: [Latest successful commit for Acceleration.](${{ fromJson('./workflows/output.json') }})
+          name: "Bleeding-Edge Release"
+          body: "[Latest successful commit for Acceleration.](${{ fromJson('./workflows/output.json') }})"
           draft: true
           prerelease: true
           allowUpdates: true
