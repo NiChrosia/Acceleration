@@ -27,7 +27,7 @@ jobs:
 
         tag: "snapshot"
         name: "Bleeding-Edge Release"
-        body: ""
+        body: "Latest successful commit for Acceleration."
         draft: true
         prerelease: true
         allowUpdates: true
