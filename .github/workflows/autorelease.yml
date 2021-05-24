@@ -17,7 +17,15 @@ jobs:
         workflow: gradle.yml
         path: "."
 
-    - name: Create Release
+    - name: Get latest commit
+      id: getCommit
+      uses: actions/checkout@v2
+      with:
+        ref: master
+        path: ${{ github.event.repository.name }}
+
+
+    - name: Create release
       id: createRelease
       uses: ncipollo/release-action@v1
       with:
@@ -25,9 +33,10 @@ jobs:
         artifacts: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
         artifactContentType: application/zip
 
-        tag: "snapshot"
+        tag: "dev"
         name: "Bleeding-Edge Release"
-        body: "Latest successful commit for Acceleration."
+        body: """[Latest successful commit for Acceleration.](${{ github.event.workflow_run[head_sha] }})
+"""
         draft: true
         prerelease: true
         allowUpdates: true
