@@ -55,10 +55,10 @@ tasks.register<Jar>("jarAndroid") {
 
     doLast {
         val files = (
-            configurations.compileClasspath.get().files +
-            configurations.runtimeClasspath.get().files +
-            setOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
-        ).toTypedArray()
+                configurations.compileClasspath.get().files +
+                        configurations.runtimeClasspath.get().files +
+                        setOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
+                ).toTypedArray()
 
         val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
 
@@ -68,12 +68,12 @@ tasks.register<Jar>("jarAndroid") {
 
 tasks.register("alphableed") {
     exec {
-        workingDir = File(rootDir.path + "/assets/sprites")
+        workingDir = rootDir
 
         if (project.extra["windows"] as Boolean) {
-            commandLine("./alpha-bleeding-windows.exe", "--replace", ".")
+            commandLine(".\\alpha-bleeding-windows.exe", "--replace", ".\\assets\\sprites")
         } else {
-            commandLine("./alpha-bleed", ".")
+            commandLine(".\\alpha-bleed", ".\\assets\\sprites")
         }
     }
 }
