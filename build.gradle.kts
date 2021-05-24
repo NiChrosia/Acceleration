@@ -62,7 +62,7 @@ tasks.register<Jar>("jarAndroid") {
 
         val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
 
-        exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName}Android.jar ${archiveBaseName}Desktop.jar") }
+        exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName.get()}Android.jar ${archiveBaseName.get()}Desktop.jar") }
     }
 }
 
