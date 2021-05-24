@@ -38,7 +38,7 @@ jobs:
       - name: Sleep to allow for python to create output.json
         uses: jakejarvis/wait-action@master
         with:
-          time: '2s'
+          time: '5s'
 
       - name: Confirm existence of output.json
         run: ls workflows/

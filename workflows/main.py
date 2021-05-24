@@ -55,4 +55,4 @@ if __name__ == '__main__':
         description = generate_description(data)
 
         json.dump(description, f, indent=4)
-        f.close()
+        # f.close()
