@@ -7,7 +7,7 @@ def convert_string(sha_url):
 
 
 if __name__ == '__main__':
-    string = convert_string(*sys.argv[0:])
+    string = convert_string(*sys.argv[1:])
 
     with(open("output.json", "w")) as f:
         json.dump(string, f, indent=4)

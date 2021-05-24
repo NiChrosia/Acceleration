@@ -11,48 +11,41 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-    - name: Download Artifact
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        workflow: gradle.yml
-        path: "."
+      - name: Download Artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: gradle.yml
+          path: "."
 
-    - name: Get latest commit
-      id: getCommit
-      uses: actions/checkout@v2
-      with:
-        ref: master
-        path: ${{ github.event.repository.name }}
+      - name: Get latest commit
+        id: getCommit
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: ${{ github.event.repository.name }}
 
-    - name: Run link string code
-      run: python ./workflows/main.py
+      - name: Run link string code
+        run: python ./workflows/main.py ${{ github.event.workflow_run.head_sha }}
 
-    - name: Get link string
-      id: getLink
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: ./workflows/output.json
+      - name: Create release
+        id: createRelease
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: ${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
+          artifactContentType: application/zip
 
-
-    - name: Create release
-      id: createRelease
-      uses: ncipollo/release-action@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
-        artifactContentType: application/zip
-
-        tag: "dev"
-        name: "Bleeding-Edge Release"
-        body: "[Latest successful commit for Acceleration.](${{ steps.getLink.outputs.content }})"
-        draft: true
-        prerelease: true
-        allowUpdates: true
+          tag: dev
+          name: Bleeding-Edge Release
+          body: [Latest successful commit for Acceleration.](${{ fromJson('./workflows/output.json') }})
+          draft: true
+          prerelease: true
+          allowUpdates: true
