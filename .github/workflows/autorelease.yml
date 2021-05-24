@@ -43,9 +43,9 @@ jobs:
           artifacts: ${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
           artifactContentType: application/zip
 
-          tag: dev
+          tag: "dev"
           name: "Bleeding-Edge Release"
-          body: ${{ fromJSON('workflows/output.json').description }}
+          body: "${{ fromJSON('workflows/output.json').description }}"
           draft: true
           prerelease: true
           allowUpdates: true
