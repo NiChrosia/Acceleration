@@ -30,12 +30,12 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
+        artifacts: ${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
         artifactContentType: application/zip
 
         tag: "dev"
         name: "Bleeding-Edge Release"
-        body: "[Latest successful commit for Acceleration.](${{ github.event.workflow_run.head_sha }})"
+        body: "[Latest successful commit for Acceleration.](https://github.com/NiChrosia/Acceleration/tree/${{ github.event.workflow_run.head_sha.split('/')[7] }})"
         draft: true
         prerelease: true
         allowUpdates: true
