@@ -35,7 +35,7 @@ jobs:
 
         tag: "dev"
         name: "Bleeding-Edge Release"
-        body: "[Latest successful commit for Acceleration.](https://github.com/NiChrosia/Acceleration/tree/${{ github.event.workflow_run.head_sha.split('/')[7] }})"
+        body: "[Latest successful commit for Acceleration.](https://github.com/NiChrosia/Acceleration/tree/${{ github.event.workflow_run.head_sha[77:] }})"
         draft: true
         prerelease: true
         allowUpdates: true
