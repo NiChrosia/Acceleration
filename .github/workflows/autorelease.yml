@@ -39,7 +39,7 @@ jobs:
         uses: pCYSl5EDgo/cat@master
         id: getDescription
         with:
-          path: workflows/output.json
+          path: ./workflows/output.json
 
       - name: Create release
         id: createRelease
