@@ -35,6 +35,9 @@ jobs:
       - name: Run python code
         run: python ./workflows/main.py ${{ github.event.workflow_run.head_sha }}
 
+      - name: Confirm existence of output.json
+        run: ls workflows/
+
       - name: Get description string
         uses: pCYSl5EDgo/cat@master
         id: getDescription
