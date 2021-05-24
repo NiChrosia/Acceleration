@@ -73,7 +73,7 @@ tasks.register("alphableed") {
         if (project.extra["windows"] as Boolean) {
             commandLine("./alpha-bleeding-windows.exe", "--replace", ".")
         } else {
-            commandLine("./alpha-bleed", "--replace", ".")
+            commandLine("./alpha-bleed", ".")
         }
     }
 }
