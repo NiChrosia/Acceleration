@@ -20,7 +20,7 @@ jobs:
           chmod +x gradlew
           chmod +x alpha-bleed
       - name: Build mod jar
-        run: ./gradlew deploy
+        run: ./gradlew deployDexed
       - name: Upload built jar file
         uses: actions/upload-artifact@v2
         with:
