@@ -35,6 +35,12 @@ jobs:
       - name: Run python code
         run: python ./workflows/main.py ${{ github.event.workflow_run.head_sha }}
 
+      - name: Get description string
+        uses: pCYSl5EDgo/cat@master
+        id: getDescription
+        with:
+          path: workflows/output.json
+
       - name: Create release
         id: createRelease
         uses: ncipollo/release-action@v1
@@ -45,7 +51,7 @@ jobs:
 
           tag: "dev"
           name: "Bleeding-Edge Release"
-          body: "${{ fromJSON('workflows/output.json').description }}"
+          body: "${{ steps.getDescription.outputs.text }}"
           draft: true
           prerelease: true
           allowUpdates: true
