@@ -37,7 +37,7 @@ tasks {
     "jar"(Jar::class) {
         val dirName = rootDir.name.split("//").last()
 
-        archiveFileName.set("$dirName-${project.version}.jar")
+        archiveFileName.set("$dirName-Desktop.jar")
 
         from(configurations.runtimeClasspath.map { configuration ->
             configuration.asFileTree.fold(files().asFileTree) { collection, file ->
@@ -53,6 +53,9 @@ tasks {
 tasks.register<Jar>("jarAndroid") {
     dependsOn("jar")
 
+    val dirName = rootDir.name.split("//").last()
+    archiveFileName.set("$dirName-Android")
+
     doLast {
         val files = (
             configurations.compileClasspath.get().files +
@@ -62,7 +65,7 @@ tasks.register<Jar>("jarAndroid") {
 
         val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
 
-        exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName.get()}Android.jar ${archiveBaseName.get()}Desktop.jar") }
+        exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName.get()}-Android.jar ${archiveBaseName.get()}-Desktop.jar") }
     }
 }
 
@@ -83,7 +86,7 @@ tasks.register<Jar>("deploy") {
     dependsOn("jar")
 
     doLast {
-        delete { delete("$buildDir/libs/${archiveBaseName}Desktop.jar") }
+        delete { delete("$buildDir/libs/${archiveBaseName}-Desktop.jar") }
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
@@ -93,4 +96,21 @@ tasks.register<Jar>("deploy") {
     }
 }
 
-tasks.register("deployDexed") { dependsOn("jarAndroid"); dependsOn("deploy") }
+tasks.register<Jar>("deployDexed") {
+    dependsOn("alphableed")
+    dependsOn("jar")
+    dependsOn("jarAndroid")
+
+    doLast {
+        delete {
+            delete("$buildDir/libs/${archiveBaseName}-Desktop.jar")
+            delete("$buildDir/libs/${archiveBaseName}-Android.jar")
+        }
+
+        if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
+            exec {
+                commandLine("powershell.exe", "mv -Force build/libs/Acceleration-kotlin-${project.version}.jar ../../Acceleration-kotlin-${project.version}.jar")
+            }
+        }
+    }
+}
