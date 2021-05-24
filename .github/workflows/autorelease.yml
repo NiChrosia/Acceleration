@@ -35,8 +35,7 @@ jobs:
 
         tag: "dev"
         name: "Bleeding-Edge Release"
-        body: """[Latest successful commit for Acceleration.](${{ github.event.workflow_run[head_sha] }})
-"""
+        body: "[Latest successful commit for Acceleration.](${{ github.event.workflow_run[head_sha] }})"
         draft: true
         prerelease: true
         allowUpdates: true
