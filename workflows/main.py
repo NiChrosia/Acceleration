@@ -32,11 +32,11 @@ def get_info(commit_hash):
 
 
 def generate_description(info):
-    return f"""## Commit information:
+    return {"description": f"""## Commit information:
 Name: {info['commit_name']}
 Author: {info['author']}
 [Filetree](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
-[Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""
+[Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""}
 
 
 if __name__ == '__main__':
