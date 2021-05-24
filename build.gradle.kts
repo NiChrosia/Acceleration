@@ -11,9 +11,9 @@ fun String.runCommand(workingDir: File = file("./")): String {
         .redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
 
-    while (!proc.onExit().isDone) {
-        TimeUnit.SECONDS.sleep(1L)
-    }
+    //while (!proc.onExit().isDone) {
+    //    TimeUnit.SECONDS.sleep(1L)
+    //}
 
     return proc.inputStream.bufferedReader().readText().trim()
 }
