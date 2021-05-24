@@ -35,7 +35,7 @@ dependencies {
 
 tasks {
     "jar"(Jar::class) {
-        val dirName = rootDir.name.split("\\\\").last()
+        val dirName = rootDir.name.split("//").last()
 
         archiveFileName.set("$dirName-${project.version}.jar")
 
@@ -71,9 +71,9 @@ tasks.register("alphableed") {
         workingDir = rootDir
 
         if (project.extra["windows"] as Boolean) {
-            commandLine(".\\alpha-bleeding-windows.exe", "--replace", "assets\\sprites")
+            commandLine("./alpha-bleeding-windows.exe", "--replace", "assets/sprites")
         } else {
-            commandLine(".\\alpha-bleed", "--replace", "assets\\sprites")
+            commandLine("./alpha-bleed", "--replace", "assets/sprites")
         }
     }
 }
