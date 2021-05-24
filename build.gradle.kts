@@ -57,15 +57,25 @@ tasks.register<Jar>("jarAndroid") {
     archiveFileName.set("$dirName-Android")
 
     doLast {
-        val files = (
+        /*val files = (
             configurations.compileClasspath.get().files +
             configurations.runtimeClasspath.get().files +
             setOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
         ).toTypedArray()
 
         val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
+        */
+        //exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName.get()}-Android.jar ${archiveBaseName.get()}-Desktop.jar") }
 
-        exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName.get()}-Android.jar ${archiveBaseName.get()}-Desktop.jar") }
+        val files = (
+            configurations.compileClasspath.get().files +
+            configurations.runtimeClasspath.get().files +
+            arrayOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
+        )
+        val dependencies = files.fold("") { str, file ->  str + " --classpath ${file.path}" }
+
+        //dex and desugar files - this requires d8 in your PATH
+        exec { commandLine("d8 $dependencies --min-api 14 --output $dirName-Android.jar $dirName-Desktop.jar") }
     }
 }
 
