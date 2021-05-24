@@ -47,10 +47,10 @@ jobs:
           name: "Bleeding-Edge Release"
           body: |
             ## Commit information:
-            Name: ${{ fromJSON('workflows/output.json').commit_name }}
-            Author: ${{ fromJSON('workflows/output.json').author }}
-            [Filetree](https://github.com/NiChrosia/Acceleration/tree/${{ github.event.workflow_run.head_sha }})
-            [Commit](https://github.com/NiChrosia/Acceleration/commit/${{ github.event.workflow_run.head_sha }})
+            "Name: ${{ fromJSON('workflows/output.json').commit_name }}"
+            "Author: ${{ fromJSON('workflows/output.json').author }}"
+            "[Filetree](https://github.com/NiChrosia/Acceleration/tree/${{ github.event.workflow_run.head_sha }})"
+            "[Commit](https://github.com/NiChrosia/Acceleration/commit/${{ github.event.workflow_run.head_sha }})"
           draft: true
           prerelease: true
           allowUpdates: true
