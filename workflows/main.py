@@ -31,6 +31,14 @@ def get_info(commit_hash):
     }
 
 
+def generate_description(info):
+    return f"""## Commit information:
+Name: {info['commit_name']}
+Author: {info['author']}
+[Filetree](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
+[Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""
+
+
 if __name__ == '__main__':
     commit_name = get_commit_name(*sys.argv[1:])
     info = get_info(*sys.argv[1:])
@@ -40,8 +48,11 @@ if __name__ == '__main__':
             "commit_name": commit_name,
             "info": info["full"],
             "author": info["author"],
-            "date": info["date"]
+            "date": info["date"],
+            "commit_sha": sys.argv[1]
         }
 
-        json.dump(data, f, indent=4)
+        description = generate_description(data)
+
+        json.dump(description, f, indent=4)
         f.close()
