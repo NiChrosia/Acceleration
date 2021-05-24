@@ -55,15 +55,14 @@ tasks.register<Jar>("jarAndroid") {
 
     doLast {
         val files = (
-                configurations.compileClasspath.get().files +
-                        configurations.runtimeClasspath.get().files +
-                        setOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
-                ).toTypedArray()
+            configurations.compileClasspath.get().files +
+            configurations.runtimeClasspath.get().files +
+            setOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
+        ).toTypedArray()
 
         val dependencies = files.fold(arrayOf<String>()) { collection, file -> collection.plus("--classpath ${file.path}") }
-        var dependencyString = ""; dependencies.forEach { dependencyString += it }
 
-        exec { commandLine("d8 $dependencyString --min-api 14 --output ${archiveBaseName}Android.jar ${archiveBaseName}Desktop.jar") }
+        exec { commandLine("d8 ${dependencies.joinToString(" ")} --min-api 14 --output ${archiveBaseName}Android.jar ${archiveBaseName}Desktop.jar") }
     }
 }
 
@@ -72,9 +71,9 @@ tasks.register("alphableed") {
         workingDir = rootDir
 
         if (project.extra["windows"] as Boolean) {
-            commandLine("./alpha-bleeding-windows.exe", "--replace", "assets/sprites")
+            commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
         } else {
-            commandLine("./alpha-bleed", "--replace", "assets/sprites")
+            commandLine("./alpha-bleed", "--replace", "./assets/sprites")
         }
     }
 }
