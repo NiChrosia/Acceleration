@@ -71,9 +71,9 @@ tasks.register("alphableed") {
         workingDir = rootDir
 
         if (project.extra["windows"] as Boolean) {
-            commandLine(".\\alpha-bleeding-windows.exe", "--replace", ".\\assets\\sprites")
+            commandLine(".\\alpha-bleeding-windows.exe", "--replace", "assets\\sprites")
         } else {
-            commandLine(".\\alpha-bleed", ".\\assets\\sprites")
+            commandLine(".\\alpha-bleed", "--replace", "assets\\sprites")
         }
     }
 }
