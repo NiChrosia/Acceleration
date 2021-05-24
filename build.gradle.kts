@@ -3,6 +3,21 @@ plugins { kotlin("jvm") version "1.5.0" }
 apply(plugin = "kotlin")
 kotlin.sourceSets.getByName("main").kotlin.setSrcDirs(listOf("src", "assets"))
 
+fun String.runCommand(workingDir: File = file("./")): String {
+    val parts = this.split("\\s".toRegex())
+    val proc = ProcessBuilder(*parts.toTypedArray())
+        .directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
+        .start()
+
+    while (!proc.onExit().isDone) {
+        TimeUnit.SECONDS.sleep(1L)
+    }
+
+    return proc.inputStream.bufferedReader().readText().trim()
+}
+
 buildscript {
     project.extra.apply {
         /** Whether to move the jarfile into my mods directory for easy testing. Disable if you are not me. */
@@ -53,7 +68,7 @@ tasks {
 tasks.register<Jar>("jarAndroid") {
     dependsOn("jar")
 
-    val dirName = rootDir.name.split("//").last()
+    val dirName = rootDir.name.split("/").last()
     archiveFileName.set("$dirName-Android")
 
     doLast {
@@ -72,10 +87,11 @@ tasks.register<Jar>("jarAndroid") {
             configurations.runtimeClasspath.get().files +
             arrayOf(File("${project.extra["sdkRoot"]}/platforms/android-${project.extra["sdkVersion"]}/android.jar"))
         )
+
         val dependencies = files.fold("") { str, file ->  str + " --classpath ${file.path}" }
 
         //dex and desugar files - this requires d8 in your PATH
-        exec { commandLine("d8 $dependencies --min-api 14 --output $dirName-Android.jar $dirName-Desktop.jar") }
+        "d8$dependencies --min-api 14 --output $dirName-Android.jar $dirName-Desktop.jar".runCommand(File("${buildDir.path}/libs"))
     }
 }
 
