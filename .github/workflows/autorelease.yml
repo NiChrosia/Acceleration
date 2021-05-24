@@ -32,10 +32,12 @@ jobs:
         ref: master
         path: ${{ github.event.repository.name }}
 
+    - name: Run link string code
+      run: python ./workflows/main.py
+
     - name: Get link string
       id: getLink
       uses: juliangruber/read-file-action@v1
-      run: python ./workflows/main.py
       with:
         path: ./workflows/output.json
 
