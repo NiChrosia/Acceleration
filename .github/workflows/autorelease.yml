@@ -9,7 +9,15 @@ jobs:
   createRelease:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
     - name: Download Artifact
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -24,6 +32,13 @@ jobs:
         ref: master
         path: ${{ github.event.repository.name }}
 
+    - name: Get link string
+      id: getLink
+      uses: juliangruber/read-file-action@v1
+      run: python ./workflows/main.py
+      with:
+        path: ./workflows/output.json
+
 
     - name: Create release
       id: createRelease
@@ -35,7 +50,7 @@ jobs:
 
         tag: "dev"
         name: "Bleeding-Edge Release"
-        body: "[Latest successful commit for Acceleration.](https://github.com/NiChrosia/Acceleration/tree/${{ github.event.workflow_run.head_sha[77:] }})"
+        body: "[Latest successful commit for Acceleration.](${{ steps.getLink.outputs.content }})"
         draft: true
         prerelease: true
         allowUpdates: true
