@@ -1,0 +1,40 @@
+name: Auto-Release
+
+on:
+  workflow_run:
+    workflows: ["Commit Checks"]
+    types: [completed]
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - name: Download Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        workflow: gradle.yml
+        path: "."
+
+    - name: Create Release
+      id: createRelease
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: "v1"
+        release_name: ""
+        body: ""
+        draft: true
+
+    - name: Upload artifacts
+      id: uploadArtifacts
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.createRelease.outputs.upload_url }}
+        asset_path: ./${{ github.event.repository.name }}-1.0.jar
+        asset_name: ${{ github.event.repository.name }}.jar
+        asset_content_type: application/zip
