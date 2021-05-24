@@ -22,12 +22,12 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifact: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
+        artifacts: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}.jar
         artifactContentType: application/zip
 
         tag: "snapshot"
         name: "Bleeding-Edge Release"
-        omitBody: true
+        body: ""
         draft: true
         prerelease: true
         allowUpdates: true

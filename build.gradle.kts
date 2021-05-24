@@ -102,7 +102,7 @@ tasks.register<Jar>("deploy") {
     dependsOn("jar")
 
     val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-${project.version}.jar")
+    archiveFileName.set("$dirName.jar")
 
     from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"))
 
@@ -111,7 +111,7 @@ tasks.register<Jar>("deploy") {
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
-                commandLine("powershell.exe", "mv -Force build/libs/Acceleration-kotlin-${project.version}.jar ../../Acceleration-kotlin-${project.version}.jar")
+                commandLine("powershell.exe", "mv -Force build/libs/$dirName.jar ../../$dirName.jar")
             }
         }
     }
@@ -123,7 +123,7 @@ tasks.register<Jar>("deployDexed") {
     dependsOn("jarAndroid")
 
     val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-${project.version}.jar")
+    archiveFileName.set("$dirName.jar")
 
     from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"),
          zipTree("$buildDir/libs/${dirName}-Android.jar"))
@@ -136,7 +136,7 @@ tasks.register<Jar>("deployDexed") {
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
-                commandLine("powershell.exe", "mv -Force build/libs/Acceleration-kotlin-${project.version}.jar ../../Acceleration-kotlin-${project.version}.jar")
+                commandLine("powershell.exe", "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar")
             }
         }
     }
