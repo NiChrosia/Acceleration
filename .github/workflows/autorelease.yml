@@ -45,7 +45,7 @@ jobs:
 
           tag: "dev"
           name: "Bleeding-Edge Release"
-          body: "$[ fromJSON('workflows/output.json').description ]"
+          body: "${{ fromJSON('workflows/output.json').description }}"
           draft: true
           prerelease: true
           allowUpdates: true
