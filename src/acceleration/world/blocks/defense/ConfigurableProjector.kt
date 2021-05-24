@@ -38,7 +38,7 @@ import mindustry.entities.Effect
 import mindustry.entities.Units
 import mindustry.game.EventType
 import mindustry.gen.*
-import mindustry.gen.Unit
+import mindustry.gen.Unit as mUnit
 import mindustry.graphics.Layer
 import mindustry.type.Liquid
 import mindustry.ui.Bar
@@ -233,7 +233,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             Call.tileConfig(Vars.player, this, value)
         }
 
-        override fun configured(builder: Unit?, value: Any?) {
+        override fun configured(builder: mUnit?, value: Any?) {
             if (value is String && value.split(" ").size == 3) {
                 val valueSeq = Seq(value.split(" ").toTypedArray())
 

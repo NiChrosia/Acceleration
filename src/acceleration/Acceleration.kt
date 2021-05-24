@@ -35,7 +35,5 @@ class Acceleration : Mod() {
         }
 
         Log.info("Mod ${accent}Acceleration${end} loaded content successfully.")
-
-        Any().takeUnless { true }
     }
 }

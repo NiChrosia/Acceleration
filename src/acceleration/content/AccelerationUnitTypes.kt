@@ -14,7 +14,7 @@ import mindustry.entities.abilities.RepairFieldAbility
 import mindustry.entities.abilities.ShieldRegenFieldAbility
 import mindustry.entities.abilities.StatusFieldAbility
 import mindustry.gen.*
-import mindustry.gen.Unit
+import mindustry.gen.Unit as mUnit
 import mindustry.type.AmmoTypes
 import mindustry.type.UnitType
 import mindustry.type.Weapon
@@ -203,7 +203,7 @@ class AccelerationUnitTypes : ContentList {
                 )
             }
 
-            override fun update(unit: Unit) {
+            override fun update(unit: mUnit) {
                 super.update(unit)
 
                 Units.nearby(unit.x - zoneSize / 2, unit.y - zoneSize / 2, zoneSize, zoneSize) { u ->
