@@ -69,7 +69,7 @@ tasks.register<Jar>("jarAndroid") {
     dependsOn("jar")
 
     val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-Android")
+    archiveFileName.set("$dirName-Android.jar")
 
     doLast {
         val files = (
@@ -101,10 +101,13 @@ tasks.register<Jar>("deploy") {
     dependsOn("alphableed")
     dependsOn("jar")
 
+    val dirName = rootDir.name.split("/").last()
+    archiveFileName.set("$dirName-${project.version}.jar")
 
+    from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"))
 
     doLast {
-        delete { delete("$buildDir/libs/${archiveBaseName}-Desktop.jar") }
+        delete { delete("$buildDir/libs/${dirName}-Desktop.jar") }
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
@@ -119,17 +122,16 @@ tasks.register<Jar>("deployDexed") {
     dependsOn("jar")
     dependsOn("jarAndroid")
 
-    from(rootDir) {
-        arrayOf(
-            zipTree("$buildDir/libs/${archiveBaseName}-Desktop.jar"),
-            zipTree("$buildDir/libs/${archiveBaseName}-Android.jar")
-        )
-    }
+    val dirName = rootDir.name.split("/").last()
+    archiveFileName.set("$dirName-${project.version}.jar")
+
+    from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"),
+         zipTree("$buildDir/libs/${dirName}-Android.jar"))
 
     doLast {
         delete {
-            delete("$buildDir/libs/${archiveBaseName}-Desktop.jar")
-            delete("$buildDir/libs/${archiveBaseName}-Android.jar")
+            delete("$buildDir/libs/${dirName}-Desktop.jar")
+            delete("$buildDir/libs/${dirName}-Android.jar")
         }
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
