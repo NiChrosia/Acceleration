@@ -1,6 +1,5 @@
 import sys
 import subprocess
-import json
 
 
 def get_commit_name(commit_hash):
@@ -37,9 +36,8 @@ Name: {info['commit_name']}
 Author: {info['author']}
 [Filetree](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
 [Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""\
-        .replace("<br>", "\\<br>")\
-        .replace("\n", "<br>")\
-        .replace("\"", "")
+        .replace("<br>", "\<br>")\
+        .replace("Author: Author: ", "Author: ")
 
 
 if __name__ == '__main__':
@@ -57,6 +55,6 @@ if __name__ == '__main__':
     }
 
     description = generate_description(data)
+    f.writelines(description)
 
-    json.dump(description, f, indent=4)
     f.close()
