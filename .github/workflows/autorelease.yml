@@ -23,6 +23,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: gradle.yml
+          name: Acceleration.jar
           path: "."
 
       - name: Get latest commit
