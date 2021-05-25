@@ -40,6 +40,12 @@ jobs:
         with:
           path: ./output.json
 
+      - name: Get tag string
+        uses: pCYSl5EDgo/cat@master
+        id: getTag
+        with:
+          path: ./tag.json
+
       - name: Create release
         id: createRelease
         uses: ncipollo/release-action@v1
@@ -48,7 +54,7 @@ jobs:
           artifacts: ${{ github.event.repository.name }}.jar
           artifactContentType: application/zip
 
-          tag: "dev"
+          tag: ${{ steps.getTag.outputs.text }}
           name: "Dev release"
           body: ${{ steps.getDescription.outputs.text }}
           prerelease: false

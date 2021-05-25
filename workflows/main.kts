@@ -171,8 +171,12 @@ fun generateDescription(info: CommitInfo): String {
         .replace("**Date:** Date: ", "**Date:** ")
 }
 
-val file = File("output.json")
+fun getTag(): String? {
+    return "git shortlog | grep -E '^[ ]+\\w+' | wc -l".runCommand()
+}
 
-file.writeText(
-    generateDescription(CommitInfo(args[0]))
-)
+val output = File("output.json")
+val tag = File("tag.json")
+
+output.writeText(generateDescription(CommitInfo(args[0])))
+if (getTag() != null) tag.writeText(getTag()) else tag.writeText("error-${args[0].substring(0, 5)}")
