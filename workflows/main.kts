@@ -93,7 +93,7 @@ data class Date(val source: String, val use24Hr: Boolean) {
 
     fun convertDateToString(): String {
         /** Monday, January 1st, 2021 */
-        return "${days.get(weekday)}, ${months.get(month)}${monthdayEnds.get(monthday % 10)} $monthday, $year"
+        return "${days.get(weekday)}, ${months.get(month)} $monthday${monthdayEnds.get(monthday % 10)}, $year"
     }
 
     init {
