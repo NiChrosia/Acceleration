@@ -148,7 +148,7 @@ data class CommitInfo(val hash: String) {
 
             date = Date(process[2]
                 .split(" ")
-                .filterIndexed { i, s -> i > 0 && i < 6 }
+                .subList(1, 5)
                 .joinToString(" "), true)
 
             name = process[4]
