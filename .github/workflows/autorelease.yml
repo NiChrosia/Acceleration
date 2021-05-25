@@ -35,6 +35,12 @@ jobs:
       - name: Run python code
         run: python workflows/main.py ${{ github.event.workflow_run.head_sha }}
 
+      - name: Get description string
+        uses: pCYSl5EDgo/cat@master
+        id: getDescription
+        with:
+          path: ./output.json
+
       - name: Create release
         id: createRelease
         uses: ncipollo/release-action@v1
