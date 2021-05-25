@@ -172,13 +172,13 @@ fun generateDescription(info: CommitInfo): String {
 }
 
 fun getTag(): String? {
-    return "git shortlog | grep -E '^[ ]+\\w+' | wc -l".runCommand()
+    return "python -c \"import subprocess; subprocess.run('git shortlog | grep -E \\'^[ ]+\\\\w+\\' | wc -l', shell=True)\"".runCommand()
 }
 
-val output = File("output.json")
+val outputFile = File("output.json")
 val tagFile = File("tag.json")
 
-output.writeText(generateDescription(CommitInfo(args[0])))
+outputFile.writeText(generateDescription(CommitInfo(args[0])))
 
 val tag = getTag()
 
