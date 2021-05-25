@@ -177,4 +177,4 @@ val outputFile = File("output.json")
 val tagFile = File("tag.json")
 
 outputFile.writeText(generateDescription(CommitInfo(hash)))
-tagFile.writeText("dev-${hash.substring(0, 5)}")
+tagFile.writeText("dev-${hash.substring(0, 6)}")
