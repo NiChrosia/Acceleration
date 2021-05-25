@@ -88,7 +88,7 @@ data class Date(val source: String, val use24Hr: Boolean) {
 
         if (outMinute == 60) outMinute %= 60
 
-        return "$outHour:$outMinute ${if (morning) "AM" else "PM"}"
+        return "$outHour:${if (outMinute < 10) "0$outMinute" else outMinute} ${if (morning) "AM" else "PM"}"
     }
 
     fun convertDateToString(): String {
