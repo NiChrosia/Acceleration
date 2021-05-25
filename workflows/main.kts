@@ -1,23 +1,40 @@
 import java.io.File
 
+fun String.runCommand(
+    workingDir: File = File("."),
+    timeoutAmount: Long = 60,
+    timeoutUnit: TimeUnit = TimeUnit.SECONDS
+): String? = runCatching {
+    ProcessBuilder("\\s".toRegex().split(this))
+        .directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
+        .start().also { it.waitFor(timeoutAmount, timeoutUnit) }
+        .inputStream.bufferedReader().readText()
+}.onFailure { it.printStackTrace() }.getOrNull()
+
 data class CommitInfo(val hash: String) {
     lateinit var author: String
     lateinit var date: String
     lateinit var name: String
 
     init {
-        val process = run("git show $hash").split("\n")
+        val command = "git show $hash".runCommand()
 
-        /* Example of "git show <hash>"
-        commit <hash> (HEAD -> master, origin/master)
-        Author: <username> <<email>>
-        Date:   <weekday> <month> <monthday> <time> <year> -0500
-            <commit-name>
-         */
+        if (command != null) {
+            val process = command.split("\n")
 
-        author = process[1]
-        date = process[2]
-        name = process[4].substring(4)
+            /* Example of "git show <hash>"
+            commit <hash> (HEAD -> master, origin/master)
+            Author: <username> <<email>>
+            Date:   <weekday> <month> <monthday> <time> <year> -0500
+                <commit-name>
+             */
+
+            author = process[1]
+            date = process[2]
+            name = process[4].substring(4)
+        } else { author = name = date = "" }
     }
 }
 
@@ -32,5 +49,5 @@ fun generateDescription(info: CommitInfo) {
 val file = File.createNewFile("output.json")
 
 file.writeText(
-    generateDescription(args[0])
+    generateDescription(CommitInfo(args[0]))
 )
