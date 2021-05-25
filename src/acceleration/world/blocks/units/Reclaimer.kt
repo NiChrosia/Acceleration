@@ -11,7 +11,7 @@ import mindustry.Vars
 import mindustry.content.Fx
 import mindustry.game.EventType
 import mindustry.gen.Building
-import mindustry.gen.Unit
+import mindustry.gen.Unit as mUnit
 import mindustry.graphics.Drawf
 import mindustry.graphics.Pal
 import mindustry.type.Item
@@ -29,7 +29,7 @@ open class Reclaimer(name: String) : Block(name) {
     private val requirementMap = ObjectMap<UnitType, Array<out ItemStack>>()
     private val upgradeMap = ObjectMap<UnitType, UnitType>()
     private val tierMap = ObjectMap<UnitType, Int>()
-    private var T1Units = Seq<UnitType>()
+    private var tierOneUnits = Seq<UnitType>()
     private val reclaimers = Seq<ReclaimerBuild>()
     private var nearby = 0
 
@@ -56,7 +56,7 @@ open class Reclaimer(name: String) : Block(name) {
             if (b is UnitFactory) {
                 b.plans.each { p ->
                     individualRequirementMap.put(p.unit, p.requirements)
-                    T1Units.add(p.unit)
+                    tierOneUnits.add(p.unit)
                 }
             }
             if (b is Reconstructor) {
@@ -72,7 +72,7 @@ open class Reclaimer(name: String) : Block(name) {
         var index = 0
         var tier = 1
 
-        var lastUpgrade: UnitType? = T1Units[index]
+        var lastUpgrade: UnitType? = tierOneUnits[index]
         var prevUnits: Seq<UnitType> = Seq.with(lastUpgrade)
 
         addRequirements(lastUpgrade, prevUnits)
@@ -87,9 +87,9 @@ open class Reclaimer(name: String) : Block(name) {
                 tier++
                 addRequirements(lastUpgrade, prevUnits)
                 tierMap.put(lastUpgrade, tier)
-            } else if (index < T1Units.size - 2) {
+            } else if (index < tierOneUnits.size - 2) {
                 index++
-                lastUpgrade = T1Units[index]
+                lastUpgrade = tierOneUnits[index]
                 prevUnits = Seq.with(lastUpgrade)
 
                 addRequirements(lastUpgrade, prevUnits)
@@ -127,7 +127,7 @@ open class Reclaimer(name: String) : Block(name) {
     }
 
     inner class ReclaimerBuild : Building() {
-        private val units = Seq<Unit>()
+        private val units = Seq<mUnit>()
         private var queuedItems = Seq<Array<out ItemStack>>()
 
         override fun created() {
@@ -194,6 +194,8 @@ open class Reclaimer(name: String) : Block(name) {
 
         private fun updateItems() {
             units.each { u ->
+                u.type ?: return@each
+                
                 val unitItems = requirementMap.get(u.type) ?: return@each
 
                 val tierPercent = tierScale(tier) // The scale for the block tier
