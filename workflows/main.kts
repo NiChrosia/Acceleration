@@ -35,11 +35,15 @@ data class CommitInfo(val hash: String) {
             author = process[1]
             date = process[2]
             name = process[4].substring(4)
-        } else { author = name = date = "" }
+        } else {
+            author = ""
+            name = ""
+            date = ""
+        }
     }
 }
 
-fun generateDescription(info: CommitInfo) {
+fun generateDescription(info: CommitInfo): String {
     return """## Commit information:
         Name: ${info.name}
         Author: ${info.author}
@@ -47,7 +51,7 @@ fun generateDescription(info: CommitInfo) {
         [Commit](https://github.com/NiChrosia/Acceleration/commit/${info.hash})""".trimIndent()
 }
 
-val file = File.createNewFile("output.json")
+val file = File("output.json")
 
 file.writeText(
     generateDescription(CommitInfo(args[0]))
