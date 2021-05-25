@@ -171,15 +171,10 @@ fun generateDescription(info: CommitInfo): String {
         .replace("**Date:** Date: ", "**Date:** ")
 }
 
-fun getTag(hash: String): String {
-    return "dev-${hash.substring(0, 5)}"
-}
-
 val hash = args[0]
 
 val outputFile = File("output.json")
 val tagFile = File("tag.json")
 
 outputFile.writeText(generateDescription(CommitInfo(hash)))
-tagFile.writeText("dev-$hash")
-
+tagFile.writeText("dev-${hash.substring(0, 5)}")
