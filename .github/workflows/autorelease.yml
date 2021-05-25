@@ -39,6 +39,9 @@ jobs:
       - name: Run python code
         run: python workflows/main.py ${{ github.event.workflow_run.head_sha }}
 
+      - name: Run kotlin code
+        run: kotlinc -script workflows/main.kts ${{ github.event.workflow_run.head_sha }}
+
       - name: Get description string
         uses: pCYSl5EDgo/cat@master
         id: getDescription
