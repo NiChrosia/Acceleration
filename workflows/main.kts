@@ -97,7 +97,10 @@ data class Date(val source: String, val use24Hr: Boolean) {
     }
 
     init {
-        if (source.split(" ").size != 5) throw Exception("Source size must be 5, but found ${source.split(" ").size}")
+        if (source.split(" ").size != 5) {
+            val exception = "Source size must be 5, but found ${source.split(" ").size}. \nSource: $source"
+            throw Exception(exception)
+        }
 
         /** Example:
          * Tue May 25 12:16:34 2021
