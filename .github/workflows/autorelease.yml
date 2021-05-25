@@ -46,6 +46,12 @@ jobs:
         with:
           path: ./tag.json
 
+      - name: Debug printing
+        run: |
+          ls
+          cat output.json
+          cat tag.json
+
       - name: Create release
         id: createRelease
         uses: ncipollo/release-action@v1
@@ -54,7 +60,7 @@ jobs:
           artifacts: ${{ github.event.repository.name }}.jar
           artifactContentType: application/zip
 
-          tag: "" #${{ steps.getTag.outputs.text }}
+          tag: ${{ steps.getTag.outputs.text }}
           name: "Dev release"
           body: ${{ steps.getDescription.outputs.text }}
           prerelease: false
