@@ -19,7 +19,7 @@ jobs:
           python-version: '3.8'
 
       - name: Setup Kotlin
-        uses: actions/setup-kotlin@master
+        uses: fwilhe2/setup-kotlin@main
         with:
           version: 1.5
 
