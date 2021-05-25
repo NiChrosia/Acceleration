@@ -107,6 +107,7 @@ data class Date(val source: String, val use24Hr: Boolean) {
          **/
 
         val arr = source.split(" ")
+        println(arr)
 
         weekday = arr[0]
         month = arr[1]
