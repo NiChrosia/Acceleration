@@ -39,7 +39,8 @@ def generate_description(info):
 [*Filetree*](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
 [*Commit*](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""\
         .replace("<br>", "\<br>")\
-        .replace("Author: Author: ", "Author: ")
+        .replace("**Author:** Author: ", "**Author:** ")\
+        .replace("**Date:** Date: ", "**Date:** ")
 
 
 if __name__ == '__main__':
