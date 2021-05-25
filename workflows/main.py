@@ -34,8 +34,9 @@ def generate_description(info):
     return f"""## Commit information:
 Name: {info['commit_name']}
 Author: {info['author']}
-[Filetree](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
-[Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""\
+## Links:
+[*Filetree*](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
+[*Commit*](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""\
         .replace("<br>", "\<br>")\
         .replace("Author: Author: ", "Author: ")
 
