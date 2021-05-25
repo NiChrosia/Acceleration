@@ -3,21 +3,19 @@ import java.util.concurrent.TimeUnit
 
 fun String.runCommand(
     workingDir: File = File("."),
-    timeoutAmount: Long = 60,
-    timeoutUnit: TimeUnit = TimeUnit.SECONDS
 ): String? = runCatching {
-    ProcessBuilder("\\s".toRegex().split(this))
+    ProcessBuilder(split(" "))
         .directory(workingDir)
         .redirectOutput(ProcessBuilder.Redirect.PIPE)
         .redirectError(ProcessBuilder.Redirect.PIPE)
-        .start().also { it.waitFor(timeoutAmount, timeoutUnit) }
+        .start()
         .inputStream.bufferedReader().readText()
 }.onFailure { it.printStackTrace() }.getOrNull()
 
 data class CommitInfo(val hash: String) {
-    lateinit var author: String
-    lateinit var date: String
-    lateinit var name: String
+    var author: String
+    var date: String
+    var name: String
 
     init {
         val command = "git show $hash".runCommand()
@@ -45,10 +43,12 @@ data class CommitInfo(val hash: String) {
 
 fun generateDescription(info: CommitInfo): String {
     return """## Commit information:
-        Name: ${info.name}
-        Author: ${info.author}
-        [Filetree](https://github.com/NiChrosia/Acceleration/tree/${info.hash})
-        [Commit](https://github.com/NiChrosia/Acceleration/commit/${info.hash})""".trimIndent()
+**Name:** ${info.name}
+**Author:** ${info.author}
+**Date:** ${info.date}
+## Links:
+[*Filetree*](https://github.com/NiChrosia/Acceleration/tree/${info.hash})
+[*Commit*](https://github.com/NiChrosia/Acceleration/commit/${info.hash})"""
 }
 
 val file = File("output.json")
