@@ -55,7 +55,7 @@ jobs:
         uses: pCYSl5EDgo/cat@master
         id: getDescription
         with:
-          path: ./outputpy.json
+          path: ./output_py.json
 
       - name: Create release
         id: createRelease
