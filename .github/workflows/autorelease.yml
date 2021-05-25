@@ -49,7 +49,9 @@ jobs:
       - name: Debug printing
         run: |
           ls
+          echo -----
           cat output.json
+          echo -----
           cat tag.json
 
       - name: Create release
