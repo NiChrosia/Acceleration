@@ -51,4 +51,4 @@ jobs:
           tag: "dev"
           name: "Dev release"
           body: ${{ steps.getDescription.outputs.text }}
-          prerelease: true
+          prerelease: false
