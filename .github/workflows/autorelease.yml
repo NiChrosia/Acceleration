@@ -18,11 +18,6 @@ jobs:
         with:
           python-version: '3.8'
 
-      #- name: Setup Kotlin
-      #  uses: fwilhe2/setup-kotlin@0.2.0
-      #  with:
-      #    version: 1.5
-
       - name: Download jar
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -37,25 +32,8 @@ jobs:
           ref: master
           path: ${{ github.event.repository.name }}
 
-      #- name: Run kotlin code
-      #  run: kotlinc -script workflows/main.kts ${{ github.event.workflow_run.head_sha }}
-
       - name: Run python code
         run: python workflows/main.py ${{ github.event.workflow_run.head_sha }}
-
-      - name: Sleep to allow for python to create output.json
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '5s'
-
-      - name: Confirm existence of output.json
-        run: ls workflows/
-
-      - name: Get description string
-        uses: pCYSl5EDgo/cat@master
-        id: getDescription
-        with:
-          path: ./output_py.json
 
       - name: Create release
         id: createRelease
