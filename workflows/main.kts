@@ -30,7 +30,7 @@ data class CommitInfo(val hash: String) {
                 <commit-name>
              */
 
-            author = process[1]
+            author = process[1].split(" ").take(2).joinToString(" ") // Censor email
             date = process[2]
             name = process[4].substring(4)
         } else {
@@ -49,6 +49,8 @@ fun generateDescription(info: CommitInfo): String {
 ## Links:
 [*Filetree*](https://github.com/NiChrosia/Acceleration/tree/${info.hash})
 [*Commit*](https://github.com/NiChrosia/Acceleration/commit/${info.hash})"""
+        .replace("**Author:** Author: ", "**Author:** ")
+        .replace("**Date:** Date: ", "**Date:** ")
 }
 
 val file = File("output.json")
