@@ -17,7 +17,7 @@ data class CommitInfo(val hash: String) {
 
         author = process[1]
         date = process[2]
-        name = process[4][4:]
+        name = process[4].substring(4)
     }
 }
 
