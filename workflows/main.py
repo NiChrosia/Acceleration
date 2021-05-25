@@ -36,7 +36,7 @@ def generate_description(info):
 Name: {info['commit_name']}
 Author: {info['author']}
 [Filetree](https://github.com/NiChrosia/Acceleration/tree/{info['commit_sha']})
-[Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})"""
+[Commit](https://github.com/NiChrosia/Acceleration/commit/{info['commit_sha']})""".replace("\n", "<br>")
 
 
 if __name__ == '__main__':

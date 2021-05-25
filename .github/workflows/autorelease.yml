@@ -50,7 +50,7 @@ jobs:
           artifactContentType: application/zip
 
           tag: "dev"
-          name: "Bleeding-Edge Release"
+          name: "Dev release"
           body: ${{ steps.getDescription.outputs.text }}
           draft: true
           prerelease: true
