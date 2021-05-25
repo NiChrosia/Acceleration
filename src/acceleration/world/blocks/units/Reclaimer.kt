@@ -194,12 +194,10 @@ open class Reclaimer(name: String) : Block(name) {
 
         private fun updateItems() {
             units.each { u ->
-                u.type ?: return@each
-                
                 val unitItems = requirementMap.get(u.type) ?: return@each
 
                 val tierPercent = tierScale(tier) // The scale for the block tier
-                val unitPercent = unitScale(tierMap.get(u.type)) // The scale for the unit hitSize
+                val unitPercent = unitScale(tierMap.get(u.type) ?: 1) // The scale for the unit hitSize
 
                 for (iterItem in unitItems.iterator()) {
                     val item = iterItem.item

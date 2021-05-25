@@ -102,7 +102,7 @@ tasks.register<Jar>("deploy") {
     dependsOn("jar")
 
     val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName.jar")
+    archiveFileName.set("$dirName-${project.version}.jar")
 
     from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"))
 
@@ -111,7 +111,7 @@ tasks.register<Jar>("deploy") {
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
-                commandLine("powershell.exe", "mv -Force build/libs/$dirName.jar ../../$dirName.jar")
+                commandLine("powershell.exe", "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar")
             }
         }
     }
