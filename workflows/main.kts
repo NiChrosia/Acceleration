@@ -179,4 +179,8 @@ val output = File("output.json")
 val tag = File("tag.json")
 
 output.writeText(generateDescription(CommitInfo(args[0])))
-if (getTag() != null) tag.writeText(getTag()) else tag.writeText("error-${args[0].substring(0, 5)}")
+if (getTag() != null) {
+    tag.writeText(getTag()!!)
+} else {
+    tag.writeText("error-${args[0].substring(0, 5)}")
+}
