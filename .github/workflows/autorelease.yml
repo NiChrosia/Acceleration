@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - uses: fwilhe2/setup-kotlin@main
+        with:
+          install-native: true
 
       - name: Setup Python
         uses: actions/setup-python@v2
