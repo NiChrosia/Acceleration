@@ -43,16 +43,17 @@ if __name__ == '__main__':
     commit_name = get_commit_name(*sys.argv[1:])
     info = get_info(*sys.argv[1:])
 
-    with(open("output.json", "w+")) as f:
-        data = {
-            "commit_name": commit_name,
-            "info": info["full"],
-            "author": info["author"],
-            "date": info["date"],
-            "commit_sha": sys.argv[1]
-        }
+    f = open("output.json", "w+")
 
-        description = generate_description(data)
+    data = {
+        "commit_name": commit_name,
+        "info": info["full"],
+        "author": info["author"],
+        "date": info["date"],
+        "commit_sha": sys.argv[1]
+    }
 
-        json.dump(description, f, indent=4)
-        # f.close()
+    description = generate_description(data)
+
+    json.dump(description, f, indent=4)
+    f.close()
