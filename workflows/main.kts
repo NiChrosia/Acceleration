@@ -171,20 +171,15 @@ fun generateDescription(info: CommitInfo): String {
         .replace("**Date:** Date: ", "**Date:** ")
 }
 
-fun getTag(): String? {
-    return "python -c \"import subprocess; subprocess.run('git shortlog | grep -E \\'^[ ]+\\\\w+\\' | wc -l', shell=True)\"".runCommand()
+fun getTag(hash: String): String {
+    return "dev-${hash.substring(0, 5)}"
 }
+
+val hash = args[0]
 
 val outputFile = File("output.json")
 val tagFile = File("tag.json")
 
-outputFile.writeText(generateDescription(CommitInfo(args[0])))
+outputFile.writeText(generateDescription(CommitInfo(hash)))
+tagFile.writeText("dev-$hash")
 
-val tag = getTag()
-
-if (tag != null) {
-    println("Tag: ($tag)")
-    tagFile.writeText(tag)
-} else {
-    tagFile.writeText("error-${args[0].substring(0, 5)}")
-}

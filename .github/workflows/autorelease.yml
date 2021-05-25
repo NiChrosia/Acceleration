@@ -13,11 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: fwilhe2/setup-kotlin@main
-        with:
-          install-native: true
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
 
       - name: Download jar
         uses: dawidd6/action-download-artifact@v2
