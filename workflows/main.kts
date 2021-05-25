@@ -183,6 +183,7 @@ output.writeText(generateDescription(CommitInfo(args[0])))
 val tag = getTag()
 
 if (tag != null) {
+    println("Tag: ($tag)")
     tagFile.writeText(tag)
 } else {
     tagFile.writeText("error-${args[0].substring(0, 5)}")
