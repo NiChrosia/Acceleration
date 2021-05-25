@@ -142,9 +142,16 @@ data class CommitInfo(val hash: String) {
                 <commit-name>
              */
 
-            author = process[1].split(" ").take(2).joinToString(" ") // Censor email
-            date = Date(process[2].split(" ").take(6).joinToString(" "), true)
-            name = process[4].substring(4)
+            author = process[1]
+                .split(" ")[1]
+
+            date = Date(process[2]
+                .split(" ")
+                .filterIndexed { i, s -> i > 0 && i < 5 }
+                .joinToString(" "), true)
+
+            name = process[4]
+                .substring(4)
         } else {
             throw NullPointerException("Result from command 'git show $hash' was null.")
         }
