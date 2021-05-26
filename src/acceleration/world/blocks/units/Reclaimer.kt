@@ -44,14 +44,7 @@ open class Reclaimer(name: String) : Block(name) {
         return tier * 20.0
     }
 
-    init {
-        super.init()
-
-        solid = true
-        update = true
-        destructible = true
-        hasItems = true
-
+    private fun loadMaps() {
         Vars.content.blocks().each { b ->
             if (b is UnitFactory) {
                 b.plans.each { p ->
@@ -78,7 +71,6 @@ open class Reclaimer(name: String) : Block(name) {
         addRequirements(lastUpgrade, prevUnits)
         tierMap.put(lastUpgrade, tier)
 
-        Log.info("[accent]units:[]")
         while (individualRequirementMap.containsKey(lastUpgrade)) {
             if (upgradeMap.containsKey(lastUpgrade)) {
                 lastUpgrade = upgradeMap.get(lastUpgrade)
@@ -98,8 +90,19 @@ open class Reclaimer(name: String) : Block(name) {
                 break
             }
         }
+    }
 
-        Log.info(requirementMap)
+    init {
+        super.init()
+
+        solid = true
+        update = true
+        destructible = true
+        hasItems = true
+
+        loadMaps()
+
+        Events.run("hackustry-reload-reconstructors") { loadMaps() }
 
         Events.on(EventType.ResetEvent::class.java) {
             reclaimers.clear()
@@ -197,6 +200,9 @@ open class Reclaimer(name: String) : Block(name) {
                 val unitItems = requirementMap.get(u.type) ?: return@each
 
                 val tierPercent = tierScale(tier) // The scale for the block tier
+                Log.info(u.type)
+                Log.info(tierMap.containsKey(u.type))
+                Log.info(tierMap)
                 val unitPercent = unitScale(tierMap.get(u.type) ?: 1) // The scale for the unit hitSize
 
                 for (iterItem in unitItems.iterator()) {
