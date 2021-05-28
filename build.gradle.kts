@@ -50,7 +50,6 @@ dependencies {
 
 tasks {
     "jar"(Jar::class) {
-        dependsOn("clean")
         dependsOn("compileKotlin")
 
         val dirName = rootDir.name.split("\\").last()
@@ -58,7 +57,7 @@ tasks {
 
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
-        from(configurations.compileClasspath.map { configuration ->
+        from(configurations.runtimeClasspath.map { configuration ->
             configuration.asFileTree.fold(files().asFileTree) { collection, file ->
                 if (file.isDirectory) collection else collection.plus(zipTree(file))
             }
