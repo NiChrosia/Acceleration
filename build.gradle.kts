@@ -28,6 +28,7 @@ buildscript {
         set("sdkVersion", "30")
         set("sdkRoot", System.getenv("ANDROID_HOME"))
         set("windows", System.getProperty("os.name").toLowerCase().contains("windows"))
+        set("dirName", rootDir.name.split("/").last())
     }
 
     repositories { mavenCentral() }
@@ -51,9 +52,8 @@ dependencies {
 tasks {
     "jar"(Jar::class) {
         dependsOn("compileKotlin")
-
-        val dirName = rootDir.name.split("\\").last()
-        archiveFileName.set("$dirName-Desktop.jar")
+        
+        archiveFileName.set("${project.extra["dirName"]}-Desktop.jar")
 
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
@@ -71,8 +71,7 @@ tasks {
 tasks.register<Jar>("jarAndroid") {
     dependsOn("jar")
 
-    val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-Android.jar")
+    archiveFileName.set("${project.extra["dirName"]}-Android.jar")
 
     doLast {
         val files = (
@@ -84,7 +83,7 @@ tasks.register<Jar>("jarAndroid") {
         val dependencies = files.fold("") { str, file ->  str + " --classpath ${file.path}" }
 
         //dex and desugar files - this requires d8 in your PATH
-        "d8$dependencies --min-api 14 --output $dirName-Android.jar $dirName-Desktop.jar".runCommand(File("${buildDir.path}/libs"))
+        "d8$dependencies --min-api 14 --output ${project.extra["dirName"]}-Android.jar ${project.extra["dirName"]}-Desktop.jar".runCommand(File("${buildDir.path}/libs"))
     }
 }
 
@@ -100,62 +99,58 @@ tasks.register("alphableed") {
     }
 }
 
-tasks.register<Jar>("deploy") {
-    dependsOn("alphableed")
-    dependsOn("jar")
-
-    val dirName = rootDir.name.split("/").last()
-
-    from(zipTree("$buildDir/libs/$dirName-Desktop.jar"))
-
+tasks.register("move-jar") {
     doLast {
-        delete { delete("$buildDir/libs/$dirName-Desktop.jar") }
-
-        if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
-            exec {
-                try {
+        if (project.extra["moveJar"] as Boolean) {
+            if (project.extra["windows"] as Boolean) {
+                exec {
                     commandLine(
-                        "powershell.exe",
-                        "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar"
+                            "powershell.exe",
+                            "mv -Force build/libs/${project.extra["dirName"]}-${project.version}.jar ../../${project.extra["dirName"]}-${project.version}.jar"
                     )
-                } catch (e: Exception) {
-                    commandLine("") // neccesary for exec
-                    println("Moving jarfile failed with exception: $e")
+                }
+            } else {
+                exec {
+                    commandLine(
+                        "mv",
+                        "-f",
+                        "./build/libs/${project.extra["dirName"]}-${project.version}.jar",
+                        "../../.local/share/Mindustry/mods/${project.extra["dirName"]}-${project.version}.jar"
+                    )
                 }
             }
         }
     }
 }
 
+tasks.register<Jar>("deploy") {
+    dependsOn("alphableed", "jar")
+
+    from(zipTree("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar"))
+
+    doLast {
+        delete { delete("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar") }
+    }
+
+    finalizedBy("move-jar")
+}
+
 tasks.register<Jar>("deployDexed") {
-    dependsOn("alphableed")
-    dependsOn("jar")
-    dependsOn("jarAndroid")
+    dependsOn("alphableed", "jar", "jarAndroid")
 
-    val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName.jar")
+    tasks.getByName("move-jar").setShouldRunAfter(mutableListOf(this))
 
-    from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"),
-         zipTree("$buildDir/libs/${dirName}-Android.jar"))
+    archiveFileName.set("${project.extra["dirName"]}.jar")
+
+    from(zipTree("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar"),
+         zipTree("$buildDir/libs/${project.extra["dirName"]}-Android.jar"))
 
     doLast {
         delete {
-            delete("$buildDir/libs/${dirName}-Desktop.jar")
-            delete("$buildDir/libs/${dirName}-Android.jar")
-        }
-
-        if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
-            exec {
-                try {
-                    commandLine(
-                        "powershell.exe",
-                        "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar"
-                    )
-                } catch(e: Exception) {
-                    commandLine("") // neccesary for exec
-                    println("Moving jarfile failed with exception: $e")
-                }
-            }
+            delete("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar")
+            delete("$buildDir/libs/${project.extra["dirName"]}-Android.jar")
         }
     }
+
+    finalizedBy("move-jar")
 }
