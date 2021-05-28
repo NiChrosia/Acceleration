@@ -20,8 +20,12 @@ fun String.runCommand(workingDir: File = file("./")): String {
 
 buildscript {
     project.extra.apply {
+        val args = if (project.hasProperty("args")) project.properties["args"] else arrayOf<Any>()
+        /** Whether this run is local or from GitHub Actions. */
+        val local = (args as List<*>)[0] != "githubActions"
+
         /** Whether to move the jarfile into my mods directory for easy testing. Disable if you are not me. */
-        set("moveJar", true)
+        set("moveJar", true && local)
 
         set("kotlinVersion", "1.5.0")
         set("mindustryVersion", "v126.2")
