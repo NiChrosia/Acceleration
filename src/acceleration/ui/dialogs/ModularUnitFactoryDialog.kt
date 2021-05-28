@@ -17,11 +17,11 @@ class ModularUnitFactoryDialog : BaseDialog("modular-unit-factory", Styles.defau
 
                 }.size(48f).pad(3f)
             }.growX()
-        }}.size(200f, 420f).left().pad(10f)
+        }}.size(200f, 400f).left().pad(10f)
 
         cont.table {
             it.table(Tex.button) {}.size(200f, 200f).right().top().pad(10f)
             it.table(Tex.button) {}.size(200f, 200f).right().bottom().pad(10f)
-        }.size(200f, 420f).right().pad(10f)
+        }.size(250f, 500f).right().pad(10f)
     } 
 }

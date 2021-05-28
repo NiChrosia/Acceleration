@@ -50,6 +50,7 @@ dependencies {
 
 tasks {
     "jar"(Jar::class) {
+        dependsOn("clean")
         dependsOn("compileKotlin")
 
         val dirName = rootDir.name.split("\\").last()
@@ -95,7 +96,7 @@ tasks.register("alphableed") {
         if (project.extra["windows"] as Boolean) {
             commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
         } else {
-            commandLine("./alpha-bleed", "--replace", "assets/sprites")
+            commandLine("./alpha-bleed", "--replace", "./assets/sprites")
         }
     }
 }
@@ -103,9 +104,6 @@ tasks.register("alphableed") {
 tasks.register<Jar>("deploy") {
     dependsOn("alphableed")
     dependsOn("jar")
-    var s = ""
-    if (File("$buildDir/libs").listFiles() != null) for (string in File("$buildDir/libs").listFiles()!!) s += "${string.name}\n"
-    println(s)
 
     val dirName = rootDir.name.split("/").last()
 
