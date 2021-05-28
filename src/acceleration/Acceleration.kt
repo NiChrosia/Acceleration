@@ -3,13 +3,18 @@ package acceleration
 import arc.util.Log
 import mindustry.mod.Mod
 import acceleration.content.*
+import acceleration.ui.AccelerationUI
 import arc.Events
 import mindustry.Vars
 import mindustry.game.EventType
 
-class Acceleration : Mod() {
+open class Acceleration : Mod() {
     private val accent = if (Vars.net.client()) "[accent]" else ""
     private val end = if (Vars.net.client()) "[]" else ""
+
+    companion object {
+        lateinit var ui: AccelerationUI
+    }
 
     init {
         Log.info("Mod ${accent}Acceleration${end} constructor loaded successfully.")
@@ -32,6 +37,8 @@ class Acceleration : Mod() {
 
         Events.on(EventType.ClientLoadEvent().javaClass) {
             AccelerationSettings().load()
+
+            ui = AccelerationUI()
         }
 
         Log.info("Mod ${accent}Acceleration${end} loaded content successfully.")

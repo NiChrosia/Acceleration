@@ -24,9 +24,7 @@ import mindustry.world.meta.StatUnit
 import kotlin.math.abs
 import mindustry.Vars
 
-
 open class MenderCoreTurret(name: String) : CoreBlock(name) {
-
     open var rotateSpeed = 2f
     open var range = (50 * Vars.tilesize).toFloat()
     open var baseColor: Color = Color.valueOf("84f491")
@@ -78,6 +76,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
         return arrayOf(iconRegion!!)
     }
 
+    @Suppress("unused")
     inner class MenderCoreTurretBuild : CoreBlock.CoreBuild() {
         private var charge = 0f
         private var cooldown = 0f

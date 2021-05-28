@@ -50,11 +50,14 @@ dependencies {
 
 tasks {
     "jar"(Jar::class) {
-        val dirName = rootDir.name.split("//").last()
+        dependsOn("compileKotlin")
 
+        val dirName = rootDir.name.split("\\").last()
         archiveFileName.set("$dirName-Desktop.jar")
 
-        from(configurations.runtimeClasspath.map { configuration ->
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+        from(configurations.compileClasspath.map { configuration ->
             configuration.asFileTree.fold(files().asFileTree) { collection, file ->
                 if (file.isDirectory) collection else collection.plus(zipTree(file))
             }
@@ -92,7 +95,7 @@ tasks.register("alphableed") {
         if (project.extra["windows"] as Boolean) {
             commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
         } else {
-            commandLine("./alpha-bleed", "--replace", "./assets/sprites")
+            commandLine("./alpha-bleed", "--replace", "assets/sprites")
         }
     }
 }
@@ -100,18 +103,28 @@ tasks.register("alphableed") {
 tasks.register<Jar>("deploy") {
     dependsOn("alphableed")
     dependsOn("jar")
+    var s = ""
+    if (File("$buildDir/libs").listFiles() != null) for (string in File("$buildDir/libs").listFiles()!!) s += "${string.name}\n"
+    println(s)
 
     val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-${project.version}.jar")
 
-    from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"))
+    from(zipTree("$buildDir/libs/$dirName-Desktop.jar"))
 
     doLast {
-        delete { delete("$buildDir/libs/${dirName}-Desktop.jar") }
+        delete { delete("$buildDir/libs/$dirName-Desktop.jar") }
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
-                commandLine("powershell.exe", "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar")
+                try {
+                    commandLine(
+                        "powershell.exe",
+                        "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar"
+                    )
+                } catch (e: Exception) {
+                    commandLine("") // neccesary for exec
+                    println("Moving jarfile failed with exception: $e")
+                }
             }
         }
     }
@@ -136,7 +149,15 @@ tasks.register<Jar>("deployDexed") {
 
         if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
             exec {
-                commandLine("powershell.exe", "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar")
+                try {
+                    commandLine(
+                        "powershell.exe",
+                        "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar"
+                    )
+                } catch(e: Exception) {
+                    commandLine("") // neccesary for exec
+                    println("Moving jarfile failed with exception: $e")
+                }
             }
         }
     }

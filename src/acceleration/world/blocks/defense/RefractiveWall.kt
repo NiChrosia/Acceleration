@@ -1,7 +1,6 @@
 package acceleration.world.blocks.defense
 
 import arc.math.geom.Vec2
-import arc.util.Log
 import mindustry.Vars
 import mindustry.entities.Damage
 import mindustry.entities.bullet.LaserBulletType
@@ -11,6 +10,7 @@ import mindustry.world.blocks.defense.Wall
 import kotlin.math.abs
 
 open class RefractiveWall(name: String) : Wall(name) {
+    @Suppress("unused")
     inner class RefractiveWallBuild : Wall.WallBuild() {
         override fun collision(bullet: Bullet?): Boolean {
             if (bullet != null) {
