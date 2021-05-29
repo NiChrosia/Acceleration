@@ -3,6 +3,7 @@ package acceleration
 import arc.util.Log
 import mindustry.mod.Mod
 import acceleration.content.*
+import acceleration.type.modularunit.ModularUnitProperties
 import acceleration.ui.AccelerationUI
 import arc.Events
 import mindustry.Vars
@@ -14,6 +15,8 @@ open class Acceleration : Mod() {
 
     companion object {
         lateinit var ui: AccelerationUI
+        var modularUnitProperties = ModularUnitProperties()
+        const val modName = "acceleration"
     }
 
     init {
@@ -39,6 +42,12 @@ open class Acceleration : Mod() {
             AccelerationSettings().load()
 
             ui = AccelerationUI()
+        }
+
+        Events.run(EventType.Trigger.update) {
+            modularUnitProperties.each {
+                it.update()
+            }
         }
 
         Log.info("Mod ${accent}Acceleration${end} loaded content successfully.")

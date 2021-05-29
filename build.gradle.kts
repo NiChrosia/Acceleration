@@ -67,7 +67,11 @@ tasks {
             }
         })
 
-        from(rootDir) { include("mod.hjson") }
+        from(rootDir) {
+            include("mod.hjson")
+            include("icon.png")
+            include("preview.png")
+        }
         from("assets/") { include("**") }
     }
 }
@@ -103,7 +107,7 @@ tasks.register("alphableed") {
     }
 }
 
-tasks.register("move-jar") {
+tasks.register("moveJar") {
     doLast {
         if (project.extra["moveJar"] as Boolean) {
             if (project.extra["windows"] as Boolean) {
@@ -136,13 +140,13 @@ tasks.register<Jar>("deploy") {
         delete { delete("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar") }
     }
 
-    finalizedBy("move-jar")
+    finalizedBy("moveJar")
 }
 
 tasks.register<Jar>("deployDexed") {
     dependsOn("alphableed", "jar", "jarAndroid")
 
-    tasks.getByName("move-jar").setShouldRunAfter(mutableListOf(this))
+    tasks.getByName("moveJar").setShouldRunAfter(mutableListOf(this))
 
     archiveFileName.set("${project.extra["dirName"]}.jar")
 
@@ -156,5 +160,5 @@ tasks.register<Jar>("deployDexed") {
         }
     }
 
-    finalizedBy("move-jar")
+    finalizedBy("moveJar")
 }
