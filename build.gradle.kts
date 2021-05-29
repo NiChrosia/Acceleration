@@ -98,7 +98,7 @@ tasks.register("alphableed") {
         if (project.extra["windows"] as Boolean) {
             commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
         } else {
-            commandLine("./alpha-bleed", "--replace", "./assets/sprites")
+            commandLine("./alpha-bleed", "./assets/sprites")
         }
     }
 }
