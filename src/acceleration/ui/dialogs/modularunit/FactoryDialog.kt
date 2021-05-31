@@ -1,4 +1,4 @@
-package acceleration.ui.dialogs
+package acceleration.ui.dialogs.modularunit
 
 import acceleration.Acceleration
 import arc.Core
@@ -12,11 +12,10 @@ import mindustry.ui.Bar
 import mindustry.ui.Styles
 import mindustry.ui.dialogs.BaseDialog
 
-class ModularUnitFactoryDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-factory.name"), Styles.defaultDialog) {
+open class FactoryDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-factory.name"), Styles.defaultDialog) {
     init {
-        addCloseListener()
-
-        buttons.button("@back", Icon.left) { hide() }.name("back").size(160f, 64f)
+        this.addCloseListener()
+        this.addCloseButton()
 
         cont.table(Tex.button) { table -> table.apply {
                 table(Tex.button) { modules -> modules.apply {
@@ -46,16 +45,19 @@ class ModularUnitFactoryDialog : BaseDialog(Core.bundle.format("dialog.modular-u
                         center()
                         image(module.icon).size(32f, 32f).tooltip(module.name)
                         pack()
-                    }}
 
-                    table { installed -> installed.apply {
-                        top().right()
-                        add(Image(Icon.okSmall)).color(Color.lime.shiftSaturation(module.level * 20f)).size(Scl.scl(12f))
-                        visible { module.level > 0 }
-                        pack()
+                        table { installed -> installed.apply {
+                            top().right()
+                            add(Image(Icon.okSmall)).color(Color.lime.shiftSaturation(module.level * 20f)).size(Scl.scl(12f))
+
+                            // check for module in current blueprint, if it isn't there, it can't be applied.
+                            visible { Acceleration.modularUnitProperties.getModule(module.internalName) != null }
+
+                            pack()
+                        }}
                     }}
                 }}, Styles.accenti) {
-                    Acceleration.ui.modularUnitModule.show(module)
+                    Acceleration.ui.modularUnitInstallModule.show(module)
                 }
             }
         }}.size(400f, 800f).growX().left()
@@ -72,6 +74,27 @@ class ModularUnitFactoryDialog : BaseDialog(Core.bundle.format("dialog.modular-u
     }}
 
     private fun buildInstalledModules(table: Table) { table.apply {
+        clear()
 
+        pane { modules -> modules.apply {
+            Acceleration.modularUnitModules.each { module ->
+                button({ button -> button.apply {
+                    table { icon -> icon.apply {
+                        center()
+                        image(module.icon).size(32f, 32f).tooltip(module.name)
+                        visible { Acceleration.modularUnitProperties.hasModule(module) }
+                        pack()
+
+                        table { numeral -> numeral.apply {
+                            top().right()
+                            label {Acceleration.modularUnitProperties.getModule(module)?.level?.toString() ?: ""}.fontScale(0.5f)
+                            visible { Acceleration.modularUnitProperties.hasModule(module) }
+                        }}
+                    }}
+                }}, Styles.accenti) {
+                    Acceleration.ui.modularUnitViewModule.show(module)
+                }
+            }
+        }}.size(400f, 800f).growX().left()
     }}
 }

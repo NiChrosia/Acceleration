@@ -76,13 +76,17 @@ data class ModularUnitProperties(
     }
 
     /** Get the specified module by its internal name. Returns null if not found. */
-    fun get(moduleName: String): ModularUnitModule? {
-        var output: ModularUnitModule? = null
+    fun getModule(moduleName: String): ModularUnitModule? {
+        val output = modules.copy().filter { it.internalName == moduleName }
 
-        modules.each {
-            if (it.internalName == moduleName) output = it
-        }
+        return if (!output.isEmpty) output.first() else null
+    }
 
-        return output
+    fun getModule(module: ModularUnitModule): ModularUnitModule? {
+        return getModule(module.internalName)
+    }
+
+    fun hasModule(module: ModularUnitModule): Boolean {
+        return !modules.copy().filter { it.internalName == module.internalName }.isEmpty
     }
 }

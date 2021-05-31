@@ -11,6 +11,7 @@ open class ModularUnitModules {
         internalName = "electricity-absorber",
         
         name = "Electricity Absorber",
+        description = "Absorbs electricity into its plastanium shell.",
         color = Pal.plastanium,
         requirements = {
             ItemStack.with(

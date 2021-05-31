@@ -1,4 +1,4 @@
-package acceleration.ui.dialogs
+package acceleration.ui.dialogs.modularunit
 
 import acceleration.Acceleration
 import acceleration.type.modularunit.ModularUnitModule
@@ -18,30 +18,28 @@ import mindustry.ui.Bar
 import mindustry.ui.Cicon
 import mindustry.ui.Styles
 import mindustry.ui.dialogs.BaseDialog
-import kotlin.math.min
 
-class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-module.name")) {
+open class InstallModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-install-module.name")) {
     /** Whether the module exists in the current blueprint. */
-    private var moduleExists: Boolean = false
-    private var module: ModularUnitModule? = null
+    protected var moduleExists: Boolean = false
+    protected var module: ModularUnitModule? = null
         set(module) {
             field = module
 
             rebuild()
         }
 
-    private var applyAmount = 1
-    private var applyHovered = false
-    private var moduleProperties: ModularUnitProperties? = null
+    protected var applyAmount = 1
+    protected var applyHovered = false
+    protected var moduleProperties: ModularUnitProperties? = null
 
-    private fun rebuild() {
+    protected fun rebuild() {
         buttons.clearChildren()
         cont.clearChildren()
         clearListeners()
 
-        addCloseListener()
-
-        buttons.button("@back", Icon.left) { hide() }.name("back").size(160f, 64f)
+        this.addCloseListener()
+        this.addCloseButton()
 
         cont.table(Tex.button) { main -> main.apply {
             table(Tex.button) { description -> description.apply {
@@ -66,16 +64,16 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
         rebuild()
     }
 
-    fun show(module: ModularUnitModule): Dialog? {
+    open fun show(module: ModularUnitModule): Dialog? {
         // check if modularUnitProperties has it, and if it doesn't, use the new version
-        val existingModule = Acceleration.modularUnitProperties.get(module.internalName)
+        val existingModule = Acceleration.modularUnitProperties.getModule(module.internalName)
         this.module = existingModule ?: module
         moduleExists = existingModule != null
 
         return show()
     }
 
-    private fun buildDescription(table: Table) { table.apply {
+    protected fun buildDescription(table: Table) { table.apply {
         module?.let { module ->
             image(module.icon).size(64f, 64f)
 
@@ -92,12 +90,13 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
             val maxLevel = module.max - module.level
             // minimize applyAmount to maxLevel if maxLevel is greater than 1,
             // otherwise make it the max for showing the current amount applied.
-            applyAmount = min(applyAmount, if (maxLevel < 1) module.max else maxLevel)
+            applyAmount = Mathf.clamp(applyAmount, 1, if (maxLevel < 1) module.max else maxLevel)
 
-            if (module.level < maxLevel) {
-                if (module.max > 1) {
-                    label { "Apply amount: $applyAmount" }.color(Pal.accent).fontScale(0.85f)
+            if (module.level < module.max) {
+                label { "Apply amount: $applyAmount" }.color(Pal.accent).fontScale(0.85f)
 
+                // only show the slider if it can actually modify applyAmount
+                if (maxLevel > 1) {
                     slider(1f, (module.max - module.level).toFloat(), 1f, applyAmount.toFloat()) { sliderOutput ->
                         applyAmount = sliderOutput.toInt()
                     }
@@ -117,9 +116,6 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
                         applyHovered = true
 
                         // show preview for current properties combined with the properties of this module
-                        //moduleProperties = Acceleration.modularUnitProperties.copy().add(module.copy().apply {
-                        //    level = applyAmount
-                        //}).update()
                         moduleProperties = module.copy().apply(Acceleration.modularUnitProperties.copy())
                     }
 
@@ -133,7 +129,7 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
         }
     }}
 
-    private fun buildProperties(table: Table) { table.apply {
+    protected fun buildProperties(table: Table) { table.apply {
         module?.let { module -> module.modifiers.eachIndexed { index, prop ->
             add(Bar(prop.name, prop.color) {
                 val defValue = prop.value * applyAmount / prop.max
@@ -147,7 +143,7 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
         }}
     }}
 
-    private fun buildRequirements(table: Table) { table.apply {
+    protected fun buildRequirements(table: Table) { table.apply {
         module?.let { module ->
             add("Requirements:", Pal.accent)
 

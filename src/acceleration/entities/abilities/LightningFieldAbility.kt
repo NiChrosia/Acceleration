@@ -10,7 +10,7 @@ import mindustry.entities.abilities.Ability
 import mindustry.gen.Sounds
 import mindustry.gen.Unit
 
-class LightningFieldAbility(
+open class LightningFieldAbility(
         private val lightningPoints: Int,
         private val lightningDamage: Float,
         private val baseHitSizeOffset: Float,
