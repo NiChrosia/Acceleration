@@ -3,6 +3,7 @@ package acceleration
 import arc.util.Log
 import mindustry.mod.Mod
 import acceleration.content.*
+import acceleration.type.modularunit.ModularUnitModules
 import acceleration.type.modularunit.ModularUnitProperties
 import acceleration.ui.AccelerationUI
 import arc.Events
@@ -15,7 +16,8 @@ open class Acceleration : Mod() {
 
     companion object {
         lateinit var ui: AccelerationUI
-        var modularUnitProperties = ModularUnitProperties()
+        lateinit var modularUnitProperties: ModularUnitProperties
+        lateinit var modularUnitModules: ModularUnitModules
         const val modName = "acceleration"
     }
 
@@ -38,16 +40,20 @@ open class Acceleration : Mod() {
         AccelerationSectors().load()
         AccelerationTechTree().load()
 
-        Events.on(EventType.ClientLoadEvent().javaClass) {
+        // load on ContentInitEvent so sprites are loaded
+        Events.on(EventType.ContentInitEvent::class.java) {
+            modularUnitProperties = ModularUnitProperties()
+            modularUnitModules = ModularUnitModules()
+        }
+
+        Events.on(EventType.ClientLoadEvent()::class.java) {
             AccelerationSettings().load()
 
             ui = AccelerationUI()
         }
 
         Events.run(EventType.Trigger.update) {
-            modularUnitProperties.each {
-                it.update()
-            }
+            modularUnitProperties.update()
         }
 
         Log.info("Mod ${accent}Acceleration${end} loaded content successfully.")

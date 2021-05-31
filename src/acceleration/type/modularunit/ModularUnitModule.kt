@@ -6,36 +6,35 @@ import arc.graphics.Color
 import arc.graphics.g2d.TextureRegion
 import mindustry.type.ItemStack
 
-class ModularUnitModule {
-    var name: String = ""
-    var description: String = ""
-    var color: Color = Color.white
-    var requirements: () -> Array<ItemStack> = { ItemStack.with() }
-    var internalName: String = "error"
-      set(name) {
-          field = name
-
-          icon = Core.atlas.find("${Acceleration.modName}-module-$internalName")
-      }
-
-    var icon: TextureRegion = Core.atlas.find("${Acceleration.modName}-module-$internalName")
-    var modifiers: ModularUnitProperties = ModularUnitProperties()
-
-    var level: Int = 0
+data class ModularUnitModule(
+    var name: String = "",
+    var description: String = "",
+    var color: Color = Color.white,
+    var requirements: () -> Array<ItemStack> = { ItemStack.with() },
+    var internalName: String = "error",
+    var icon: TextureRegion = Core.atlas.find("error"),
+    var modifiers: ModularUnitProperties = ModularUnitProperties(),
+    var level: Int = 0,
     var max: Int = 1
+) {
+    init {
+        icon = Core.atlas.find("${Acceleration.modName}-module-$internalName")
+    }
 
-    fun apply(other: ModularUnitProperties) {
-        if (level >= max) return
+    fun apply(other: ModularUnitProperties): ModularUnitProperties {
+        if (level > max) return modifiers
 
-        level++
+        for (unused in 1..level) {
+            other.cooling.value += modifiers.cooling.value
+            other.energyProduction.value += modifiers.energyProduction.value
+            other.energyConsumption.value += modifiers.energyConsumption.value
+            other.energyCapacity.value += modifiers.energyCapacity.value
+            other.weight.value += modifiers.weight.value
+            other.complexity.value += modifiers.complexity.value
+            other.volatility.value += modifiers.volatility.value
+            other.toughness.value += modifiers.toughness.value
+        }
 
-        other.cooling.value += this.modifiers.cooling.value
-        other.energyProduction.value += this.modifiers.energyProduction.value
-        other.energyConsumption.value += this.modifiers.energyConsumption.value
-        other.energyCapacity.value += this.modifiers.energyCapacity.value
-        other.weight.value += this.modifiers.weight.value
-        other.complexity.value += this.modifiers.complexity.value
-        other.volatility.value += this.modifiers.volatility.value
-        other.toughness.value += this.modifiers.toughness.value
+        return other
     }
 }

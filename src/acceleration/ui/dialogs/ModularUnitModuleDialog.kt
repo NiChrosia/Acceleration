@@ -3,9 +3,9 @@ package acceleration.ui.dialogs
 import acceleration.Acceleration
 import acceleration.type.modularunit.ModularUnitModule
 import acceleration.type.modularunit.ModularUnitProperties
-import acceleration.type.modularunit.ModularUnitProperty
 import arc.Core
 import arc.graphics.Color
+import arc.math.Mathf
 import arc.scene.Element
 import arc.scene.event.InputEvent
 import arc.scene.event.InputListener
@@ -21,6 +21,8 @@ import mindustry.ui.dialogs.BaseDialog
 import kotlin.math.min
 
 class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-module.name")) {
+    /** Whether the module exists in the current blueprint. */
+    private var moduleExists: Boolean = false
     private var module: ModularUnitModule? = null
         set(module) {
             field = module
@@ -36,7 +38,6 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
         buttons.clearChildren()
         cont.clearChildren()
         clearListeners()
-
 
         addCloseListener()
 
@@ -66,8 +67,10 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
     }
 
     fun show(module: ModularUnitModule): Dialog? {
-        this.module = module
-        this.module?.level = 0
+        // check if modularUnitProperties has it, and if it doesn't, use the new version
+        val existingModule = Acceleration.modularUnitProperties.get(module.internalName)
+        this.module = existingModule ?: module
+        moduleExists = existingModule != null
 
         return show()
     }
@@ -86,9 +89,12 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
 
             row()
 
-            applyAmount = min(applyAmount, module.max)
+            val maxLevel = module.max - module.level
+            // minimize applyAmount to maxLevel if maxLevel is greater than 1,
+            // otherwise make it the max for showing the current amount applied.
+            applyAmount = min(applyAmount, if (maxLevel < 1) module.max else maxLevel)
 
-            if (module.level < module.max) {
+            if (module.level < maxLevel) {
                 if (module.max > 1) {
                     label { "Apply amount: $applyAmount" }.color(Pal.accent).fontScale(0.85f)
 
@@ -100,24 +106,24 @@ class ModularUnitModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-un
                 row()
 
                 buttons.button("Apply", Icon.ok) {
-                    for (unused in 1..applyAmount) module.apply(Acceleration.modularUnitProperties)
+                    if (moduleExists) {
+                        module.apply { level = Mathf.clamp(level + applyAmount, 1, max) }
+                    } else Acceleration.modularUnitProperties.add(module.copy().apply { level = applyAmount })
 
                     hide()
                 }.size(160f, 64f).get().addListener(object : InputListener() {
+                    /** When the mouse hovers over the apply button */
                     override fun enter(event: InputEvent?, x: Float, y: Float, pointer: Int, fromActor: Element?) {
                         applyHovered = true
 
-                        val modularUnitProperties = mutableListOf<ModularUnitProperty>()
-
-                        Acceleration.modularUnitProperties.each { prop ->
-                            modularUnitProperties.add(prop)
-                        }
-
-                        moduleProperties = module.modifiers.copy().eachIndexed { index, prop ->
-                            prop.fraction = min((prop.value * applyAmount / prop.max) + modularUnitProperties[index].fraction, 1f)
-                        }
+                        // show preview for current properties combined with the properties of this module
+                        //moduleProperties = Acceleration.modularUnitProperties.copy().add(module.copy().apply {
+                        //    level = applyAmount
+                        //}).update()
+                        moduleProperties = module.copy().apply(Acceleration.modularUnitProperties.copy())
                     }
 
+                    /** When the mouse moves off of the apply button */
                     override fun exit(event: InputEvent?, x: Float, y: Float, pointer: Int, toActor: Element?) {
                         applyHovered = false
                         moduleProperties = null

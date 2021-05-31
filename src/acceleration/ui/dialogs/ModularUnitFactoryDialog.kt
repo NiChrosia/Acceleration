@@ -1,8 +1,10 @@
 package acceleration.ui.dialogs
 
 import acceleration.Acceleration
-import acceleration.type.modularunit.ModularUnitModules
 import arc.Core
+import arc.graphics.Color
+import arc.scene.ui.Image
+import arc.scene.ui.layout.Scl
 import arc.scene.ui.layout.Table
 import mindustry.gen.Icon
 import mindustry.gen.Tex
@@ -38,9 +40,20 @@ class ModularUnitFactoryDialog : BaseDialog(Core.bundle.format("dialog.modular-u
 
     private fun buildModules(table: Table) { table.apply {
         pane { modules -> modules.apply {
-            ModularUnitModules.each { module ->
+            Acceleration.modularUnitModules.each { module ->
                 button({ button -> button.apply {
-                    image(module.icon).size(32f, 32f).tooltip(module.name)
+                    table { icon -> icon.apply {
+                        center()
+                        image(module.icon).size(32f, 32f).tooltip(module.name)
+                        pack()
+                    }}
+
+                    table { installed -> installed.apply {
+                        top().right()
+                        add(Image(Icon.okSmall)).color(Color.lime.shiftSaturation(module.level * 20f)).size(Scl.scl(12f))
+                        visible { module.level > 0 }
+                        pack()
+                    }}
                 }}, Styles.accenti) {
                     Acceleration.ui.modularUnitModule.show(module)
                 }
