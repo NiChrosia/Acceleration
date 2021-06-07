@@ -26,7 +26,7 @@ import mindustry.Vars
 
 open class MenderCoreTurret(name: String) : CoreBlock(name) {
     open var rotateSpeed = 2f
-    open var range = (50 * Vars.tilesize).toFloat()
+    open var range = 50f * Vars.tilesize
     open var baseColor: Color = Color.valueOf("84f491")
     open var healPercent = 45f
     open var mendReload = 400f
@@ -52,7 +52,7 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
         Draw.z(Layer.darkness - 1)
         Drawf.dashCircle((x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, baseColor)
 
-        Vars.indexer.eachBlock(Vars.player.team(), (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, {true}, { b ->
+        Vars.indexer.eachBlock(Vars.player.team(), (x * Vars.tilesize).toFloat(), (y * Vars.tilesize).toFloat(), range, { true }, { b ->
             Drawf.selected(b, Tmp.c1.set(baseColor).a(Mathf.absin(4f, 1f)))
         })
     }

@@ -15,7 +15,6 @@ import mindustry.gen.Icon
 import mindustry.gen.Tex
 import mindustry.graphics.Pal
 import mindustry.ui.Bar
-import mindustry.ui.Cicon
 import mindustry.ui.Styles
 import mindustry.ui.dialogs.BaseDialog
 
@@ -150,7 +149,7 @@ open class InstallModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-u
             row()
 
             for (itemstack in module.requirements()) {
-                image(itemstack.item.icon(Cicon.medium))
+                image(itemstack.item.uiIcon)
 
                 add("${itemstack.amount} ${itemstack.item.localizedName}", Color.white, 0.75f).growX().wrap()
 

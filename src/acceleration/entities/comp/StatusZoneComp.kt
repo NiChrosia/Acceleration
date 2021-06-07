@@ -6,7 +6,6 @@ import arc.graphics.g2d.Draw
 import arc.graphics.g2d.Fill
 import arc.graphics.g2d.Lines
 import arc.math.Mathf
-import arc.math.geom.Position
 import arc.struct.Seq
 import mindustry.Vars
 import mindustry.content.Bullets
@@ -24,22 +23,25 @@ import mindustry.graphics.Layer
 import mindustry.type.Liquid
 import mindustry.type.StatusEffect
 
-open class StatusZoneComp(val fxColor: Color) {
+abstract class StatusZoneComp(val fxColor: Color) {
     open val fxLifetime = 40f
     open var statusZoneSize: Float = 16f
     open var statusEffect: StatusEffect = StatusEffects.none
+    open var statusEffectLength: Float = 10f
+    var settings: Seq<String> = Seq.with("animated-status-zone", "animatedshields")
+    var particleSettings: Seq<String> = Seq.with("status-zone-particles")
     var shieldEffect: Effect = Fx.none
     var lineEffect: Effect = Fx.none
     var particleEffect: Effect = Fx.none
     var particleChance: Double = 0.015
     var triggerFire: Boolean = false
     var triggerShock: Boolean = false
+    var damageBuildings: Boolean = false
+    var damageUnits: Boolean = false
     val triggerRange: Float = 12f
     val triggerChance = 0.015
 
-    open fun search(): Any? {
-        return null
-    }
+    abstract fun search(): Any?
 
     init {
         shieldEffect = Effect(fxLifetime) { e ->
@@ -64,14 +66,20 @@ open class StatusZoneComp(val fxColor: Color) {
     open fun update() {
         search()
     }
+
+    protected fun damage(units: Seq<Unit>, buildings: Seq<Building>) {
+        if (damageUnits) {
+            units.each { u -> u.apply(statusEffect, statusEffectLength) }
+        }
+
+        if (damageBuildings) {
+            buildings.each { b -> b.damage(statusEffect.damage) }
+        }
+    }
 }
 
 open class PuddleStatusZoneComp(color: Color) : StatusZoneComp(color) {
     var liquid: Liquid = Liquids.water
-    var settings: Seq<String> = Seq.with("animatedstatuszone", "animatedshields")
-    var particleSettings: Seq<String> = Seq.with("statuszoneparticles")
-    var damageBuildings: Boolean = false
-    var damageUnits: Boolean = false
     private var particlesValid: Boolean = true
     private var settingsValid: Boolean = true
 
@@ -183,25 +191,11 @@ open class PuddleStatusZoneComp(color: Color) : StatusZoneComp(color) {
             }
         }
     }
-
-    private fun damage(units: Seq<Unit>, buildings: Seq<Building>) {
-        units.each { u ->
-            if (damageUnits) u.apply(statusEffect)
-        }
-
-        buildings.each { b ->
-            if (damageBuildings) b.damage(statusEffect.damage)
-        }
-    }
 }
 
 open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color) {
     var bullet: BulletType = Bullets.standardCopper
-    var settings: Seq<String> = Seq.with("animatedstatuszone", "animatedshields")
-    var particleSettings: Seq<String> = Seq.with("statuszoneparticles")
-    var damageBuildings: Boolean = false
-    var damageUnits: Boolean = false
-    final override val fxLifetime = 15f
+    override val fxLifetime = 15f
     private var particlesValid: Boolean = true
     private var settingsValid: Boolean = true
 
@@ -332,16 +326,6 @@ open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color) {
                     }
                 }
             }
-        }
-    }
-
-    private fun damage(units: Seq<Unit>, buildings: Seq<Building>) {
-        if (damageUnits) {
-            units.each { u -> u.apply(statusEffect) }
-        }
-
-        if (damageBuildings) {
-            buildings.each { b -> b.damage(statusEffect.damage) }
         }
     }
 }

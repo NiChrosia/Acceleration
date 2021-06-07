@@ -21,9 +21,9 @@ class AccelerationStatusEffects : ContentList {
             override fun init() {
                 super.init()
 
-                affinity(StatusEffects.blasted) { unit, time, newTime, result ->
+                affinity(StatusEffects.blasted) { unit, result, time ->
                     unit.damagePierce(transitionDamage)
-                    result.set(StatusEffects.blasted, newTime + time)
+                    result.set(StatusEffects.blasted, time)
                 }
 
                 opposite(StatusEffects.burning)
@@ -46,8 +46,10 @@ class AccelerationStatusEffects : ContentList {
             override fun init() {
                 super.init()
 
-                affinity(StatusEffects.tarred
-                ) { _, time, newTime, result -> result.set(StatusEffects.tarred, newTime + time) }
+                affinity(StatusEffects.tarred) { unit, result, time ->
+                    unit.damagePierce(transitionDamage)
+                    result.set(StatusEffects.tarred, time)
+                }
 
                 opposite(arctifreezing)
             }

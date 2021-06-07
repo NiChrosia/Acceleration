@@ -28,7 +28,7 @@ buildscript {
         set("moveJar", true && local)
 
         set("kotlinVersion", "1.5.0")
-        set("mindustryVersion", "v126.2")
+        set("mindustryVersion", "master-SNAPSHOT")
         set("sdkVersion", "30")
         set("sdkRoot", System.getenv("ANDROID_HOME"))
         set("windows", System.getProperty("os.name").toLowerCase().contains("windows"))

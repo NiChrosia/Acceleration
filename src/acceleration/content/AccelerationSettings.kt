@@ -1,7 +1,9 @@
 package acceleration.content
+
+import acceleration.ui.line
 import arc.Core
-import arc.scene.ui.SettingsDialog
 import mindustry.Vars
+import mindustry.graphics.Pal
 
 open class AccelerationSettings {
     private fun addSetting(name: String, default: Boolean = true) {
@@ -10,6 +12,7 @@ open class AccelerationSettings {
 
     /** Needs to be called in ClientLoadEvent */
     open fun load() {
+        Vars.ui.settings.graphics.line(5f, 5f, Pal.accent)
         addSetting("animated-status-zone")
         addSetting("status-zone-particles")
         addSetting("animated-items")

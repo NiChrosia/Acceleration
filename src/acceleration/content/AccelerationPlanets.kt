@@ -10,12 +10,11 @@ import mindustry.ctype.ContentList
 import mindustry.type.Planet
 import mindustry.graphics.g3d.HexMesh
 
-class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0, but still will be needed in 6.0 for access to custom ores
+class AccelerationPlanets : ContentList {
     override fun load() {
         cryogenia = object : Planet("cryogenia", Planets.sun, 3, 1f) {
             init {
-                generator = object : CustomPlanetGenerator() {
-                    init {
+                generator = CustomPlanetGenerator().apply {
                         arr = arrayOf(
                             arrayOf(
                                 Blocks.water,
@@ -218,7 +217,6 @@ class AccelerationPlanets : ContentList { // Guaranteed to be deprecated by 7.0,
                             117,
                             120
                         )
-                    }
                 }
 
                 atmosphereColor = Color.valueOf("55b7e0")

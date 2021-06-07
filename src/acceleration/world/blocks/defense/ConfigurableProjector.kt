@@ -6,42 +6,42 @@ import arc.Events
 import arc.graphics.Blending
 import arc.graphics.Color
 import arc.graphics.g2d.Draw
+import arc.graphics.g2d.Fill
 import arc.graphics.g2d.Lines
 import arc.graphics.g2d.TextureRegion
-import arc.scene.ui.layout.Table
-import mindustry.Vars
-import mindustry.world.blocks.defense.MendProjector
-import mindustry.content.Fx
 import arc.math.Mathf
+import arc.math.geom.Geometry
+import arc.math.geom.Intersector
+import arc.scene.ui.layout.Table
 import arc.struct.ObjectMap
 import arc.struct.Seq
 import arc.util.Time
 import arc.util.Tmp
 import arc.util.io.Reads
 import arc.util.io.Writes
-import mindustry.graphics.Drawf
-import mindustry.graphics.Pal
-import mindustry.ui.Styles
-import mindustry.world.Block
-import mindustry.world.blocks.ItemSelection
-import mindustry.world.meta.Stat
-import kotlin.math.abs
-import kotlin.math.min
-import arc.math.geom.Geometry
-import kotlin.math.max
-import mindustry.world.consumers.ConsumeType
-import mindustry.world.consumers.ConsumeLiquidFilter
-import arc.math.geom.Intersector
-import arc.graphics.g2d.Fill
+import mindustry.Vars
+import mindustry.content.Fx
 import mindustry.content.StatusEffects
 import mindustry.entities.Effect
 import mindustry.entities.Units
 import mindustry.game.EventType
 import mindustry.gen.*
-import mindustry.gen.Unit as mUnit
+import mindustry.graphics.Drawf
 import mindustry.graphics.Layer
+import mindustry.graphics.Pal
 import mindustry.type.Liquid
 import mindustry.ui.Bar
+import mindustry.ui.Styles
+import mindustry.world.Block
+import mindustry.world.blocks.ItemSelection
+import mindustry.world.blocks.defense.MendProjector
+import mindustry.world.consumers.ConsumeLiquidFilter
+import mindustry.world.consumers.ConsumeType
+import mindustry.world.meta.Stat
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+import mindustry.gen.Unit as mUnit
 
 open class ConfigurableProjector(name: String) : MendProjector(name) {
     /** Ticks between each autoadjust. */

@@ -1,11 +1,7 @@
 package acceleration.content
 
-import acceleration.type.item.AnimatedItem
-import arc.Events
 import arc.graphics.Color
-import mindustry.Vars
 import mindustry.ctype.ContentList
-import mindustry.game.EventType
 import mindustry.type.Item
 
 class AccelerationItems : ContentList {
@@ -28,12 +24,6 @@ class AccelerationItems : ContentList {
             init {
                 color = Color.valueOf("e6e15a")
                 charge = 1.25f
-            }
-        }
-
-        for (i in Vars.content.items()) {
-            if (i is AnimatedItem) {
-                Events.run(EventType.Trigger.update) { i.update() }
             }
         }
     }

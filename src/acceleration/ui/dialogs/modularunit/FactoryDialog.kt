@@ -66,6 +66,14 @@ open class FactoryDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-fa
         })
     }
 
+    /** The button for access to the blueprint area, similar to schematics. */
+    protected fun addBlueprintsButton() {
+        buttons.defaults().size(210f, 64f)
+        buttons.button(Core.bundle.format("button.modular-unit-blueprints.name"), Icon.edit) {
+
+        }.name("blueprints")
+    }
+
     protected fun buildModules(table: Table) { table.apply {
         pane { modules -> modules.apply {
             Acceleration.modularUnitModules.each { module ->

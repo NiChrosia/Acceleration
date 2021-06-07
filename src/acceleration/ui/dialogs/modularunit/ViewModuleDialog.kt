@@ -1,29 +1,21 @@
 package acceleration.ui.dialogs.modularunit
 
 import acceleration.type.modularunit.ModularUnitModule
+import acceleration.ui.line
+import acceleration.ui.row
 import arc.Core
 import arc.graphics.Color
 import arc.scene.ui.Dialog
 import arc.scene.ui.Image
-import arc.scene.ui.layout.Cell
 import arc.scene.ui.layout.Table
 import mindustry.gen.Tex
 import mindustry.graphics.Pal
 import mindustry.ui.Bar
-import mindustry.ui.Cicon
 import mindustry.ui.Styles
 import mindustry.ui.dialogs.BaseDialog
 
 open class ViewModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-view-module.name"), Styles.defaultDialog) {
     private var module: ModularUnitModule? = null
-
-    fun Table.line(pad: Float, height: Float, color: Color): Cell<*> {
-        return image().growX().pad(pad).padLeft(0f).padRight(0f).height(height).color(color)
-    }
-
-    fun Table.row(index: Int, start: Int = 0) {
-        if (index > start) row()
-    }
 
     init {
         rebuild()
@@ -89,7 +81,7 @@ open class ViewModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit
                             module.requirements().forEachIndexed { index, itemstack ->
                                 row(index)
 
-                                image(itemstack.item.icon(Cicon.medium))
+                                image(itemstack.item.uiIcon)
                                 add(itemstack.item.localizedName, Pal.accent)
                                 add(" ${itemstack.amount}", Color.lightGray)
                             }

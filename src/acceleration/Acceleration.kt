@@ -46,7 +46,7 @@ open class Acceleration : Mod() {
             modularUnitModules = ModularUnitModules()
         }
 
-        Events.on(EventType.ClientLoadEvent()::class.java) {
+        Events.on(EventType.ClientLoadEvent::class.java) {
             AccelerationSettings().load()
 
             ui = AccelerationUI()
