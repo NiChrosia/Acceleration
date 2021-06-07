@@ -23,8 +23,7 @@ import mindustry.graphics.Layer
 import mindustry.type.Liquid
 import mindustry.type.StatusEffect
 
-abstract class StatusZoneComp(val fxColor: Color) {
-    open val fxLifetime = 40f
+abstract class StatusZoneComp(val fxColor: Color, val fxLifetime: Float = 40f) {
     open var statusZoneSize: Float = 16f
     open var statusEffect: StatusEffect = StatusEffects.none
     open var statusEffectLength: Float = 10f
@@ -193,9 +192,8 @@ open class PuddleStatusZoneComp(color: Color) : StatusZoneComp(color) {
     }
 }
 
-open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color) {
+open class BulletStatusZoneComp(color: Color) : StatusZoneComp(color, 15f) {
     var bullet: BulletType = Bullets.standardCopper
-    override val fxLifetime = 15f
     private var particlesValid: Boolean = true
     private var settingsValid: Boolean = true
 
