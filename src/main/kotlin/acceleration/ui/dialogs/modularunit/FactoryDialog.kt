@@ -133,10 +133,10 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
         clear()
 
         table { bars -> bars.apply {
-            blueprint.eachIndexed { index, prop ->
+            blueprint.arr.forEachIndexed { index, prop ->
                 add(Bar(prop.name, prop.color) {
                     //blueprint[index].update()
-                    blueprint[index].fraction
+                    blueprint.arr[index].fraction
                 }).size(400f, 40f)
 
                 row()

@@ -107,7 +107,7 @@ open class ViewModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit
         module?.let { module ->
             val modifiers = module.modifiers
 
-            modifiers.eachIndexed { index, prop ->
+            modifiers.arr.forEachIndexed { index, prop ->
                 row(index)
 
                 add(Bar(prop.name, prop.color) {

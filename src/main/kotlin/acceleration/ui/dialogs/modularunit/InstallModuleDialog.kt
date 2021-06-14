@@ -127,12 +127,12 @@ open class InstallModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-u
     }}
 
     protected fun buildProperties(table: Table) { table.apply {
-        module?.let { module -> module.modifiers.eachIndexed { index, prop ->
+        module?.let { module -> module.modifiers.arr.forEachIndexed { index, prop ->
             add(Bar(prop.name, prop.color) {
                 val defValue = prop.value * applyAmount / prop.max
 
                 moduleProperties?.let {
-                    it[index].fraction + defValue
+                    it.arr[index].fraction + defValue
                 } ?: defValue
             }).size(400f, 40f)
 

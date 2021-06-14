@@ -3,70 +3,79 @@ package acceleration.type.modularunit
 import arc.graphics.Color
 import arc.struct.Seq
 import mindustry.graphics.Pal
+
+// required for github actions because it errors without it
 import acceleration.type.modularunit.ModularUnitProperty
 
 data class Blueprint(
     var name: String = "",
     var modules: Seq<ModularUnitModule> = Seq<ModularUnitModule>(),
+
+    // constant
+    /** The amount of cooling this unit has */
     var cooling: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Cooling"
         color = Color.sky
     },
+    /** The amount of energy this unit can produce */
     var energyProduction: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Energy Production"
         color = Pal.surge
     },
+    /** The amount of energy this unit consumes */
     var energyConsumption: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Energy Consumption"
         color = Pal.surge
     },
+    /** The amount of storage in this unit's batteries */
     var energyCapacity: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Energy Capacity"
         color = Pal.surge
     },
+    /** The weight of this unit, affects drag & speed */
     var weight: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Weight"
         color = Pal.darkMetal
     },
+    /** The complexity of this unit, affects what factories it can be produced in */
     var complexity: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Complexity"
         color = Pal.logicOperations
     },
+    /** The volatility of this unit. Affects death explosion strength and chance of death while overheated */
     var volatility: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Volatility"
         color = Pal.lightPyraFlame
     },
+    /** The armor toughness of this unit, affects how much armor this unit has */
     var toughness: ModularUnitProperty = ModularUnitProperty().apply {
         this.name = "Toughness"
         color = Pal.darkMetal
+    },
+
+    // active
+    /** The current heat level this unit has, can cause explosions */
+    var heat: ModularUnitProperty = ModularUnitProperty().apply {
+        this.name = "Heat"
+        color = Color.scarlet
+    },
+    var energy: ModularUnitProperty = ModularUnitProperty().apply {
+        this.name = "Energy"
+        color = Pal.surge
     }
 ) {
-    private var arr = arrayOf(
+    var arr = arrayOf(
         cooling, energyProduction, energyConsumption, energyCapacity, weight, complexity, volatility, toughness
     )
-
-    operator fun get(index: Int): ModularUnitProperty {
-        return arr[index]
-    }
-
-    /** Iterate over all properties that are `ModularUnitProperty`s */
-    fun each(iterator: (ModularUnitProperty) -> Unit): Blueprint {
-        arr.forEach(iterator)
-
-        return this
-    }
-
-    /** Iterate over all properties that are `ModularUnitProperty`s, with an index. */
-    fun eachIndexed(iterator: (Int, ModularUnitProperty) -> Unit): Blueprint {
-        arr.forEachIndexed(iterator)
-
-        return this
-    }
+    var activeArr = arrayOf(
+        heat, energy
+    )
 
     fun update(): Blueprint {
-        each { it.value = 0f }
+        arr.forEach { it.value = 0f }
         modules.each { it.apply(this) }
-        each(ModularUnitProperty::update)
+        arr.forEach(ModularUnitProperty::update)
+        activeArr.forEach(ModularUnitProperty::update)
 
         return this
     }
