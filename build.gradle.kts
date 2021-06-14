@@ -1,7 +1,10 @@
 version = "1.0"
 plugins { kotlin("jvm") version "1.5.0" }
 apply(plugin = "kotlin")
-kotlin.sourceSets.getByName("main").kotlin.setSrcDirs(listOf("src", "assets"))
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+}
 
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
@@ -11,24 +14,29 @@ fun String.runCommand(workingDir: File = file("./")): String {
         .redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
 
-    //while (!proc.onExit().isDone) {
-    //    TimeUnit.SECONDS.sleep(1L)
-    //}
-
     return proc.inputStream.bufferedReader().readText().trim()
 }
 
 buildscript {
     project.extra.apply {
         val args = if (project.hasProperty("args")) project.properties["args"] else ""
+
         /** Whether this run is local or from GitHub Actions. */
         val local = (args as String).split(" ").first() != "githubActions"
 
-        /** Whether to move the jarfile into my mods directory for easy testing. Disable if you are not me. */
-        set("moveJar", true && local)
+        /** Whether the user running this build is NiChrosia. Used only for moveJar. Disable if you aren't me. */
+        val isNiChrosia = true
 
-        set("kotlinVersion", "1.5.0")
-        set("mindustryVersion", "master-SNAPSHOT")
+        /** Whether this is a development build. Used to determine whether to use commit hashes or releases. */
+        val dev = true
+
+        /** The latest Mindustry release. */
+        val latestMindustryRelease = "v126.2"
+
+        set("moveJar", isNiChrosia && local)
+        set("kotlinVersion", "1.5.10")
+        set("arcVersion", if (dev) "3926b785320fea0cd9ca597f6bfa9071263a5464" else latestMindustryRelease)
+        set("mindustryVersion", if (dev) "7ec713ab66d0bd40bede2941df954a022f41d230" else latestMindustryRelease)
         set("sdkVersion", "30")
         set("sdkRoot", System.getenv("ANDROID_HOME"))
         set("windows", System.getProperty("os.name").toLowerCase().contains("windows"))
@@ -48,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.Anuken.Arc:arc-core:${project.extra["mindustryVersion"]}")
+    compileOnly("com.github.Anuken.Arc:arc-core:${project.extra["arcVersion"]}")
     compileOnly("com.github.Anuken.Mindustry:core:${project.extra["mindustryVersion"]}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${project.extra["kotlinVersion"]}")
 }
@@ -72,7 +80,6 @@ tasks {
             include("icon.png")
             include("preview.png")
         }
-        from("assets/") { include("**") }
     }
 }
 
