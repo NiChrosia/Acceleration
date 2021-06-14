@@ -3,6 +3,7 @@ package acceleration.type.modularunit
 import arc.graphics.Color
 import arc.struct.Seq
 import mindustry.graphics.Pal
+import acceleration.type.modularunit.ModularUnitProperty
 
 data class Blueprint(
     var name: String = "",
