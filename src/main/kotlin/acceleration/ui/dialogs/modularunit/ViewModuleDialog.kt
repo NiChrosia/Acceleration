@@ -1,6 +1,6 @@
 package acceleration.ui.dialogs.modularunit
 
-import acceleration.type.modularunit.ModularUnitModule
+import acceleration.type.modularunit.MUModule
 import acceleration.ui.line
 import acceleration.ui.row
 import arc.Core
@@ -15,7 +15,7 @@ import mindustry.ui.Styles
 import mindustry.ui.dialogs.BaseDialog
 
 open class ViewModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-view-module.name"), Styles.defaultDialog) {
-    private var module: ModularUnitModule? = null
+    private var module: MUModule? = null
 
     init {
         rebuild()
@@ -39,7 +39,7 @@ open class ViewModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit
         }}.size(1050f, 650f)
     }
 
-    fun show(module: ModularUnitModule): Dialog? {
+    fun show(module: MUModule): Dialog? {
         this.module = module
 
         rebuild()

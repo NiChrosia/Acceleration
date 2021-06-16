@@ -2,6 +2,7 @@ package acceleration.content
 
 import arc.struct.Seq
 import arc.util.Log
+import arc.util.Strings
 import mindustry.Vars
 import mindustry.content.*
 import mindustry.ctype.ContentList
@@ -10,41 +11,23 @@ import mindustry.game.Objectives
 import mindustry.type.ItemStack
 
 class AccelerationTechTree : ContentList {
-    private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack?) {
-        val realRequirements = if (requirements != null) {
-            arrayOf(requirements)
-        } else {
-            contentType.researchRequirements()
-        }
-
+    private fun node(
+        parent: UnlockableContent,
+        contentType: UnlockableContent,
+        objectives: Seq<Objectives.Objective> = Seq.with(),
+        requirements: Array<out ItemStack> = arrayOf()
+    ): TechTree.TechNode {
+        val realRequirements = requirements.ifEmpty { contentType.researchRequirements() }
         val techNode = TechTree.TechNode(TechTree.get(parent), contentType, realRequirements)
 
-        realRequirements.forEach { i ->
-            techNode.objectives.add(Objectives.Research(i.item))
-        }
+        realRequirements.forEach { techNode.objectives.add(Objectives.Research(it.item)) }
+        techNode.objectives.addAll(objectives)
 
-        if (objectives != null) techNode.objectives.addAll(objectives)
+        return techNode
     }
 
-    private fun node(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
-        node(parent, contentType, objectives, null)
-    }
-
-    private fun node(parent: UnlockableContent, contentType: UnlockableContent) {
-        node(parent, contentType, null)
-    }
-
-    private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?, requirements: ItemStack?) {
-        objectives?.add(Objectives.Produce(contentType))
-        node(parent, contentType, objectives, requirements)
-    }
-
-    private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective>?) {
-        nodeProduce(parent, contentType, objectives, null)
-    }
-
-    private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent) {
-        nodeProduce(parent, contentType, null)
+    private fun nodeProduce(parent: UnlockableContent, contentType: UnlockableContent, objectives: Seq<Objectives.Objective> = Seq.with(), requirements: Array<out ItemStack> = arrayOf()) {
+        node(parent, contentType, objectives.addAll(Objectives.Produce(contentType)), requirements)
     }
 
     override fun load() {
@@ -57,8 +40,6 @@ class AccelerationTechTree : ContentList {
         nodeProduce(AccelerationItems.velosium, AccelerationItems.arcaneVelosium)
         nodeProduce(AccelerationItems.velosium, AccelerationItems.voltaicVelosium)
 
-        // Blocks
-
         /// Cores
         node(Blocks.coreNucleus, AccelerationBlocks.atomCore)
 
@@ -67,7 +48,7 @@ class AccelerationTechTree : ContentList {
         node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
 
         /// Projectors
-        node(Blocks.forceProjector, AccelerationBlocks.configurableProjector, Seq.with(
+        node(Blocks.overdriveDome, AccelerationBlocks.configurableProjector, Seq.with(
             Objectives.Research(Blocks.mendProjector),
             Objectives.Research(Blocks.overdriveDome),
             Objectives.Research(Blocks.forceProjector)
@@ -76,6 +57,7 @@ class AccelerationTechTree : ContentList {
         /// Reclaimers
         node(Blocks.container, AccelerationBlocks.reclaimer)
 
-        if (Vars.net.client()) Log.info("Mod [accent]Acceleration[] tech tree loaded successfully.") else Log.info("Mod Acceleration tech tree loaded successfully.")
+        val text = "Mod [accent]Acceleration[] tech tree loaded successfully."
+        Log.info(if (Vars.net.client()) Strings.stripColors(text) else text)
     }
 }

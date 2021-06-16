@@ -3,6 +3,7 @@ package acceleration
 import arc.util.Log
 import mindustry.mod.Mod
 import acceleration.content.*
+import acceleration.game.Blueprints
 import acceleration.type.modularunit.*
 import acceleration.ui.AccelerationUI
 import arc.Events
@@ -16,7 +17,7 @@ open class Acceleration : Mod() {
     companion object {
         lateinit var ui: AccelerationUI
 
-        lateinit var modularUnitModules: ModularUnitModules
+        lateinit var MUModules: MUModules
         lateinit var blueprints: Blueprints
 
         const val modName = "acceleration"
@@ -41,7 +42,7 @@ open class Acceleration : Mod() {
 
         // load on ContentInitEvent so sprites are loaded
         Events.on(EventType.ContentInitEvent::class.java) {
-            modularUnitModules = ModularUnitModules()
+            MUModules = MUModules()
             blueprints = Blueprints()
         }
 

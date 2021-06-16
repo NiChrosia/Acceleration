@@ -1,6 +1,7 @@
-package acceleration.type.modularunit
+package acceleration.game
 
 import acceleration.Acceleration
+import acceleration.type.modularunit.Blueprint
 import arc.Core
 import arc.files.Fi
 import arc.struct.Seq
@@ -30,7 +31,7 @@ open class Blueprints {
                     val blueprint = Blueprint()
 
                     blueprintJson.get("modules").JsonIterator().forEach {
-                        val module = Acceleration.modularUnitModules.get(it.name)
+                        val module = Acceleration.MUModules.get(it.name)
                         if (module != null) blueprint.add(module)
                     }
 
@@ -47,11 +48,11 @@ open class Blueprints {
 
         all.each { bp ->
             val moduleStrings = mutableListOf<String>()
-            bp.modules.copy().each {
+            bp.modules.toList().forEach {
                 moduleStrings += "\"${it.internalName}\""
             }
 
-            directory.child("${bp.name}-${bp.hashCode()}").writeString("""{
+            directory.child("${bp.name}-${bp.hashCode()}.mblu").writeString("""{
                 "modules": [
                     ${moduleStrings.joinToString(", \n")}
                 ]

@@ -1,10 +1,10 @@
 package acceleration.content
 
-import acceleration.Acceleration
 import acceleration.entities.abilities.LightningFieldAbility
 import acceleration.entities.unit.ModularUnit
 import acceleration.type.modularunit.ModularUnitType
 import arc.func.Prov
+import arc.struct.ObjectIntMap
 import arc.struct.ObjectSet
 import arc.struct.Seq
 import mindustry.ai.types.BuilderAI
@@ -19,10 +19,46 @@ import mindustry.gen.*
 import mindustry.type.AmmoTypes
 import mindustry.type.UnitType
 import mindustry.type.Weapon
+import kotlin.reflect.KClass
 
 class AccelerationUnitTypes : ContentList {
+    private val types: Array<Map.Entry<KClass<out Entityc>, Prov<out Entityc>>> = arrayOf(
+        prov(ModularUnit::class, ModularUnit::create)
+    )
+
+    /**
+     * Internal function to flatmap `Class -> Prov` into an [MutableMap.MutableEntry].
+     * @author GlennFolker
+     */
+    private fun <T : Entityc> prov(type: KClass<T>, prov: Prov<T>): Map.Entry<KClass<T>, Prov<T>> {
+        //val entry = ObjectMap<Class<T>, Prov<T>>().Entry<Class<T>, Prov<T>>()
+        val map = mutableMapOf<KClass<T>, Prov<T>>()
+        map[type] = prov
+
+        return map.entries.first()
+    }
+
+    /**
+     * Setups all entity IDs and maps them into [EntityMapping].
+     * @author GlennFolker
+     */
+    private fun setupID() {
+        var i = 0
+        var j = 0
+        val len = EntityMapping.idMap.size
+        while (i < len) {
+            if (EntityMapping.idMap[i] == null) {
+                idMap.put(types[j].key, i)
+                EntityMapping.idMap[i] = types[j].value
+                if (++j >= types.size) break
+            }
+            i++
+        }
+    }
 
     override fun load() {
+        setupID()
+
         quark = UnitType("quark").apply {
             speed = 3.75f
             rotateSpeed = 21f
@@ -308,13 +344,22 @@ class AccelerationUnitTypes : ContentList {
             )
         }
 
-        EntityMapping.register("${Acceleration.modName}-modular-unit") { ModularUnit.create() }
         modularUnit = ModularUnitType("modular-unit").apply {
-
+            constructor = Prov { ModularUnit.create() }
         }
     }
 
     companion object {
+        private val idMap = ObjectIntMap<KClass<out Entityc>>()
+
+        /**
+         * Retrieves the class ID for a certain entity type.
+         * @author GlennFolker
+         */
+        fun <T : Entityc> classID(type: KClass<T>): Int {
+            return idMap.get(type, -1)
+        }
+
         lateinit var quark: UnitType
 
         // Controller Tree

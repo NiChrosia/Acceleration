@@ -105,7 +105,7 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
 
     protected fun buildModules(table: Table) { table.apply {
         pane { modules -> modules.apply {
-            Acceleration.modularUnitModules.each { module ->
+            Acceleration.MUModules.each { module ->
                 button({ button -> button.apply {
                     table { icon -> icon.apply {
                         center()
@@ -148,7 +148,7 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
         clear()
 
         pane { modules -> modules.apply {
-            Acceleration.modularUnitModules.each { module ->
+            Acceleration.MUModules.each { module ->
                 button({ button -> button.apply {
                     table { icon -> icon.apply {
                         center()
@@ -192,7 +192,7 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
             }
 
             exportBlueprintDialog.show()
-        }.size(210f, 64f).disabled { blueprint.modules.isEmpty }
+        }.size(210f, 64f).disabled { blueprint.modules.isEmpty() }
     }
 
     protected fun addSpawnButton() {

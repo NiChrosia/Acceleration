@@ -1,20 +1,20 @@
 package acceleration.type.modularunit
 
-import acceleration.Acceleration
 import acceleration.entities.unit.ModularUnit
-import arc.func.Prov
 import mindustry.game.Team
-import mindustry.gen.EntityMapping
+import mindustry.gen.Unit
 import mindustry.type.UnitType
 
 open class ModularUnitType(name: String) : UnitType(name) {
-    @Suppress("unchecked_cast")
-    var unitConstructor: Prov<ModularUnit> = EntityMapping.map("${Acceleration.modName}-$name") as Prov<ModularUnit>
+    init {
+        flying = true
+    }
 
-    override fun create(team: Team?): ModularUnit {
-        val unit = unitConstructor.get()
-        unit.team = team
+    override fun create(team: Team): ModularUnit {
+        val unit = constructor.get() as ModularUnit
+
         unit.setType(this)
+        unit.team = team
         unit.ammo = ammoCapacity.toFloat()
         unit.elevation = if (flying) 1f else 0f
         unit.heal()
@@ -28,5 +28,9 @@ open class ModularUnitType(name: String) : UnitType(name) {
         out.set(x, y)
         out.add()
         return out
+    }
+
+    override fun update(unit: Unit) {
+
     }
 }

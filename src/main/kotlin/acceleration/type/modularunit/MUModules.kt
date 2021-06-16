@@ -6,8 +6,8 @@ import mindustry.content.Items
 import mindustry.graphics.Pal
 import mindustry.type.ItemStack
 
-class ModularUnitModules {
-    val electricityAbsorber = ModularUnitModule(
+class MUModules {
+    val electricityAbsorber = MUModule(
         internalName = "electricity-absorber",
         
         name = "Electricity Absorber",
@@ -28,7 +28,7 @@ class ModularUnitModules {
         max = 5
     )
 
-    val explosives = ModularUnitModule(
+    val explosives = MUModule(
         internalName = "explosives",
 
         name = "Explosives",
@@ -46,7 +46,7 @@ class ModularUnitModules {
         max = 5
     )
 
-    val radioactivityProduction = ModularUnitModule(
+    val radioactivityProduction = MUModule(
         internalName = "radioactivity-production",
 
         name = "Radioactivity Production Module",
@@ -64,7 +64,7 @@ class ModularUnitModules {
         max = 5
     )
 
-    val titaniumPlating = ModularUnitModule(
+    val titaniumPlating = MUModule(
         internalName = "titanium-plating",
 
         name = "Titanium Armor Plating",
@@ -82,7 +82,7 @@ class ModularUnitModules {
         max = 10
     )
 
-    val surgePlating = ModularUnitModule(
+    val surgePlating = MUModule(
         internalName = "surge-plating",
 
         name = "Surge Armor Plating",
@@ -100,7 +100,7 @@ class ModularUnitModules {
         max = 10
     )
 
-    val energyShield = ModularUnitModule(
+    val energyShield = MUModule(
         internalName = "energy-shield",
 
         name = "Energy Shield",
@@ -120,7 +120,7 @@ class ModularUnitModules {
         max = 10
     )
 
-    val forceField = ModularUnitModule(
+    val forceField = MUModule(
         internalName = "force-field",
 
         name = "Force Field",
@@ -140,7 +140,7 @@ class ModularUnitModules {
         max = 1
     )
 
-    val electricPort = ModularUnitModule(
+    val electricPort = MUModule(
         internalName = "electric-port",
 
         name = "Electric Port",
@@ -158,7 +158,7 @@ class ModularUnitModules {
         max = 1
     )
     
-    val thermiteProduction = ModularUnitModule(
+    val thermiteProduction = MUModule(
         internalName = "thermite-production",
 
         name = "Thermite Production Module",
@@ -187,11 +187,11 @@ class ModularUnitModules {
         thermiteProduction
     )
 
-    fun each(iterator: (ModularUnitModule) -> Unit) {
+    fun each(iterator: (MUModule) -> Unit) {
         arr.forEach(iterator)
     }
 
-    fun get(name: String): ModularUnitModule? {
+    fun get(name: String): MUModule? {
         val filteredArray = arr.filter { it.internalName == name }
         return if (filteredArray.isEmpty()) null else filteredArray.first()
     }

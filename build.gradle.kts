@@ -32,11 +32,13 @@ buildscript {
 
         /** The latest Mindustry release. */
         val latestMindustryRelease = "v126.2"
+        val mindustryHash = "fe9ff212b24f7b2f0e1ac1a95fef4c19a4e21ce8"
+        val arcHash = "07ced971f4c8b8b5a61aa3a84b29c90aa497cb48"
 
         set("moveJar", isNiChrosia && local)
         set("kotlinVersion", "1.5.10")
-        set("arcVersion", if (dev) "3926b785320fea0cd9ca597f6bfa9071263a5464" else latestMindustryRelease)
-        set("mindustryVersion", if (dev) "7ec713ab66d0bd40bede2941df954a022f41d230" else latestMindustryRelease)
+        set("arcVersion", if (dev) arcHash else latestMindustryRelease)
+        set("mindustryVersion", if (dev) mindustryHash else latestMindustryRelease)
         set("sdkVersion", "30")
         set("sdkRoot", System.getenv("ANDROID_HOME"))
         set("windows", System.getProperty("os.name").toLowerCase().contains("windows"))

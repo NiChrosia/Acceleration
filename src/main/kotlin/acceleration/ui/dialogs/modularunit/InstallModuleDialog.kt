@@ -1,7 +1,7 @@
 package acceleration.ui.dialogs.modularunit
 
 import acceleration.Acceleration
-import acceleration.type.modularunit.ModularUnitModule
+import acceleration.type.modularunit.MUModule
 import acceleration.type.modularunit.Blueprint
 import arc.Core
 import arc.graphics.Color
@@ -21,7 +21,7 @@ import mindustry.ui.dialogs.BaseDialog
 open class InstallModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-unit-install-module.name")) {
     /** Whether the module exists in the current blueprint. */
     protected var moduleExists: Boolean = false
-    protected var module: ModularUnitModule? = null
+    protected var module: MUModule? = null
         set(module) {
             field = module
 
@@ -62,7 +62,7 @@ open class InstallModuleDialog : BaseDialog(Core.bundle.format("dialog.modular-u
         rebuild()
     }
 
-    open fun show(module: ModularUnitModule): Dialog? {
+    open fun show(module: MUModule): Dialog? {
         // check if modularUnitProperties has it, and if it doesn't, use the new version
         this.module = Acceleration.ui.modularUnitFactory.blueprint.getModule(module.internalName) ?: module
         moduleExists = Acceleration.ui.modularUnitFactory.blueprint.hasModule(module)

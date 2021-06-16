@@ -2,7 +2,7 @@ package acceleration.type.modularunit
 
 import arc.graphics.Color
 
-open class ModularUnitProperty {
+open class ModuleProperty {
     open var name: String = ""
     open var color: Color = Color.white
     var min: Float = 0f
