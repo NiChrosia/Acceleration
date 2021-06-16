@@ -1,4 +1,3 @@
-version = "1.0"
 plugins { kotlin("jvm") version "1.5.0" }
 apply(plugin = "kotlin")
 
@@ -18,6 +17,8 @@ fun String.runCommand(workingDir: File = file("./")): String {
 }
 
 buildscript {
+    version = project.properties["version"] as String
+
     project.extra.apply {
         val args = if (project.hasProperty("args")) project.properties["args"] else ""
 

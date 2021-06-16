@@ -2,15 +2,16 @@ package acceleration.game
 
 import acceleration.Acceleration
 import acceleration.type.modularunit.Blueprint
-import arc.Core
+import acceleration.type.modularunit.MUModule
 import arc.files.Fi
 import arc.struct.Seq
 import arc.util.Log
-import arc.util.serialization.JsonReader
-import arc.util.serialization.SerializationException
+import mindustry.Vars
+import java.io.*
+import kotlin.math.abs
 
 open class Blueprints {
-    open val directory: Fi = Fi(Core.files.localStoragePath).child("blueprints/")
+    open val directory: Fi = Vars.dataDirectory.child("blueprints/")
     open val all = Seq<Blueprint>()
 
     init {
@@ -22,23 +23,12 @@ open class Blueprints {
     }
 
     open fun load() {
-        if (directory.isDirectory) {
-            directory.list().forEach { file ->
-                if (file.isDirectory || !file.name().endsWith("mblu")) return@forEach
-
-                try {
-                    val blueprintJson = JsonReader().parse(file.readString())
-                    val blueprint = Blueprint()
-
-                    blueprintJson.get("modules").JsonIterator().forEach {
-                        val module = Acceleration.MUModules.get(it.name)
-                        if (module != null) blueprint.add(module)
-                    }
-
-                    all.add(blueprint)
-                } catch(e: SerializationException) {
-                    Log.err("Error reading blueprint file ${file.absolutePath()}")
-                }
+        directory.list().forEach { file ->
+            try {
+                val blueprint = read(file)
+                all.add(blueprint)
+            } catch(e: IOException) {
+                Log.err("Failed to load blueprint file ${file.name()} with error ${e.stackTraceToString()}")
             }
         }
     }
@@ -47,16 +37,49 @@ open class Blueprints {
         directory.emptyDirectory()
 
         all.each { bp ->
-            val moduleStrings = mutableListOf<String>()
-            bp.modules.toList().forEach {
-                moduleStrings += "\"${it.internalName}\""
-            }
-
-            directory.child("${bp.name}-${bp.hashCode()}.mblu").writeString("""{
-                "modules": [
-                    ${moduleStrings.joinToString(", \n")}
-                ]
-            }""".trimIndent())
+            val blueprintFile = directory.child("${bp.name}-${abs(bp.hashCode())}.mblu")
+            write(blueprintFile, bp)
         }
+    }
+
+    open fun read(file: Fi): Blueprint {
+        return read(file.read())
+    }
+
+    open fun read(read: InputStream): Blueprint {
+        val blueprint = Blueprint()
+        val r = DataInputStream(read)
+
+        val arrayEmpty = r.readBoolean()
+        val serialized = r.readUTF()
+        blueprint.name = r.readUTF()
+
+        if (arrayEmpty) {
+            serialized.split(", ").forEach {
+                val (name, level) = it.split(",")
+
+                Acceleration.MUModules.get(name)?.let { existingModule ->
+                    blueprint.modules.add(existingModule.copy(name = name, level = level.toInt()))
+                }
+            }
+        }
+
+        return blueprint
+    }
+
+    open fun write(file: Fi, blueprint: Blueprint) {
+        write(file.write(), blueprint)
+    }
+
+    open fun write(write: OutputStream, blueprint: Blueprint) {
+        fun MUModule.serialize(): String {
+            return "$internalName,$level"
+        }
+
+        val w = DataOutputStream(write)
+
+        w.writeBoolean(blueprint.modules.isNotEmpty())
+        w.writeUTF(blueprint.modules.joinToString(", ", transform = MUModule::serialize))
+        w.writeUTF(blueprint.name)
     }
 }

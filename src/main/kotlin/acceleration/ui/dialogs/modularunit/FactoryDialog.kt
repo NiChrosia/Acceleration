@@ -99,7 +99,7 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
     /** The button for access to the blueprint area, similar to schematics. */
     protected fun addBlueprintsButton() {
         buttons.button("@blueprints", Icon.edit) {
-            Acceleration.ui.blueprints.show()
+            Acceleration.ui.blueprints.show(this)
         }.name("blueprints").size(210f, 64f)
     }
 
