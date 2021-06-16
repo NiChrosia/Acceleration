@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
       - uses: fwilhe2/setup-kotlin@main
 
       - name: Download jar
