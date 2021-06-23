@@ -1,7 +1,7 @@
 package acceleration.content
 
-import acceleration.entities.comp.BulletStatusZoneComp
-import acceleration.entities.comp.PuddleStatusZoneComp
+import acceleration.entities.statuszone.BulletStatusZone
+import acceleration.entities.statuszone.PuddleStatusZone
 import arc.Events
 import mindustry.Vars
 import mindustry.content.StatusEffects
@@ -11,65 +11,67 @@ import mindustry.graphics.Pal
 
 class AccelerationStatusZones : ContentList {
     override fun load() {
-        arctifluidStatusZone = PuddleStatusZoneComp(AccelerationPal.arctifluid).apply {
-            liquid = AccelerationLiquids.arctifluid
-            damageBuildings = false
-            damageUnits = true
-            statusEffect = AccelerationStatusEffects.arctifreezing
-            statusZoneSize = 32f
-        }
+        arctifluidStatusZone = PuddleStatusZone(
+            liquid = AccelerationLiquids.arctifluid,
+            damageBuildings = false,
+            damageUnits = true,
+            statusEffect = AccelerationStatusEffects.arctifreezing,
+            size = 32f
+        )
 
-        quarkPlasmaStatusZone = PuddleStatusZoneComp(AccelerationPal.quarkPlasma).apply {
-            liquid = AccelerationLiquids.quarkPlasma
-            damageBuildings = true
-            damageUnits = true
-            statusEffect = AccelerationStatusEffects.liquefying
-            statusZoneSize = 32f
-            triggerShock = true
-        }
+        quarkPlasmaStatusZone = PuddleStatusZone(
+            color = AccelerationPal.quarkPlasma,
+            liquid = AccelerationLiquids.quarkPlasma,
+            damageBuildings = true,
+            damageUnits = true,
+            statusEffect = AccelerationStatusEffects.liquefying,
+            size = 32f
+        )
 
-        sporeStatusZone = BulletStatusZoneComp(Pal.spore).apply {
-            bullet = AccelerationBullets.sporeStatusZone
-            damageBuildings = false
-            damageUnits = true
-            statusEffect = StatusEffects.sporeSlowed
-            statusZoneSize = 24f
-        }
+        sporeStatusZone = BulletStatusZone(
+            color = Pal.spore,
+            bullet = AccelerationBullets.sporeStatusZone,
+            damageBuildings = false,
+            damageUnits = true,
+            statusEffect = StatusEffects.sporeSlowed,
+            size = 24f
+        )
 
-        pyraStatusZone = BulletStatusZoneComp(Pal.lightOrange).apply {
-            bullet = AccelerationBullets.pyraStatusZone
-            damageBuildings = false
-            damageUnits = true
-            statusEffect = StatusEffects.burning
-            statusZoneSize = 24f
-            triggerFire = true
-        }
+        pyraStatusZone = BulletStatusZone(
+            color = Pal.lightOrange,
+            bullet = AccelerationBullets.pyraStatusZone,
+            damageBuildings = false,
+            damageUnits = true,
+            statusEffect = StatusEffects.burning,
+            size = 24f
+        )
 
-        thoriumStatusZone = BulletStatusZoneComp(Pal.thoriumPink).apply {
-            bullet = AccelerationBullets.thoriumStatusZone
-            damageBuildings = false
-            damageUnits = true
-            statusEffect = StatusEffects.corroded
-            statusZoneSize = 24f
-        }
+        thoriumStatusZone = BulletStatusZone(
+            color = Pal.thoriumPink,
+            bullet = AccelerationBullets.thoriumStatusZone,
+            damageBuildings = false,
+            damageUnits = true,
+            statusEffect = StatusEffects.corroded,
+            size = 24f
+        )
 
-        surgeStatusZone = BulletStatusZoneComp(Pal.surge).apply {
-            bullet = AccelerationBullets.surgeStatusZone
-            damageBuildings = false
-            damageUnits = true
-            statusEffect = StatusEffects.shocked
-            statusZoneSize = 24f
-            triggerShock = true
-        }
+        surgeStatusZone = BulletStatusZone(
+            color = Pal.surge,
+            bullet = AccelerationBullets.surgeStatusZone,
+            damageBuildings = false,
+            damageUnits = true,
+            statusEffect = StatusEffects.shocked,
+            size = 24f
+        )
 
-        shockPierceLargeStatusZone = BulletStatusZoneComp(Pal.surge).apply {
-            bullet = AccelerationBullets.shockPierceLargeBullet
-            damageBuildings = false
-            damageUnits = true
-            statusEffect = StatusEffects.shocked
-            statusZoneSize = 24f
-            triggerShock = true
-        }
+        shockPierceLargeStatusZone = BulletStatusZone(
+            color = Pal.surge,
+            bullet = AccelerationBullets.shockPierceLargeBullet,
+            damageBuildings = false,
+            damageUnits = true,
+            statusEffect = StatusEffects.shocked,
+            size = 24f
+        )
 
         Events.run(EventType.Trigger.update) {
             if (!Vars.state.isPaused) {
@@ -87,14 +89,14 @@ class AccelerationStatusZones : ContentList {
     }
 
     companion object {
-        lateinit var arctifluidStatusZone : PuddleStatusZoneComp
-        lateinit var quarkPlasmaStatusZone : PuddleStatusZoneComp
+        lateinit var arctifluidStatusZone : PuddleStatusZone
+        lateinit var quarkPlasmaStatusZone : PuddleStatusZone
 
-        lateinit var sporeStatusZone : BulletStatusZoneComp
-        lateinit var pyraStatusZone : BulletStatusZoneComp
-        lateinit var thoriumStatusZone : BulletStatusZoneComp
-        lateinit var surgeStatusZone : BulletStatusZoneComp
+        lateinit var sporeStatusZone : BulletStatusZone
+        lateinit var pyraStatusZone : BulletStatusZone
+        lateinit var thoriumStatusZone : BulletStatusZone
+        lateinit var surgeStatusZone : BulletStatusZone
 
-        lateinit var shockPierceLargeStatusZone : BulletStatusZoneComp
+        lateinit var shockPierceLargeStatusZone : BulletStatusZone
     }
 }

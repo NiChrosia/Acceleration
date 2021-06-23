@@ -28,6 +28,9 @@ buildscript {
         /** Whether the user running this build is NiChrosia. Used only for moveJar. Disable if you aren't me. */
         val isNiChrosia = true
 
+        /** Whether to automatically move the jar */
+        val moveJar = false
+
         /** Whether this is a development build. Used to determine whether to use commit hashes or releases. */
         val dev = true
 
@@ -36,7 +39,7 @@ buildscript {
         val mindustryHash = "fe9ff212b24f7b2f0e1ac1a95fef4c19a4e21ce8"
         val arcHash = "07ced971f4c8b8b5a61aa3a84b29c90aa497cb48"
 
-        set("moveJar", isNiChrosia && local)
+        set("moveJar", isNiChrosia && local && moveJar)
         set("kotlinVersion", "1.5.10")
         set("arcVersion", if (dev) arcHash else latestMindustryRelease)
         set("mindustryVersion", if (dev) mindustryHash else latestMindustryRelease)

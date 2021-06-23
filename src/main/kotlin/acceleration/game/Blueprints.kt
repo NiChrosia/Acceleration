@@ -6,6 +6,8 @@ import acceleration.type.modularunit.MUModule
 import arc.files.Fi
 import arc.struct.Seq
 import arc.util.Log
+import arc.util.io.Reads
+import arc.util.io.Writes
 import mindustry.Vars
 import java.io.*
 import kotlin.math.abs
@@ -43,16 +45,15 @@ open class Blueprints {
     }
 
     open fun read(file: Fi): Blueprint {
-        return read(file.read())
+        return read(Reads(DataInputStream(file.read())))
     }
 
-    open fun read(read: InputStream): Blueprint {
+    open fun read(read: Reads): Blueprint {
         val blueprint = Blueprint()
-        val r = DataInputStream(read)
 
-        val arrayEmpty = r.readBoolean()
-        val serialized = r.readUTF()
-        blueprint.name = r.readUTF()
+        val arrayEmpty = read.bool()
+        val serialized = read.str()
+        blueprint.name = read.str()
 
         if (arrayEmpty) {
             serialized.split(", ").forEach {
@@ -68,18 +69,16 @@ open class Blueprints {
     }
 
     open fun write(file: Fi, blueprint: Blueprint) {
-        write(file.write(), blueprint)
+        write(Writes(DataOutputStream(file.write())), blueprint)
     }
 
-    open fun write(write: OutputStream, blueprint: Blueprint) {
+    open fun write(write: Writes, blueprint: Blueprint) {
         fun MUModule.serialize(): String {
             return "$internalName,$level"
         }
 
-        val w = DataOutputStream(write)
-
-        w.writeBoolean(blueprint.modules.isNotEmpty())
-        w.writeUTF(blueprint.modules.joinToString(", ", transform = MUModule::serialize))
-        w.writeUTF(blueprint.name)
+        write.bool(blueprint.modules.isNotEmpty())
+        write.str(blueprint.modules.joinToString(", ", transform = MUModule::serialize))
+        write.str(blueprint.name)
     }
 }

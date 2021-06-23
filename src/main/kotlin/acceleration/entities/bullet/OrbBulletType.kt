@@ -1,4 +1,4 @@
-package acceleration.entities
+package acceleration.entities.bullet
 
 import arc.graphics.Color
 import arc.graphics.g2d.Draw

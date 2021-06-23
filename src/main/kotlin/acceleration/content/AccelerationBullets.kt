@@ -1,6 +1,6 @@
 package acceleration.content
 
-import acceleration.entities.OrbBulletType
+import acceleration.entities.bullet.OrbBulletType
 import arc.graphics.Color
 import mindustry.content.Fx
 import mindustry.content.StatusEffects

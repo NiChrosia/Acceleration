@@ -7,7 +7,7 @@ import arc.scene.ui.layout.Table
 fun Table.line(pad: Float, height: Float, color: Color, row: Boolean = false): Cell<*> {
     if (row) row()
 
-    return image().growX().pad(pad).padLeft(0f).padRight(0f).height(height).color(color)
+    return image().growX().padTop(pad).padBottom(pad).height(height).color(color)
 }
 
 fun Table.row(index: Int, start: Int = 0) {

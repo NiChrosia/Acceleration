@@ -1,6 +1,6 @@
 package acceleration.entities.abilities
 
-import acceleration.math.geom.Geometrym
+import acceleration.math.geom.normalPoly
 import arc.graphics.Color
 import arc.math.Mathf
 import arc.math.geom.Vec2
@@ -31,13 +31,13 @@ open class LightningFieldAbility(
     }
 
     private fun circleLightning(offset: Int, unit: Unit) {
-        val pointSeq = Geometrym.normalPoly(lightningPoints, unit.hitSize + hitSizeOffset, offset)
+        val pointSeq = normalPoly(lightningPoints, unit.hitSize + hitSizeOffset, offset)
 
         pointSeq.onEachIndexed { index, vec ->
             val next: Vec2? = try {
-                pointSeq.get(index + 1)
+                pointSeq[index + 1]
             } catch(e: Exception) {
-                pointSeq.get(0)
+                pointSeq[0]
             }
 
             next?.let { nextVector ->
