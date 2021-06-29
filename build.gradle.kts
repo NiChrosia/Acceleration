@@ -1,7 +1,9 @@
-version = "1.0"
 plugins { kotlin("jvm") version "1.5.0" }
 apply(plugin = "kotlin")
-kotlin.sourceSets.getByName("main").kotlin.setSrcDirs(listOf("src", "assets"))
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+}
 
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
@@ -11,23 +13,40 @@ fun String.runCommand(workingDir: File = file("./")): String {
         .redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
 
-    //while (!proc.onExit().isDone) {
-    //    TimeUnit.SECONDS.sleep(1L)
-    //}
-
     return proc.inputStream.bufferedReader().readText().trim()
 }
 
 buildscript {
-    project.extra.apply {
-        /** Whether to move the jarfile into my mods directory for easy testing. Disable if you are not me. */
-        set("moveJar", true)
+    version = project.properties["version"] as String
 
-        set("kotlinVersion", "1.5.0")
-        set("mindustryVersion", "v126.2")
+    project.extra.apply {
+        val args = if (project.hasProperty("args")) project.properties["args"] else ""
+
+        /** Whether this run is local or from GitHub Actions. */
+        val local = (args as String).split(" ").first() != "githubActions"
+
+        /** Whether the user running this build is NiChrosia. Used only for moveJar. Disable if you aren't me. */
+        val isNiChrosia = true
+
+        /** Whether to automatically move the jar */
+        val moveJar = false
+
+        /** Whether this is a development build. Used to determine whether to use commit hashes or releases. */
+        val dev = true
+
+        /** The latest Mindustry release. */
+        val latestMindustryRelease = "v126.2"
+        val mindustryHash = "fe9ff212b24f7b2f0e1ac1a95fef4c19a4e21ce8"
+        val arcHash = "07ced971f4c8b8b5a61aa3a84b29c90aa497cb48"
+
+        set("moveJar", isNiChrosia && local && moveJar)
+        set("kotlinVersion", "1.5.10")
+        set("arcVersion", if (dev) arcHash else latestMindustryRelease)
+        set("mindustryVersion", if (dev) mindustryHash else latestMindustryRelease)
         set("sdkVersion", "30")
         set("sdkRoot", System.getenv("ANDROID_HOME"))
         set("windows", System.getProperty("os.name").toLowerCase().contains("windows"))
+        set("dirName", rootDir.name.split("/").last())
     }
 
     repositories { mavenCentral() }
@@ -43,16 +62,18 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.Anuken.Arc:arc-core:${project.extra["mindustryVersion"]}")
+    compileOnly("com.github.Anuken.Arc:arc-core:${project.extra["arcVersion"]}")
     compileOnly("com.github.Anuken.Mindustry:core:${project.extra["mindustryVersion"]}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${project.extra["kotlinVersion"]}")
 }
 
 tasks {
     "jar"(Jar::class) {
-        val dirName = rootDir.name.split("//").last()
+        dependsOn("compileKotlin")
+        
+        archiveFileName.set("${project.extra["dirName"]}-Desktop.jar")
 
-        archiveFileName.set("$dirName-Desktop.jar")
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
         from(configurations.runtimeClasspath.map { configuration ->
             configuration.asFileTree.fold(files().asFileTree) { collection, file ->
@@ -60,16 +81,18 @@ tasks {
             }
         })
 
-        from(rootDir) { include("mod.hjson") }
-        from("assets/") { include("**") }
+        from(rootDir) {
+            include("mod.hjson")
+            include("icon.png")
+            include("preview.png")
+        }
     }
 }
 
 tasks.register<Jar>("jarAndroid") {
     dependsOn("jar")
 
-    val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-Android.jar")
+    archiveFileName.set("${project.extra["dirName"]}-Android.jar")
 
     doLast {
         val files = (
@@ -81,7 +104,7 @@ tasks.register<Jar>("jarAndroid") {
         val dependencies = files.fold("") { str, file ->  str + " --classpath ${file.path}" }
 
         //dex and desugar files - this requires d8 in your PATH
-        "d8$dependencies --min-api 14 --output $dirName-Android.jar $dirName-Desktop.jar".runCommand(File("${buildDir.path}/libs"))
+        "d8$dependencies --min-api 14 --output ${project.extra["dirName"]}-Android.jar ${project.extra["dirName"]}-Desktop.jar".runCommand(File("${buildDir.path}/libs"))
     }
 }
 
@@ -90,54 +113,65 @@ tasks.register("alphableed") {
         workingDir = rootDir
 
         if (project.extra["windows"] as Boolean) {
-            commandLine("./alpha-bleeding-windows.exe", "--replace", "./assets/sprites")
+            commandLine("./alpha-bleeding-windows.exe", "--replace", "./src/main/resources/sprites")
         } else {
-            commandLine("./alpha-bleed", "--replace", "./assets/sprites")
+            commandLine("./alpha-bleed", "./src/main/resources/sprites")
+        }
+    }
+}
+
+tasks.register("moveJar") {
+    doLast {
+        if (project.extra["moveJar"] as Boolean) {
+            if (project.extra["windows"] as Boolean) {
+                exec {
+                    commandLine(
+                            "powershell.exe",
+                            "mv -Force build/libs/${project.extra["dirName"]}-${project.version}.jar ../../${project.extra["dirName"]}-${project.version}.jar"
+                    )
+                }
+            } else {
+                exec {
+                    commandLine(
+                        "mv",
+                        "-f",
+                        "./build/libs/${project.extra["dirName"]}-${project.version}.jar",
+                        "../../.local/share/Mindustry/mods/${project.extra["dirName"]}-${project.version}.jar"
+                    )
+                }
+            }
         }
     }
 }
 
 tasks.register<Jar>("deploy") {
-    dependsOn("alphableed")
-    dependsOn("jar")
+    dependsOn("alphableed", "jar")
 
-    val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName-${project.version}.jar")
-
-    from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"))
+    from(zipTree("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar"))
 
     doLast {
-        delete { delete("$buildDir/libs/${dirName}-Desktop.jar") }
-
-        if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
-            exec {
-                commandLine("powershell.exe", "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar")
-            }
-        }
+        delete { delete("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar") }
     }
+
+    if (project.extra["moveJar"] as Boolean) finalizedBy("moveJar")
 }
 
 tasks.register<Jar>("deployDexed") {
-    dependsOn("alphableed")
-    dependsOn("jar")
-    dependsOn("jarAndroid")
+    dependsOn("alphableed", "jar", "jarAndroid")
 
-    val dirName = rootDir.name.split("/").last()
-    archiveFileName.set("$dirName.jar")
+    tasks.getByName("moveJar").setShouldRunAfter(mutableListOf(this))
 
-    from(zipTree("$buildDir/libs/${dirName}-Desktop.jar"),
-         zipTree("$buildDir/libs/${dirName}-Android.jar"))
+    archiveFileName.set("${project.extra["dirName"]}.jar")
+
+    from(zipTree("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar"),
+         zipTree("$buildDir/libs/${project.extra["dirName"]}-Android.jar"))
 
     doLast {
         delete {
-            delete("$buildDir/libs/${dirName}-Desktop.jar")
-            delete("$buildDir/libs/${dirName}-Android.jar")
-        }
-
-        if (project.extra["moveJar"] as Boolean && project.extra["windows"] as Boolean) {
-            exec {
-                commandLine("powershell.exe", "mv -Force build/libs/$dirName-${project.version}.jar ../../$dirName-${project.version}.jar")
-            }
+            delete("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar")
+            delete("$buildDir/libs/${project.extra["dirName"]}-Android.jar")
         }
     }
+
+    if (project.extra["moveJar"] as Boolean) finalizedBy("moveJar")
 }

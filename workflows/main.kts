@@ -166,9 +166,22 @@ fun generateDescription(info: CommitInfo): String {
 **Date:** ${info.date.formatted}
 ## Links:
 [*Filetree*](https://github.com/NiChrosia/Acceleration/tree/${info.hash})
-[*Commit*](https://github.com/NiChrosia/Acceleration/commit/${info.hash})"""
+[*Commit*](https://github.com/NiChrosia/Acceleration/commit/${info.hash})
+
+**WARNING:** Development builds may have experimental code that can break with future versions."""
         .replace("**Author:** Author: ", "**Author:** ")
         .replace("**Date:** Date: ", "**Date:** ")
+}
+
+fun generateTag(): String {
+    val gradleProperties = File("gradle.properties").readLines()
+    val version = gradleProperties[2].substringAfterLast("version = ")
+    val lastReleaseTag = gradleProperties[2].substringAfterLast("lastReleaseTag = ")
+
+    val command = "git log $lastReleaseTag..HEAD --oneline".runCommand()
+    val commitsSinceLastRelease = command?.split("\n")?.size
+
+    return "v$version.${commitsSinceLastRelease ?: 0}"
 }
 
 val hash = args[0]
@@ -177,4 +190,4 @@ val outputFile = File("output.json")
 val tagFile = File("tag.json")
 
 outputFile.writeText(generateDescription(CommitInfo(hash)))
-tagFile.writeText("dev-${hash.substring(0, 6)}")
+tagFile.writeText(generateTag())
