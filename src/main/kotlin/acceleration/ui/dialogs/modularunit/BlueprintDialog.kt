@@ -1,7 +1,7 @@
 package acceleration.ui.dialogs.modularunit
 
 import acceleration.Acceleration
-import acceleration.ui.line
+import acceleration.func.ui.line
 import arc.scene.ui.layout.Table
 import mindustry.gen.Icon
 import mindustry.gen.Tex

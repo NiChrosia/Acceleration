@@ -1,6 +1,7 @@
 package acceleration.type.modularunit
 
 import acceleration.entities.unit.ModularUnit
+import acceleration.func.toFloat
 import mindustry.game.Team
 import mindustry.gen.Unit
 import mindustry.type.UnitType
@@ -16,7 +17,7 @@ open class ModularUnitType(name: String) : UnitType(name) {
         unit.setType(this)
         unit.team = team
         unit.ammo = ammoCapacity.toFloat()
-        unit.elevation = if (flying) 1f else 0f
+        unit.elevation = flying.toFloat()
         unit.heal()
 
         return unit

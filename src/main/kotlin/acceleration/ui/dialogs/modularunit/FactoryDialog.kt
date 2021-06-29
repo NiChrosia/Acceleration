@@ -3,6 +3,7 @@ package acceleration.ui.dialogs.modularunit
 import acceleration.Acceleration
 import acceleration.content.AccelerationUnitTypes
 import acceleration.type.modularunit.Blueprint
+import acceleration.type.modularunit.MUModules
 import acceleration.world.blocks.units.ModularUnitFactory
 import arc.Core
 import arc.graphics.Color
@@ -105,7 +106,7 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
 
     protected fun buildModules(table: Table) { table.apply {
         pane { modules -> modules.apply {
-            Acceleration.MUModules.each { module ->
+            MUModules().each { module ->
                 button({ button -> button.apply {
                     table { icon -> icon.apply {
                         center()
@@ -148,7 +149,7 @@ open class FactoryDialog : BaseDialog("@modular-unit-factory-dialog", Styles.def
         clear()
 
         pane { modules -> modules.apply {
-            Acceleration.MUModules.each { module ->
+            MUModules().each { module ->
                 button({ button -> button.apply {
                     table { icon -> icon.apply {
                         center()

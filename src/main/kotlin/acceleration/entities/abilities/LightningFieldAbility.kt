@@ -1,6 +1,6 @@
 package acceleration.entities.abilities
 
-import acceleration.math.geom.normalPoly
+import acceleration.func.math.geom.normalPoly
 import arc.graphics.Color
 import arc.math.Mathf
 import arc.math.geom.Vec2

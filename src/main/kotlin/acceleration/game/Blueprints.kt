@@ -1,8 +1,8 @@
 package acceleration.game
 
-import acceleration.Acceleration
 import acceleration.type.modularunit.Blueprint
 import acceleration.type.modularunit.MUModule
+import acceleration.type.modularunit.MUModules
 import arc.files.Fi
 import arc.struct.Seq
 import arc.util.Log
@@ -59,7 +59,7 @@ open class Blueprints {
             serialized.split(", ").forEach {
                 val (name, level) = it.split(",")
 
-                Acceleration.MUModules.get(name)?.let { existingModule ->
+                MUModules().get(name)?.let { existingModule ->
                     blueprint.modules.add(existingModule.copy(name = name, level = level.toInt()))
                 }
             }

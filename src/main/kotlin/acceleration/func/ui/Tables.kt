@@ -1,4 +1,4 @@
-package acceleration.ui
+package acceleration.func.ui
 
 import arc.graphics.Color
 import arc.scene.ui.layout.Cell

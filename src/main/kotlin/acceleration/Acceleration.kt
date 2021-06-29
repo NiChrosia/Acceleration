@@ -4,27 +4,22 @@ import arc.util.Log
 import mindustry.mod.Mod
 import acceleration.content.*
 import acceleration.game.Blueprints
-import acceleration.type.modularunit.*
 import acceleration.ui.AccelerationUI
+import acceleration.func.stripIf
 import arc.Events
 import mindustry.Vars
 import mindustry.game.EventType
 
 open class Acceleration : Mod() {
-    private val accent = if (Vars.net.client()) "[accent]" else ""
-    private val end = if (Vars.net.client()) "[]" else ""
-
     companion object {
         lateinit var ui: AccelerationUI
-
-        lateinit var MUModules: MUModules
         lateinit var blueprints: Blueprints
 
         const val modName = "acceleration"
     }
 
     init {
-        Log.info("Mod ${accent}Acceleration${end} constructor loaded successfully.")
+        Log.info("Mod [accent]Acceleration[] constructor loaded successfully.".stripIf(Vars.headless))
     }
     
     override fun loadContent() {
@@ -36,13 +31,12 @@ open class Acceleration : Mod() {
         AccelerationBullets().load()
         AccelerationUnitTypes().load()
         AccelerationItems().load()
-        AccelerationBlocks().load()
+        loadBlocks()
         AccelerationStatusZones().load()
         AccelerationTechTree().load()
 
         // load on ContentInitEvent so sprites are loaded
         Events.on(EventType.ContentInitEvent::class.java) {
-            MUModules = MUModules()
             blueprints = Blueprints()
         }
 
@@ -56,6 +50,6 @@ open class Acceleration : Mod() {
             ui.modularUnitFactory.blueprint.update()
         }
 
-        Log.info("Mod ${accent}Acceleration${end} loaded content successfully.")
+        Log.info("Mod [accent]Acceleration[] loaded content successfully.".stripIf(Vars.headless))
     }
 }

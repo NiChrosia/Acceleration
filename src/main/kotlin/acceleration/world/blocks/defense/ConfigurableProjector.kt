@@ -1,18 +1,19 @@
 package acceleration.world.blocks.defense
 
-import acceleration.content.AccelerationBlocks
+import acceleration.content.forceIcon
+import acceleration.content.mendIcon
+import acceleration.content.noneIcon
+import acceleration.content.overdriveIcon
 import arc.Core
 import arc.graphics.Blending
 import arc.graphics.Color
 import arc.graphics.g2d.Draw
 import arc.graphics.g2d.Fill
 import arc.graphics.g2d.Lines
-import arc.graphics.g2d.TextureRegion
 import arc.math.Mathf
 import arc.math.geom.Geometry
 import arc.math.geom.Intersector
 import arc.scene.ui.layout.Table
-import arc.struct.ObjectMap
 import arc.struct.Seq
 import arc.util.Time
 import arc.util.Tmp
@@ -49,6 +50,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
     open var maxLevels = 5.0
 
     /** The numerous minimum and maximum values, these should really be calculated according to a base value */
+
     var minReload = 50f
     var maxReload = 300f
 
@@ -89,28 +91,37 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         }
     }
 
-    /** ObjectMaps for converting between values internally. */
-
-    private val modeMap: ObjectMap<Block, String> = ObjectMap.of(
-        AccelerationBlocks.noneIcon, "none",
-        AccelerationBlocks.mendIcon, "mend",
-        AccelerationBlocks.overdriveIcon, "overdrive",
-        AccelerationBlocks.forceIcon, "force"
-    )
-
-    private val blockMap: ObjectMap<String, Block> = ObjectMap.of(
-        "none", AccelerationBlocks.noneIcon,
-        "mend", AccelerationBlocks.mendIcon,
-        "overdrive", AccelerationBlocks.overdriveIcon,
-        "force", AccelerationBlocks.forceIcon
-    )
-
-    private val colorMap: ObjectMap<String, Color> = ObjectMap.of(
-        "none", Color.white,
-        "mend", Pal.heal,
-        "overdrive", Color.valueOf("feb380"),
-        "force", Color.valueOf("ffd37f")
-    )
+    enum class Mode(
+        val color: Color, 
+        val description: (ConfigurableProjectorBuild) -> String, 
+        val value: (ConfigurableProjectorBuild) -> Float,
+        val iconBlock: Block
+    ) {
+        None(
+            Color.white,
+            { Core.bundle.format("bar.none") },
+            { 1f },
+            noneIcon
+        ),
+        Mend(
+            Pal.heal,
+            { Core.bundle.format("bar.mend") },
+            { if (it.charge / it.buildReload == 0f) 1f else it.charge / it.buildReload },
+            mendIcon
+        ),
+        Overdrive(
+            Pal.accent,
+            { Core.bundle.format("bar.boost", it.buildOverdrive) },
+            { it.buildOverdrive / it.calculateSpeed((it.block as ConfigurableProjector).minOverdrive, (it.block as ConfigurableProjector).maxOverdrive, 1.0) },
+            overdriveIcon
+        ),
+        Force(
+            Pal.accent,
+            { Core.bundle.format("stat.shieldhealth") },
+            { (if (it.broken) 0f else 1f - it.buildup / it.buildShieldHealth) },
+            forceIcon
+        );
+    }
 
     /** Adds two bars; power, and the configurable bar. The configurable bar depends on what the mode is. */
     override fun setBars() {
@@ -130,26 +141,9 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             "configurable"
         ) { entity: ConfigurableProjectorBuild ->
             Bar(
-                { when (entity.mode) {
-                    "mend" -> Core.bundle.format("bar.mend")
-                    "overdrive" -> Core.bundle.format("bar.boost", entity.buildOverdrive)
-                    "force" -> Core.bundle.format("stat.shieldhealth")
-                    else -> Core.bundle.format("bar.none")
-                } },
-
-                { when (entity.mode) {
-                    "mend" -> Pal.heal
-                    "overdrive" -> Pal.accent
-                    "force" -> Pal.accent
-                    else -> Color.white
-                } },
-
-                { when (entity.mode) {
-                    "mend" -> if ((entity.charge / entity.buildReload) == 0f) 1f else entity.charge / entity.buildReload
-                    "overdrive" -> entity.buildOverdrive / entity.calculateSpeed(minOverdrive, maxOverdrive, 1.0) /* Actual max speed. */
-                    "force" -> (if (entity.broken) 0f else 1f - entity.buildup / entity.buildShieldHealth)
-                    else -> 1f
-                } }
+                { entity.mode.description(entity) },
+                { entity.mode.color },
+                { entity.mode.value(entity) }
             )
         }
     }
@@ -179,7 +173,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
     }
 
     open inner class ConfigurableProjectorBuild : MendProjector.MendBuild() {
-        var mode: String = "none"
+        var mode: Mode = Mode.None
         private var level = 0
         private var autoadjust = false
         private var adjustTicks = 0
@@ -209,7 +203,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
                 level = valueSeq[0].toInt()
                 autoadjust = valueSeq[1].toBoolean()
-                mode = valueSeq[2]
+                mode = Mode.valueOf(valueSeq[2])
             }
 
             Call.tileConfig(Vars.player, this, value)
@@ -221,7 +215,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
                 level = valueSeq[0].toInt()
                 autoadjust = valueSeq[1].toBoolean()
-                mode = valueSeq[2]
+                mode = Mode.valueOf(valueSeq[2])
             }
         }
 
@@ -245,30 +239,14 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             super.write(write)
             write.i(level)
             write.bool(autoadjust)
-
-            val modeToInt: ObjectMap<String, Int> = ObjectMap.of(
-                "none", 0,
-                "mend", 1,
-                "overdrive", 2,
-                "force", 3
-            )
-
-            write.i(modeToInt.get(mode))
+            write.i(mode.ordinal)
         }
 
         override fun read(read: Reads, revision: Byte) {
             super.read(read, revision)
             level = read.i()
             autoadjust = read.bool()
-
-            val intToMode: ObjectMap<Int, String> = ObjectMap.of(
-                0, "none",
-                1, "mend",
-                2, "overdrive",
-                3, "force"
-            )
-
-            mode = intToMode.get(read.i())
+            mode = Mode.values()[read.i()]
         }
 
         override fun buildConfiguration(table: Table) {
@@ -289,9 +267,9 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
             table.row()
 
-            ItemSelection.buildTable(table, Seq.with(AccelerationBlocks.noneIcon, AccelerationBlocks.mendIcon, AccelerationBlocks.overdriveIcon, AccelerationBlocks.forceIcon), {if (mode == "none") null else blockMap.get(mode)}) { block ->
+            ItemSelection.buildTable(table, Seq.with(noneIcon, mendIcon, overdriveIcon, forceIcon), { mode.iconBlock }) { block ->
                 if (block != null) {
-                    val output = modeMap.get(block)
+                    val output = Mode.values().filter { it.iconBlock == block }.ifEmpty { null }?.first()
                     if (output != null) configure("$level $autoadjust $output")
                 }
             }
@@ -303,15 +281,15 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
         override fun updateTile() {
             var decLevel: Double = ((level + 1) / maxLevels)
-            buildPowerUse = if (mode != "none") calculateSpeed(minPowerUse, maxPowerUse, decLevel) else 0f
+            buildPowerUse = if (mode != Mode.None) calculateSpeed(minPowerUse, maxPowerUse, decLevel) else 0f
 
-            if (mode != "force" && mode != "none") {
+            if (mode != Mode.Force && mode != Mode.None) {
                 val cons = consumes.get<ConsumeLiquidFilter>(ConsumeType.liquid)
                 if (cons.valid(this)) {
                     cons.update(this)
-                    if (mode == "overdrive") {
+                    if (mode == Mode.Overdrive) {
                         decLevel += (cooldownLiquid * (1f + (liquids.current().heatCapacity - 0.4f) * 0.9f)) * 0.05
-                    } else if (mode == "mend") {
+                    } else if (mode == Mode.Mend) {
                         decLevel += (cooldownLiquid * (1f + (liquids.current().heatCapacity - 0.4f) * 0.9f)) * 0.025
                     }
                 }
@@ -342,7 +320,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             heat = Mathf.lerpDelta(heat, if (consValid() || cheating()) 1f else 0f, 0.08f)
             charge += heat * efficiency() * Time.delta
 
-            if (mode == "mend") {
+            if (mode == Mode.Mend) {
                 if (charge >= buildReload) {
                     charge = 0f
                     Vars.indexer.eachBlock(
@@ -363,7 +341,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                     }
                 }
             }
-            if (mode == "overdrive" && efficiency() > 0) {
+            if (mode == Mode.Overdrive && efficiency() > 0) {
 
                 charge = 0f
 
@@ -377,7 +355,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
                     }
                 }
             }
-            if (mode == "force") {
+            if (mode == Mode.Force) {
                 radscl = Mathf.lerpDelta(radscl, if (broken) 0f else warmup, 0.05f)
 
                 if (Mathf.chanceDelta(buildup / buildShieldHealth * 0.1)) {
@@ -428,7 +406,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         override fun draw() {
             Draw.rect(region, x, y)
 
-            Draw.color(colorMap.get(mode))
+            Draw.color(mode.color)
             Draw.rect(Core.atlas.find("$name-mode"), x, y)
 
             Draw.reset()
@@ -436,26 +414,22 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
             val f = 1f - Time.time / 100f % 1f
 
             if (power.graph.powerProduced > 0) {
-                Draw.color(colorMap.get(mode))
+                Draw.color(mode.color)
                 Draw.alpha(heat * Mathf.absin(Time.time, 10f, 1f) * 0.5f)
-                if (mode != "force") Draw.rect(topRegion, x, y) else {
+                
+                if (mode != Mode.Force) Draw.rect(topRegion, x, y) else {
                     Draw.alpha(buildup / buildShieldHealth * 0.75f)
                     Draw.blend(Blending.additive)
                     Draw.rect(topRegion, x, y)
 
                     Draw.blend()
                 }
+                
                 Draw.reset()
 
-                if (mode == "mend") {
-                    drawMend(f)
-                }
-                if (mode == "overdrive") {
-                    drawOverdrive(f)
-                }
-                if (mode == "force") {
-                    drawShield()
-                }
+                if (mode == Mode.Mend) drawMend(f)
+                if (mode == Mode.Overdrive) drawOverdrive(f)
+                if (mode == Mode.Force) drawShield()
             }
 
             Draw.reset()
@@ -463,7 +437,7 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
 
             val drawEfficiency = if (efficiency() <= 0.2f) 0.2f else efficiency()
 
-            Draw.color(colorMap.get(mode))
+            Draw.color(mode.color)
             Draw.alpha(drawEfficiency)
             Draw.rect(Core.atlas.find("$name-level$level"), x, y)
         }
@@ -474,14 +448,14 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         }
 
         private fun drawMend(f: Float) {
-            Draw.color(colorMap.get(mode))
+            Draw.color(mode.color)
             Draw.alpha(1f)
             Lines.stroke((2f * f + 0.2f) * heat)
             Lines.square(x, y, min(1f + (1f - f) * size * Vars.tilesize / 2f, size * Vars.tilesize / 2f))
         }
 
         private fun drawOverdrive(f: Float) {
-            Draw.color(colorMap.get(mode))
+            Draw.color(mode.color)
             Draw.alpha(1f)
             Lines.stroke((2f * f + 0.1f) * heat)
 
@@ -524,15 +498,15 @@ open class ConfigurableProjector(name: String) : MendProjector(name) {
         }
 
         override fun drawSelect() {
-            if (mode != "force" && mode != "none") {
+            if (mode != Mode.Force && mode != Mode.Force) {
                 Vars.indexer.eachBlock(this, buildRange, { true }) { other: Building? ->
                     Drawf.selected(
                         other,
-                        Tmp.c1.set(colorMap.get(mode)).a(Mathf.absin(4f, 1f))
+                        Tmp.c1.set(mode.color).a(Mathf.absin(4f, 1f))
                     )
                 }
 
-                Drawf.dashCircle(x, y, buildRange, colorMap.get(mode))
+                Drawf.dashCircle(x, y, buildRange, mode.color)
             }
         }
     }

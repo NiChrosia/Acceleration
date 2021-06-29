@@ -1,8 +1,8 @@
 package acceleration.ui.dialogs.modularunit
 
 import acceleration.type.modularunit.MUModule
-import acceleration.ui.line
-import acceleration.ui.row
+import acceleration.func.ui.line
+import acceleration.func.ui.row
 import arc.Core
 import arc.graphics.Color
 import arc.scene.ui.Dialog

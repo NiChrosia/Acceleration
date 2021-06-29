@@ -1,4 +1,4 @@
-package acceleration.graphics
+package acceleration.func.graphics
 
 import arc.Core
 import arc.graphics.Texture

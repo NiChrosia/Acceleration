@@ -1,10 +1,10 @@
 package acceleration.world.blocks.units
 
+import acceleration.func.toNull
 import arc.Events
 import arc.math.Mathf
 import arc.struct.ObjectMap
 import arc.struct.Seq
-
 import arc.util.Timer
 import arc.util.io.Reads
 import mindustry.Vars
@@ -22,7 +22,6 @@ import mindustry.world.blocks.units.Reconstructor
 import mindustry.world.blocks.units.UnitFactory
 import mindustry.world.consumers.ConsumeType
 import mindustry.world.consumers.ConsumeItems
-import mindustry.world.modules.ItemModule
 
 open class Reclaimer(name: String) : Block(name) {
     private val individualRequirementMap = ObjectMap<UnitType, Array<out ItemStack>>()
@@ -93,8 +92,6 @@ open class Reclaimer(name: String) : Block(name) {
     }
 
     init {
-        super.init()
-
         solid = true
         update = true
         destructible = true
@@ -136,7 +133,6 @@ open class Reclaimer(name: String) : Block(name) {
         override fun created() {
             super.created()
 
-            if (items == null) items = ItemModule()
             Events.on(EventType.UnitDestroyEvent::class.java) { e ->
                 if (e.unit.dst(x, y) < range && tile.build is ReclaimerBuild && !dead) {
                     units.add(e.unit)
@@ -148,7 +144,7 @@ open class Reclaimer(name: String) : Block(name) {
                                     e.unit.x + Mathf.random(-e.unit.hitSize / 3, e.unit.hitSize / 3),
                                     e.unit.y + Mathf.random(-e.unit.hitSize / 3, e.unit.hitSize / 3),
                                     0f,
-                                    if (tile.build is ReclaimerBuild) this else null
+                                    this.toNull(tile.build is ReclaimerBuild)
                                 )
                             }, i / 10f)
                         }

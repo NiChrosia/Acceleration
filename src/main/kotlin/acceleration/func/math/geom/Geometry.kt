@@ -1,7 +1,6 @@
-package acceleration.math.geom
+package acceleration.func.math.geom
 
 import arc.math.geom.Vec2
-import arc.struct.Seq
 import arc.util.Tmp
 
 fun normalPoly(pointCount: Int, distance: Float, offsetRotation: Int = 0): List<Vec2> {

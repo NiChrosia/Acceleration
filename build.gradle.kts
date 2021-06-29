@@ -153,7 +153,7 @@ tasks.register<Jar>("deploy") {
         delete { delete("$buildDir/libs/${project.extra["dirName"]}-Desktop.jar") }
     }
 
-    finalizedBy("moveJar")
+    if (project.extra["moveJar"] as Boolean) finalizedBy("moveJar")
 }
 
 tasks.register<Jar>("deployDexed") {
@@ -173,5 +173,5 @@ tasks.register<Jar>("deployDexed") {
         }
     }
 
-    finalizedBy("moveJar")
+    if (project.extra["moveJar"] as Boolean) finalizedBy("moveJar")
 }

@@ -1,5 +1,6 @@
 package acceleration.content
 
+import acceleration.func.stripIf
 import arc.struct.Seq
 import arc.util.Log
 import arc.util.Strings
@@ -41,23 +42,22 @@ class AccelerationTechTree : ContentList {
         nodeProduce(AccelerationItems.velosium, AccelerationItems.voltaicVelosium)
 
         /// Cores
-        node(Blocks.coreNucleus, AccelerationBlocks.atomCore)
+        node(Blocks.coreNucleus, atomCore)
 
         /// Walls
-        node(Blocks.plastaniumWallLarge, AccelerationBlocks.metaglassWall)
-        node(AccelerationBlocks.metaglassWall, AccelerationBlocks.metaglassWallLarge)
+        node(Blocks.plastaniumWallLarge, metaglassWall)
+        node(metaglassWall, metaglassWallLarge)
 
         /// Projectors
-        node(Blocks.overdriveDome, AccelerationBlocks.configurableProjector, Seq.with(
+        node(Blocks.overdriveDome, configurableProjector, Seq.with(
             Objectives.Research(Blocks.mendProjector),
             Objectives.Research(Blocks.overdriveDome),
             Objectives.Research(Blocks.forceProjector)
         ))
 
         /// Reclaimers
-        node(Blocks.container, AccelerationBlocks.reclaimer)
+        node(Blocks.container, reclaimer)
 
-        val text = "Mod [accent]Acceleration[] tech tree loaded successfully."
-        Log.info(if (Vars.net.client()) Strings.stripColors(text) else text)
+        Log.info("Mod [accent]Acceleration[] tech tree loaded successfully.".stripIf(Vars.headless))
     }
 }

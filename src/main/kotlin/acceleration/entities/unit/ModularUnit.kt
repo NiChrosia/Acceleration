@@ -1,6 +1,5 @@
 package acceleration.entities.unit
 
-import acceleration.Acceleration
 import acceleration.content.AccelerationUnitTypes
 import acceleration.type.modularunit.Blueprint
 import arc.math.Mathf
@@ -9,6 +8,7 @@ import arc.util.io.Writes
 import mindustry.entities.Damage
 import mindustry.gen.UnitEntity
 import acceleration.type.modularunit.MUModule
+import acceleration.type.modularunit.MUModules
 
 open class ModularUnit : UnitEntity() {
     var blueprint: Blueprint = Blueprint()
@@ -71,7 +71,7 @@ open class ModularUnit : UnitEntity() {
             serialized.split(", ").forEach {
                 val (name, level) = it.split(",")
 
-                Acceleration.MUModules.get(name)?.let { existingModule ->
+                MUModules().get(name)?.let { existingModule ->
                     blueprint.modules.add(existingModule.copy(name = name, level = level.toInt()))
                 }
             }

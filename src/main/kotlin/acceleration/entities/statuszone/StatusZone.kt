@@ -7,8 +7,6 @@ import arc.graphics.g2d.Fill
 import arc.graphics.g2d.Lines
 import mindustry.entities.Effect
 import mindustry.entities.effect.ParticleEffect
-import mindustry.gen.Building
-import mindustry.gen.Unit
 import mindustry.gen.Posc
 import mindustry.graphics.Layer
 import mindustry.type.StatusEffect

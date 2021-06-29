@@ -37,9 +37,9 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
     open var recoilAmount = 5f
     private var elevation = -1f
 
-    open var turretRegion: TextureRegion? = null
-    open var mendRegion: TextureRegion? = null
-    open var iconRegion: TextureRegion? = null
+    open lateinit var turretRegion: TextureRegion
+    open lateinit var mendRegion: TextureRegion
+    open lateinit var iconRegion: TextureRegion
 
     init {
         if (elevation < 0) elevation = size / 2f * Vars.tilesize
@@ -70,10 +70,6 @@ open class MenderCoreTurret(name: String) : CoreBlock(name) {
         turretRegion = Core.atlas.find("$name-turret")
         mendRegion = Core.atlas.find("$name-mend")
         iconRegion = Core.atlas.find("$name-icon")
-    }
-
-    override fun icons(): Array<TextureRegion> {
-        return arrayOf(iconRegion!!)
     }
 
     @Suppress("unused")

@@ -1,4 +1,4 @@
-package acceleration.graphics
+package acceleration.func.graphics
 
 import arc.graphics.Color
 import arc.graphics.Pixmap

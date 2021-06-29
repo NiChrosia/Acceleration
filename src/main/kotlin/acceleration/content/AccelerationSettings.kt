@@ -1,6 +1,6 @@
 package acceleration.content
 
-import acceleration.ui.line
+import acceleration.func.ui.line
 import arc.Core
 import mindustry.Vars
 import mindustry.graphics.Pal
